@@ -114,6 +114,18 @@ p {
   }
 }
 
+.signin-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin-section .container-fluid {
+  max-width: 1500px;  /* 더 좁게 하고 싶으면 숫자만 줄이면 돼 */
+  width: 100%;
+}
+
 /* ========== cart style ========== */
 .card-style {
   background: #fff;
@@ -3625,6 +3637,7 @@ h6,
   position: fixed;
   overflow-y: scroll;
   overflow-x: hidden;
+  scrollbar-width: none;        /* Firefox */
   top: 0;
   left: 0;
   z-index: 999;
@@ -3639,6 +3652,9 @@ h6,
   -ms-transform: translateX(0);
   -o-transform: translateX(0);
   transform: translateX(0);
+}
+.sidebar-nav-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
   .sidebar-nav-wrapper {
@@ -3669,6 +3685,15 @@ h6,
   padding: 0 25px;
   margin-bottom: 30px;
   margin-top: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar-nav-wrapper .navbar-logo img {
+  width: 200px;           /* or 80~100px 정도로 줄여보자 */
+  height: auto;
+  display: block;
 }
 .sidebar-nav-wrapper .sidebar-nav .divider {
   padding: 5px 25px;
