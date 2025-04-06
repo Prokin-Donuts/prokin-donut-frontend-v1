@@ -3797,6 +3797,13 @@ h6,
   z-index: 1;
   padding: 7px 25px;
 }
+.nav-item .icon i {
+  font-size: 18px;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item a span.text {
   display: flex;
   align-items: center;
@@ -3820,8 +3827,11 @@ h6,
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item a .icon {
   margin-right: 12px;
-  margin-top: -4px;
+  /* margin-top: -4px; */
   font-size: 18px;
+  display: flex;            /* 정렬 안정화 */
+  align-items: center;      /* 세로 중앙 정렬 */
+  justify-content: center;  /* 필요 시 가운데 정렬 */
   -webkit-transition: all 0.3s ease-out 0s;
   -moz-transition: all 0.3s ease-out 0s;
   -ms-transition: all 0.3s ease-out 0s;
