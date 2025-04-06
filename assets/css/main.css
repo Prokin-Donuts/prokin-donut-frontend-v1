@@ -115,10 +115,11 @@ p {
 }
 
 .signin-section {
-  min-height: 100vh;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 5rem;
 }
 
 .signin-section .container-fluid {
@@ -5924,6 +5925,7 @@ h6,
 
 .fw-500 {
   font-weight: 500;
+  text-align: left;
 }
 
 .fw-600 {
