@@ -1,1 +1,169 @@
-점주 - 발주관리 페이지 입니다.
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/images/logo/logo.png" type="image/png" />
+    <title>Prokin Donuts</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="assets/css/materialdesignicons.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+
+  <body>
+    <!-- ======== Preloader =========== -->
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+    <!-- ======== Preloader =========== -->
+
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper">
+        <div class="navbar-logo">
+          <a href="fm-dashboard.html">
+            <img src="assets/images/logo/DONUT8.png" alt="logo" />
+          </a>
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li class="nav-item">
+              <a href="fm-dashboard.html">
+                <span class="icon">
+                  <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-dashboard"></i>
+                </span>
+                <span class="text">대시보드</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="fm-order.html">
+                <span class="icon">
+                  <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-delivery"></i>
+                </span>
+                <span class="text">발주관리</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+  
+      </aside>
+      <div class="overlay"></div>
+      <!-- ======== sidebar-nav end =========== -->
+  
+      <!-- ======== main-wrapper start =========== -->
+      <main class="main-wrapper">
+        <!-- ========== header start ========== -->
+        <header class="header">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-5 col-md-5 col-6">
+                <div class="header-left d-flex align-items-center">
+                  <div class="menu-toggle-btn mr-15">
+                    <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                      <i class="lni lni-chevron-left me-2"></i> Menu
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-7 col-md-7 col-6">
+                <div class="header-right">
+                  <!-- profile start -->
+                  <div class="profile-box ml-15">
+                    <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <div class="profile-info">
+                        <div class="info">
+                          <div class="image">
+                            <img src="assets/images/profile/profile_user.png" alt="" />
+                          </div>
+                          <div>
+                            <h6 class="fw-500">최점주</h6>
+                            <p>Franchisee</p>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                      <li>
+                        <div class="author-info flex items-center !p-1">
+                          <div class="content">
+                            <h4 class="text-sm">최점주</h4>
+                            <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#">Email@gmail.com</a>
+                          </div>
+                        </div>
+                      </li>
+                      <li class="divider"></li>
+                      <li>
+                        <a href="#0">
+                          <i class="lni lni-user"></i> View Profile
+                        </a>
+                      </li>
+                      <li>
+                        <a href="index.html"> <i class="lni lni-exit"></i> Sign Out </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- profile end -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- ========== header end ========== -->
+  
+      <!-- ========== section start ========== -->
+      <section class="section">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>발주관리</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ========== title-wrapper end ========== -->
+        </div>
+      </section>
+      <!-- ========== section end ========== -->
+
+      <!-- ========== footer start =========== -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="terms d-flex justify-content-center justify-content-md-end">
+                <a href="https://small-ragdoll-a57.notion.site/Prokin-Donuts-1b83a719d3508047953eeda89caeec14" class="text-sm">Brand Story</a>
+                <a href="https://github.com/Prokin-Donuts/Prokin-Donuts" class="text-sm ml-15">Dev Hub</a>
+              </div>
+            </div>
+            <!-- end col-->
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </footer>
+      <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/dynamic-pie-chart.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
+    <script src="assets/js/jvectormap.min.js"></script>
+    <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/polyfill.js"></script>
+    <script src="assets/js/main.js"></script>
+
+  </body>
+</html>
