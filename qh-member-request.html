@@ -33,21 +33,14 @@
       <nav class="sidebar-nav">
         <ul>
           <li class="nav-item">
-            <a href="qh-dashboard.html">
-              <span class="icon">
-                <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-dashboard"></i>
-              </span>
-              <span class="text">대시보드</span>
-            </a>
           </li>
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
-              class="collapsed"
               data-bs-toggle="collapse"
               data-bs-target="#ddmenu_2"
               aria-controls="ddmenu_2"
-              aria-expanded="false"
+              aria-expanded="true"
               aria-label="Toggle navigation"
             >
               <span class="icon">
@@ -55,16 +48,15 @@
               </span>
               <span class="text">회원관리</span>
             </a>
-            <ul id="ddmenu_2" class="collapse dropdown-nav">
+            <ul id="ddmenu_2" class="collapse dropdown-nav show">
               <li>
-                <a href="qh-member-list.html"> 회원목록 </a>
+                <a href="qh-member-list.html" class="hover-text-grow"> 회원목록 </a>
               </li>
               <li>
-                <a href="qh-member-request.html"> 회원 가입 요청 </a>
+                <a href="qh-member-request.html"  style="color: black; font-size: 17px;" > 회원 가입 요청 목록 </a>
               </li>
             </ul>
           </li>
-          <span class="divider"><hr /></span>
           <li class="nav-item">
             <a href="qh-warehouse.html">
               <span class="icon">
@@ -97,7 +89,6 @@
               <span class="text">제품관리</span>
             </a>
           </li>
-          <span class="divider"><hr /></span>
           <li class="nav-item nav-item-has-children">
             <a
               href="#0"
@@ -115,10 +106,10 @@
             </a>
             <ul id="ddmenu_55" class="collapse dropdown-nav">
               <li>
-                <a href="qh-inbound_request.html"> 입고 요청 목록 </a>
+                <a href="qh-inbound_request.html" class="hover-text-grow"> 입고 요청 목록 </a>
               </li>
               <li>
-                <a href="qh-inbound_status.html"> 입고현황 </a>
+                <a href="qh-inbound_status.html" class="hover-text-grow"> 입고현황 </a>
               </li>
             </ul>
           </li>
@@ -161,7 +152,7 @@
                     <div class="profile-info">
                       <div class="info">
                         <div class="image">
-                          <img src="assets/images/profile/profile_user.png" alt="" />
+                          <img src="assets/images/profile/user_profile.png" alt="" />
                         </div>
                         <div>
                           <h6 class="fw-500">김관리자</h6>

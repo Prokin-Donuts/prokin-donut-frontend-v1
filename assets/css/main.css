@@ -478,6 +478,17 @@ h6,
 }
 
 /* buttons hover effect */
+
+.hover-text-grow {
+  font-size: 15px; /* 기본 폰트 크기 */
+  transition: font-size 0.2s ease-in-out;
+}
+
+.hover-text-grow:hover {
+  font-size: 17px !important;
+}
+
+
 .btn-hover {
   position: relative;
   overflow: hidden;
@@ -536,7 +547,7 @@ h6,
 
 /* primary buttons */
 .primary-btn {
-  background: #365CF5;
+  background: #ff9d32;
   color: #fff;
 }
 .primary-btn:hover {
@@ -3714,7 +3725,7 @@ h6,
   color: #1A2142;
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children > a:not(.collapsed) .icon {
-  color: #365CF5;
+  color: #FF9D32;
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children > a::after {
   content: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.34306 7.76387L9.02356 3.8071C9.32923 3.47851 9.11273 2.91666 8.68048 2.91666L1.31947 2.91666C0.887218 2.91666 0.670743 3.47851 0.976393 3.8071L4.6569 7.76387C4.8464 7.96758 5.15356 7.96758 5.34306 7.76387Z' fill='%239AA4CA'/%3E%3C/svg%3E%0A");
@@ -3748,7 +3759,7 @@ h6,
   transform: rotate(0deg);
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children ul {
-  padding: 10px 24px 40px 57px;
+  padding: 10px 24px 15px 57px;
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.nav-item-has-children ul li {
   margin-bottom: 12px;
@@ -3790,7 +3801,7 @@ h6,
   display: flex;
   align-items: center;
   color: #9AA4CA;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 500;
   width: 100%;
   position: relative;
@@ -3850,7 +3861,7 @@ h6,
   color: #1A2142;
 }
 .sidebar-nav-wrapper .sidebar-nav ul .nav-item.active > a .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item.active > a.collapsed .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item:hover > a .icon, .sidebar-nav-wrapper .sidebar-nav ul .nav-item:hover > a.collapsed .icon {
-  color: #365CF5;
+  color: #FFA500;;
 }
 
 .sidebar-nav-wrapper.style-2 .sidebar-nav ul .nav-item.nav-item-has-children ul li a.active, .sidebar-nav-wrapper.style-2 .sidebar-nav ul .nav-item.nav-item-has-children ul li a:hover {
@@ -3941,7 +3952,7 @@ h6,
   color: inherit;
 }
 .main-wrapper .footer .copyright p a:hover {
-  color: #365CF5;
+  color: #FFA500;
 }
 @media (max-width: 767px) {
   .main-wrapper .footer .terms {
@@ -3953,7 +3964,7 @@ h6,
   color: #5d657b;
 }
 .main-wrapper .footer .terms a:hover {
-  color: #365CF5;
+  color: #FFA500;
 }
 
 .promo-box {
@@ -5443,7 +5454,7 @@ h6,
 
 /* ======= bg-primary shades ========= */
 .bg-primary-100 {
-  background: rgba(54, 92, 245, 0.1);
+  background: rgba(245, 222, 179, 0.1);
 }
 
 .bg-primary-200 {
@@ -5849,7 +5860,7 @@ h6,
 
 /* ======== Text Colors ========== */
 .text-primary {
-  color: #365CF5 !important;
+  color: #ff9d32 !important;
 }
 
 .text-secondary {
