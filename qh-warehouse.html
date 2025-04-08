@@ -504,6 +504,7 @@
             { width: '95px', targets: -1 },  // Actions 열 너비
             { targets: [1, 2, 3, 4, 6, 7], className: 'text-center' } // JS 속성으로 가운데 정렬
           ],
+          order: [[1, 'asc']],
           ajax: function(data, callback, settings) {
           const dummyData = [
             // 더미데이터
@@ -680,7 +681,11 @@
         $('body').on('click', '#resetFilterBtn', function () {
           $('#midCategory_clone').val('');
           $('#subCategory_clone').val('');
-          table.draw();
+
+          const defaultOrder = [[1, 'asc']]; // 1번 컬럼(제품코드) 기준 asc
+
+          const table = $('#datatable').DataTable();
+          table.order(defaultOrder).draw(); // 정렬 적용 + redraw
         });
 
         // 7. 필터 이벤트: 드롭다운 변경 시 테이블 필터링
