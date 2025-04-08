@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/images/logo/favicon.png" type="image/png" />
+    <link rel="shortcut icon" href="assets/images/logo/favicon_logo.png" type="image/png" />
     <title>Prokin Donuts</title>
 
     <!-- ========== All CSS files linkup ========= -->
@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <!-- datatable을 위해 필요함 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
   </head>
 
   <body>
@@ -27,7 +30,7 @@
     <aside class="sidebar-nav-wrapper">
       <div class="navbar-logo">
         <a href="qh-dashboard.html">
-          <img src="assets/images/logo/DONUT8.png" alt="logo" />
+          <img src="assets/images/logo/menu_logo.png" alt="logo" />
         </a>
       </div>
       <nav class="sidebar-nav">
@@ -204,6 +207,194 @@
             </div>
           </div>
           <!-- ========== title-wrapper end ========== -->
+
+          <div class="row">
+            <!-- Start col -->
+            <div class="col-lg-12">
+              <!-- Start card -->
+              <div class="card-style mb-30">
+                <h6 class="mb-10">제품 목록</h6>
+                <p class="text-sm mb-20">
+                  
+                  <!-- 원하는 필터(중분류, 소분류) 설정 -->
+                  <div id="myCustomFilters" style="display: none;">
+                    
+                    <div class="d-flex flex-wrap gap-2">
+                      <!-- 중분류 -->
+                      <div >
+                        <div class="select-style-1">
+                          <div class="select-position">
+                            <select id="midCategory">
+                              <option value="">중분류</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <!-- 소분류 -->
+                      <div >
+                        <div class="select-style-1">
+                          <div class="select-position">
+                            <select id="subCategory">
+                              <option value="">소분류</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    
+                      <!-- 필터 초기화 -->
+                      <div class="mb-20">
+                        <button class="main-btn light-btn-outline square-btn btn-hover btn-sm btn-xs" id="resetFilterBtn" style="height:auto; min-height:auto;">
+                          필터 초기화
+                        </button>
+                      </div>
+                    
+                      <!-- 오른쪽: 등록/수정/삭제 -->
+                      <div class="btu-group-1 ms-auto gap-2 mb-20">
+                        <button class="main-btn light-btn-outline square-btn btn-hover btn-sm btn-xs" id="btnProductAdd">등록</button>
+                        <button class="main-btn light-btn-outline square-btn btn-hover btn-sm btn-xs" id="btnProductEdit">수정</button>
+                        <button class="main-btn light-btn-outline square-btn btn-hover btn-sm btn-xs" id="btnProductDelete">삭제</button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </p>
+                <div class="table-wrapper table-responsive p-0">
+
+                  
+                  <!-- Start table -->
+                  <table id="datatable" class="table striped-table w-100" style="width:100%">
+                    <thead>
+                      <tr>
+                          <th><input type="checkbox" id="select-all"></th> <!-- 체크박스 열 -->
+                          <th>제품코드</th>
+                          <th>중분류</th>
+                          <th>소분류</th>
+                          <th>보관타입></th>
+                          <th>제품명</th>
+                          <th>제공단가</th>
+                          <th>설정</th> <!-- 수정/삭제 열 -->
+                      </tr>
+                    </thead>
+      
+                    <tbody>
+                    </tbody>
+      
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal HTML Start -->
+          <!-- 등록 모달 -->
+          <div class="modal fade" id="productAddModal" tabindex="-1" aria-labelledby="productAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="productAddModalLabel">제품 등록</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="registerForm">
+                    <div class="mb-3">
+                      <label class="form-label">카테고리</label>
+                      <div class="d-flex gap-2">
+                        <select class="form-select" id="registerCategoryMid">
+                          <option value="">중분류</option>
+                        </select>
+                        <select class="form-select" id="registerCategorySub">
+                          <option value="">소분류</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">제품명</label>
+                      <input type="text" class="form-control" id="registerProductName">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">제공단가</label>
+                      <input type="text" class="form-control" id="registerProductPrice">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">보관타입</label>
+                      <select class="form-select" id="registerStoredType">
+                        <option value="">선택</option>
+                        <option value="냉장">냉장</option>
+                        <option value="냉동">냉동</option>
+                        <option value="상온">상온</option>
+                      </select>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <button type="button" class="btn btn-outline-primary" id="checkDuplicate">중복체크</button>
+                      <button type="submit" class="btn btn-primary">등록</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 수정 모달 -->
+          <div class="modal fade" id="productEditModal" tabindex="-1" aria-labelledby="productEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="productEditModalLabel">제품 정보 수정</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="modifyForm">
+                    <input type="hidden" id="modifyProductId">
+                    <div class="mb-3">
+                      <label class="form-label">제품명</label>
+                      <input type="text" class="form-control" id="modifyProductName">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">제공단가</label>
+                      <input type="text" class="form-control" id="modifyProductPrice">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">보관타입</label>
+                      <select class="form-select" id="modifyStoredType">
+                        <option value="냉장">냉장</option>
+                        <option value="냉동">냉동</option>
+                        <option value="상온">상온</option>
+                      </select>
+                    </div>
+                    <div class="text-end">
+                      <button type="submit" class="btn btn-warning">수정</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 삭제 모달 -->
+          <div class="modal fade" id="productDeleteModal" tabindex="-1" aria-labelledby="productDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="productDeleteModalLabel">제품 삭제</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>선택한 제품을 정말 삭제하시겠습니까?</p>
+                  <ul id="deleteProductList" class="list-group mb-3">
+                    <!-- 선택된 제품명 목록 삽입 -->
+                  </ul>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">삭제</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal HTML End -->
+
         </div>
       </section>
       <!-- ========== section end ========== -->
@@ -229,7 +420,6 @@
     <!-- ======== main-wrapper end =========== -->
 
     <!-- ========= All Javascript files linkup ======== -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/Chart.min.js"></script>
     <script src="assets/js/dynamic-pie-chart.js"></script>
     <script src="assets/js/moment.min.js"></script>
@@ -238,6 +428,400 @@
     <script src="assets/js/world-merc.js"></script>
     <script src="assets/js/polyfill.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- datatable을 위해 필요함 -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+      $(document).ready(function() {
+        // 1. 더미 데이터 정의 (중분류, 소분류)
+        const dummyMidCategories = [
+          { id: "도넛", name: "도넛" },
+          { id: "베이글", name: "베이글" },
+          { id: "커피", name: "커피" },
+          { id: "티", name: "티" },
+          { id: "머그컵", name: "머그컵" },
+          { id: "텀블러", name: "텀블러" }
+        ];
+        const dummySubCategories = [
+          { id: "프로틴 도넛", name: "프로틴 도넛", midCategory: "도넛" },
+          { id: "글루텐 프리 도넛", name: "글루텐 프리 도넛", midCategory: "도넛" },
+          { id: "저당 도넛", name: "저당 도넛", midCategory: "도넛" },
+          { id: "글루텐프리베이글", name: "글루텐프리베이글", midCategory: "베이글" },
+          { id: "디카페인", name: "디카페인", midCategory: "커피" },
+          { id: "제로음료", name: "제로음료", midCategory: "티" },
+          { id: "프로킨머그컵", name: "프로킨머그컵", midCategory: "머그컵" },
+          { id: "프로킨텀블러", name: "프로킨텀블러", midCategory: "텀블러" }
+        ];
+
+        // 2. 원본 필터 영역에 중분류, 소분류 옵션 채우기
+        var $midSelect = $('#myCustomFilters #midCategory');
+        $.each(dummyMidCategories, function(index, item) {
+          $midSelect.append($('<option>', {
+            value: item.id,
+            text: item.name
+          }));
+        });
+        var $subSelect = $('#myCustomFilters #subCategory');
+        $.each(dummySubCategories, function(index, item) {
+          $subSelect.append($('<option>', {
+            value: item.id,
+            text: item.name
+          }));
+        });
+
+        // 3. 소분류 -> 중분류 매핑 객체
+        const mapping = {
+          "프로틴 도넛": "도넛",
+          "글루텐 프리 도넛": "도넛",
+          "저당 도넛": "도넛",
+          "글루텐프리베이글": "베이글",
+          "디카페인": "커피",
+          "제로음료": "티",
+          "프로킨머그컵": "머그컵",
+          "프로킨텀블러": "텀블러"
+        };
+
+        // 4. 이벤트 바인딩: 중분류 선택 시 소분류 리셋, 소분류 선택 시 자동 중분류 선택
+        $('#myCustomFilters #midCategory').on('change', function() {
+          $('#myCustomFilters #subCategory').val('');
+        });
+        $('#myCustomFilters #subCategory').on('change', function() {
+          var selectedSub = $(this).val();
+          if (selectedSub) {
+            var correspondingMid = mapping[selectedSub];
+            if (correspondingMid) {
+              $('#myCustomFilters #midCategory').val(correspondingMid);
+            }
+          }
+        });
+
+        // 5. DataTable 초기화 (dom 옵션에 사용자 정의 영역 포함)
+        var table = $('#datatable').DataTable({
+          autoWidth: false,
+          columnDefs: [
+            { width: '95px', targets: -1 },  // Actions 열 너비
+            { targets: [1, 2, 3, 4, 6, 7], className: 'text-center' } // JS 속성으로 가운데 정렬
+          ],
+          ajax: function(data, callback, settings) {
+          const dummyData = [
+            // 더미데이터
+            { "productId": "DPN1", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉장", "productName": "프로틴초코도넛", "productPrice": "5,000원" },
+            { "productId": "DPN2", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉장", "productName": "프로틴딸기도넛", "productPrice": "5,000원" },
+            { "productId": "DPN3", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉장", "productName": "프로틴글레이즈드도넛", "productPrice": "5,000원" },
+            { "productId": "DPN4", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉동", "productName": "냉동프로틴초코도넛", "productPrice": "4,000원" },
+            { "productId": "DPN5", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉동", "productName": "냉동프로틴딸기도넛", "productPrice": "4,000원" },
+            { "productId": "DPN6", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉동", "productName": "냉동프로틴글레이즈드도넛", "productPrice": "4,000원" },
+            { "productId": "DGL1", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉장", "productName": "글루텐프리초코도넛", "productPrice": "5,000원" },
+            { "productId": "DGL2", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉장", "productName": "글루텐프리딸기도넛", "productPrice": "5,000원" },
+            { "productId": "DGL3", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉장", "productName": "글루텐프리글레이즈드도넛", "productPrice": "5,000원" },
+            { "productId": "DGL4", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉동", "productName": "냉동동글루텐프리초코도넛", "productPrice": "4,000원" },
+            { "productId": "DGL5", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉동", "productName": "냉동글루텐프리딸기도넛", "productPrice": "4,000원" },
+            { "productId": "DGL6", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉동", "productName": "냉동글루텐프리글레이즈드도넛", "productPrice": "4,000원" },
+            { "productId": "DLW1", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉장", "productName": "저당초코도넛", "productPrice": "5,000원" },
+            { "productId": "DLW2", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉장", "productName": "저당딸기도넛", "productPrice": "5,000원" },
+            { "productId": "DLW3", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉장", "productName": "저당글레이즈드도넛", "productPrice": "5,000원" },
+            { "productId": "DLW4", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉동", "productName": "냉동저당초코도넛", "productPrice": "4,000원" },
+            { "productId": "DLW5", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉동", "productName": "냉동저당딸기도넛", "productPrice": "4,000원" },
+            { "productId": "DLW6", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉동", "productName": "냉동저당글레이즈드도넛", "productPrice": "4,000원" },
+            { "productId": "BGL1", "categoryMid": "베이글", "categorySub": "글루텐프리베이글", "StoredType": "냉동", "productName": "글루텐프리베이글", "productPrice": "5,000원" },
+            { "productId": "CDC1", "categoryMid": "커피", "categorySub": "디카페인", "StoredType": "상온", "productName": "디카페인커피", "productPrice": "5,000원" },
+            { "productId": "TZR1", "categoryMid": "티", "categorySub": "제로음료", "StoredType": "상온", "productName": "제로아이스티", "productPrice": "4,000원" },
+            { "productId": "MPK1", "categoryMid": "머그컵", "categorySub": "프로킨머그컵", "StoredType": "상온", "productName": "프로킨머그컵", "productPrice": "8,000원" },
+            { "productId": "TPK1", "categoryMid": "텀블러", "categorySub": "프로킨텀블러", "StoredType": "상온", "productName": "프로킨텀블러", "productPrice": "100,000원" }
+          ];
+          Promise.resolve().then(() => {
+            callback({ data: dummyData });
+          });
+          },
+          columns: [
+            { // 체크박스 컬럼
+              data: null,
+              orderable: false,
+              searchable: false,
+              render: function(data, type, row, meta) {
+                return '<input type="checkbox" class="row-checkbox">';
+              }
+            },
+            { data: 'productId', title: '제품코드' },
+            { data: 'categoryMid', title: '중분류' },
+            { data: 'categorySub', title: '소분류' },
+            { data: 'StoredType', title: '보관타입' },
+            { data: 'productName', title: '제품명' },
+            { data: 'productPrice', title: '제품단가' },
+            { // Edit/Delete 버튼
+              data: null,
+              orderable: false,
+              searchable: false,
+              render: function(data, type, row, meta) {
+                return `
+                  <div class="btu-group-2">
+                    <button class="btn btn-edit text-primary-2">
+                      <i class="lni lni-pencil"></i>
+                    </button>
+                    <button class="btn btn-delete text-danger">
+                      <i class="lni lni-trash-can"></i>
+                    </button>
+                  </div>
+                `;
+              },
+              title: '설정'
+            }
+          ],
+          paging: true,
+          pageLength: 10,
+          lengthMenu: [[5, 10, 20, -1], ['5개', '10개', '20개', '전체']],
+          searching: true,
+          ordering: true,
+          info: true,
+          lengthChange: true,
+          dom: '<"top"l<"myFilterArea">fr>t<"bottom"ip>',
+          language: {
+            lengthMenu: '_MENU_',
+            search: "검색 ",
+            info: "Showing _START_ to _END_ of _TOTAL_ entries",
+            infoEmpty: "no data",
+            emptyTable: "empty table",
+            paginate: {
+              previous: "< prev",
+              next: "next >"
+            }
+          },
+          // 초기에 체크박스에서 정렬 화살표 지우기
+          initComplete: function(settings, json) {
+            $('#datatable thead th').eq(0).removeClass('sorting sorting_asc sorting_desc');
+            fixLengthDropdownStyle();
+          },
+          // 새로고침 후 체크박스에서 정렬 화살표 지우기 (유지)
+          drawCallback: function(settings) {
+            $('#datatable thead th').eq(0).removeClass('sorting sorting_asc sorting_desc');
+          }
+        });
+
+        function fixLengthDropdownStyle() {
+          const $length = $('.dataTables_length');
+          const $select = $length.find('select');
+          const selectedValue = $select.val();
+
+          const $filter = $('#datatable_filter')
+          const $input = $filter.find('input');
+
+          // 기존 label 텍스트 제거 (ex. "표시 개수")
+          $length.find('label').contents().filter(function () {
+            return this.nodeType === 3; // 텍스트 노드
+          }).remove();
+
+          // 새 구조로 재조립
+          const $newWrapper = $(`
+            <div class="select-style-1">
+              <div class="select-position"></div>
+            </div>
+          `);
+
+          const $newInput = $(`
+            <div class="input-style-1">
+            </div>
+          `);
+
+          $select.detach();
+          $newWrapper.find('.select-position').append($select);
+          $length.empty().append($newWrapper);
+
+          $input.detach();
+          $input.attr('placeholder', 'Search...');
+          $newInput.append($input);
+          $filter.empty().append($newInput);
+
+          $select.val(selectedValue);
+        }
+
+        table.on('draw', function () {
+          $('.dataTables_paginate .paginate_button').removeClass().addClass('main-btn deactive-btn-outline square-btn btn-hover mt-1 pt-2 pb-2 pl-15 pr-15');
+        });
+
+        // 6. 사용자 정의 필터 영역에 원본 필터를 복제하여 주입
+        var $clone = $('#myCustomFilters').clone(true);
+        // 복제 후 삽입 시, ID 제거 필수!
+        $clone.find('#midCategory').attr('id', 'midCategory_clone');
+        $clone.find('#subCategory').attr('id', 'subCategory_clone');
+        
+        $clone.find('#btnProductAdd').attr('id', 'btnProductAdd_clone');
+        $clone.find('#btnProductEdit').attr('id', 'btnProductEdit_clone');
+        $clone.find('#btnProductDelete').attr('id', 'btnProductDelete_clone');
+        $clone.find('#btnProductAdd, #btnProductEdit, #btnProductDelete').remove();
+        $('div.myFilterArea').html($clone.html());
+
+        // select 태그 감싸는 구조 적용
+        $('.dataTables_length select').each(function() {
+          const $select = $(this);
+          if (!$select.parent().hasClass('select-position')) {
+            $select.wrap('<div class="col-lg-2"><div class="select-style-1"><div class="select-position"></div></div></div>');
+          }
+        });
+
+        // 6-1. 이벤트 위임 방식으로 변경된 ID에 새롭게 바인딩 (body를 통해 실제 필터에 작동하게!)
+        $('body').on('change', '#midCategory_clone', function() {
+          $('#subCategory_clone').val('');
+          table.draw();
+        });
+
+        $('body').on('change', '#subCategory_clone', function() {
+          const selectedSub = $(this).val();
+          if (selectedSub) {
+            const correspondingMid = mapping[selectedSub];
+            if (correspondingMid) {
+              $('#midCategory_clone').val(correspondingMid);
+            }
+          }
+          table.draw();
+        });
+        
+        $('body').on('click', '#resetFilterBtn', function () {
+          $('#midCategory_clone').val('');
+          $('#subCategory_clone').val('');
+          table.draw();
+        });
+
+        // 7. 필터 이벤트: 드롭다운 변경 시 테이블 필터링
+        $('#midCategory, #subCategory, #productNameInput').on('change keyup', function() {
+          table.draw();
+        });
+
+        // 7-1. 필터링 함수도 변경된 ID값을 기준으로 수정
+        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+          const selectedMid = $('#midCategory_clone').val();
+          const selectedSub = $('#subCategory_clone').val();
+          const categoryMid = data[2];
+          const categorySub = data[3];
+
+          if ((selectedMid && selectedMid !== categoryMid) ||
+              (selectedSub && selectedSub !== categorySub)) {
+            return false;
+          }
+
+          return true;
+        });
+
+        // 8. "Select All" 체크박스 이벤트 및 페이지 변경 시 초기화 등은 그대로 유지
+        $('#select-all').on('click', function() {
+          const rows = table.rows({ page: 'current' }).nodes();
+          $('input.row-checkbox', rows).prop('checked', this.checked);
+        });
+        $('#datatable tbody').on('change', 'input.row-checkbox', function() {
+          if(!this.checked) {
+            const el = $('#select-all').get(0);
+            if(el && el.checked) {
+              el.checked = false;
+            }
+          }
+        });
+        
+        table.on('draw', function() {
+          $('#select-all').prop('checked', false);
+        });
+
+        // 9. Edit/Delete 버튼 이벤트 (제품명 대신 productName 사용)
+        $('#datatable tbody').on('click', '.btn-edit', function(e) {
+          e.preventDefault();
+          var selectedNames = [];
+          $('#datatable tbody input.row-checkbox:checked').each(function() {
+            var rowData = table.row($(this).closest('tr')).data();
+            if(rowData && rowData.productName) {
+              selectedNames.push(rowData.productName);
+            }
+          });
+          if(selectedNames.length === 0) {
+            selectedNames.push("No rows selected.");
+          }
+          $('#productEditModal .modal-body').html('<p>' + selectedNames.join(', ') + '</p>');
+          $('#productEditModal').modal('show');
+        });
+
+        $('#datatable tbody').on('click', '.btn-delete', function(e) {
+          e.preventDefault();
+          var selectedNames = [];
+          $('#datatable tbody input.row-checkbox:checked').each(function() {
+            var rowData = table.row($(this).closest('tr')).data();
+            if(rowData && rowData.productName) {
+              selectedNames.push(rowData.productName);
+            }
+          });
+          if(selectedNames.length === 0) {
+            selectedNames.push("No rows selected.");
+          }
+          $('#productDeleteModal .modal-body').html('<p>' + selectedNames.join(', ') + '</p>');
+          $('#productDeleteModal').modal('show');
+        });
+
+        // 등록 버튼 클릭 시
+        $('#btnProductAdd_clone').on('click', function (e) {
+          $('#productAddModal').modal('show');
+        });
+
+        // 수정 버튼 클릭 시
+        $('#btnProductEdit_clone').on('click', function (e) {
+          const selectedRows = table.rows({ page: 'current' }).nodes();
+          const selectedData = [];
+
+          $(selectedRows).each(function () {
+            if ($(this).find('.row-checkbox').prop('checked')) {
+              const data = table.row(this).data();
+              selectedData.push(data);
+            }
+          });
+
+          if (selectedData.length === 0) {
+            alert('수정할 항목을 선택하세요.');
+            return;
+          }
+
+          // 수정 모달 안에 테이블 생성
+          const $editTable = $('<table class="table"><thead><tr><th>제품명</th><th>단가</th></tr></thead><tbody></tbody></table>');
+          selectedData.forEach((item, index) => {
+            const $row = $(`
+              <tr>
+                <td><input type="text" class="form-control" value="${item.productName}" data-index="${index}" data-field="productName" /></td>
+                <td><input type="text" class="form-control" value="${item.productPrice}" data-index="${index}" data-field="productPrice" /></td>
+              </tr>
+            `);
+            $editTable.find('tbody').append($row);
+          });
+
+          $('#productEditModal .modal-body').html($editTable);
+          $('#productEditModal').modal('show');
+        });
+
+        // 삭제 버튼 클릭 시
+        $('#btnProductDelete_clone').on('click', function (e) {
+          const selectedRows = table.rows({ page: 'current' }).nodes();
+          const selectedData = [];
+
+          $(selectedRows).each(function () {
+            if ($(this).find('.row-checkbox').prop('checked')) {
+              const data = table.row(this).data();
+              selectedData.push(data);
+            }
+          });
+
+          if (selectedData.length === 0) {
+            alert('삭제할 항목을 선택하세요.');
+            return;
+          }
+
+          // 삭제 확인용 테이블
+          const $deleteTable = $('<table class="table"><thead><tr><th>제품명</th><th>단가</th></tr></thead><tbody></tbody></table>');
+          selectedData.forEach(item => {
+            const $row = $(`<tr><td>${item.productName}</td><td>${item.productPrice}</td></tr>`);
+            $deleteTable.find('tbody').append($row);
+          });
+
+          $('#productDeleteModal .modal-body').html($deleteTable);
+          $('#productDeleteModal').modal('show');
+        });
+        
+      });
+
+    </script>
   </body>
 </html>
