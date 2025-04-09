@@ -1702,10 +1702,26 @@ h6,
 }
 
 /* =========== tables css =========== */
-.table {
-  border-collapse: inherit;
-  border-spacing: 0px;
+.member-datatable th,
+.membery-datatable td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
+
+/* 이메일 칼럼 (6번째): 너무 길지 않게 제한 */
+.member-datatable td:nth-child(6),
+.member-datatable th:nth-child(6) {
+  max-width: 180px;
+}
+
+/* 회원 코드 칼럼 (2번째): 너무 좁지 않게 */
+.member-datatable td:nth-child(2),
+.member-datatable th:nth-child(2) {
+  min-width: 100px;
+}
+
 .table > :not(caption) > * > * {
   padding: 15px 0;
   border-bottom-color: #efefef;
@@ -6187,4 +6203,12 @@ input[type="checkbox"].row-checkbox:checked::after, input[type="checkbox"]#selec
 
 .Required_fields{
   color: red !important;
+}
+
+#memberEditModal .modal-header{
+  border: none !important;
+}
+
+#memberDeleteModal .modal-header {
+  border-bottom: none !important;
 }
