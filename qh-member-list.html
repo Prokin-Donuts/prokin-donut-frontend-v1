@@ -232,8 +232,7 @@
                     <thead>
                       <tr>
                         <th><input type="checkbox" id="select-all"></th>
-                        <th>회원 코드</th>
-                        <th>권한 코드</th>
+                        <th>회원코드</th>
                         <th>성함</th>
                         <th>전화번호</th>
                         <th>이메일</th>
@@ -442,6 +441,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+    
     <script>
      var table = $('#datatable').DataTable({
   autoWidth: false,
@@ -476,7 +476,6 @@
       }
     },
     { data: 'memberCode', title: '회원코드' },
-    { data: 'authCode', title: '권한코드' },
     { data: 'name', title: '성함' },
     { data: 'phone', title: '전화번호' },
     { data: 'email', title: '이메일' },
