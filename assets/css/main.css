@@ -6184,3 +6184,7 @@ input[type="checkbox"].row-checkbox:checked::after, input[type="checkbox"]#selec
   flex-shrink: 0;
   top: 0px;
 }
+
+.Required_fields{
+  color: red !important;
+}
