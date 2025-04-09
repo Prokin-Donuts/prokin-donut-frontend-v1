@@ -1721,7 +1721,10 @@ h6,
 .member-datatable th:nth-child(2) {
   min-width: 100px;
 }
-
+.table {
+  border-collapse: inherit;
+border-spacing: 0px;
+}
 .table > :not(caption) > * > * {
   padding: 15px 0;
   border-bottom-color: #efefef;
