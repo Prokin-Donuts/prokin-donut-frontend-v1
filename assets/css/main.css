@@ -708,12 +708,12 @@ h6,
 
 .warning-btn-outline {
   background: transparent;
-  color: #f7c800;
-  border-color: #f7c800;
+  color: #1c1c1c;
+  border-color: #FF9D32;
 }
 .warning-btn-outline:hover {
   color: #fff;
-  background: #f7c800;
+  background: #FF9D32;
 }
 
 .warning-btn-light {
