@@ -2125,40 +2125,40 @@ border-spacing: 0px;
 }
 .input-style-1 input,
 .input-style-1 textarea {
-  width: 100%;
-  background: rgba(239, 239, 239, 0.5);
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
-  padding: 16px;
-  color: #5d657b;
-  resize: none;
-  transition: all 0.3s;
+  width: 100% !important;
+  background: rgba(239, 239, 239, 0.5) !important ;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 4px !important;
+  padding: 16px !important;
+  color: #5d657b !important;
+  resize: none !important;
+  transition: all 0.3s !important;
 }
 @media (max-width: 767px) {
   .input-style-1 input,
   .input-style-1 textarea {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 }
 .input-style-1 input:focus,
 .input-style-1 textarea:focus {
-  border-color: #FF9D32;
-  background: #fff;
+  border-color: #FF9D32 !important;
+  background: #fff !important;
 }
 .input-style-1 input[type=date], .input-style-1 input[type=time],
 .input-style-1 textarea[type=date],
 .input-style-1 textarea[type=time] {
-  background: transparent;
+  background: transparent !important;
 }
 .input-style-1 input.light-bg[type=date], .input-style-1 input.light-bg[type=time],
 .input-style-1 textarea.light-bg[type=date],
 .input-style-1 textarea.light-bg[type=time] {
-  background: rgba(239, 239, 239, 0.5);
+  background: rgba(239, 239, 239, 0.5) !important;
 }
 .input-style-1 input.light-bg[type=date]:focus, .input-style-1 input.light-bg[type=time]:focus,
 .input-style-1 textarea.light-bg[type=date]:focus,
 .input-style-1 textarea.light-bg[type=time]:focus {
-  background: #fff;
+  background: #fff !important ;
 }
 
 .input-style-2 {
