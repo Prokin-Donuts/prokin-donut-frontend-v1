@@ -339,23 +339,17 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form id="modifyForm">
+                  <form id="modifyFranchiseForm">
                     <input type="hidden" id="modifyFranchiseId">
                     <div class="mb-3">
                       <label class="form-label">가맹점명</label>
                       <input type="text" class="form-control" id="modifyFranchiseName">
                     </div>
                     <div class="mb-3">
-                      <label class="form-label">소재지</label>
-                      <input type="text" class="form-control" id="modifyFranchiseLocation">
-                    </div>
-                    <div class="mb-3">
                       <label class="form-label">점주</label>
-                      <input type="text" class="form-control" id="modifyFranchiseOwner">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">점주 이메일</label>
-                      <input type="email" class="form-control" id="modifyFranchiseEmail">
+                      <select class="form-select" id="modifyFranchiseManager">
+                        <option value="">점주 선택</option>
+                      </select>
                     </div>
                     <div class="text-end">
                       <button type="submit" class="btn btn-warning">수정</button>
@@ -472,6 +466,7 @@
               "franchiseCode": "GGF1",
               "franchiseName": "수원영통점",
               "franchiseLocation": "경기도 수원시 영통구 덕영대로 156",
+              "mamberCode": "FM1",
               "name": "박열정",
               "email": "fire123@gmail.com"
             },
@@ -479,6 +474,7 @@
               "franchiseCode": "DJF1",
               "franchiseName": "대전둔산점",
               "franchiseLocation": "대전광역시 서구 둔산로 121",
+              "mamberCode": "FM2",
               "name": "조아현",
               "email": "ahyun_fm2@gmail.com"
             },
@@ -486,36 +482,41 @@
               "franchiseCode": "SLF1",
               "franchiseName": "서울강남1호점",
               "franchiseLocation": "서울특별시 강남구 테헤란로 152",
-              "name": "",
-              "email": ""
+              "mamberCode" : null,
+              "name": null,
+              "email": null
             },
             {
               "franchiseCode": "ICF1",
               "franchiseName": "인천부평역점",
               "franchiseLocation": "인천광역시 부평구 부평대로 45",
-              "name": "",
-              "email": ""
+              "mamberCode" : null,
+              "name": null,
+              "email": null
             },
             {
               "franchiseCode": "GWF1",
               "franchiseName": "강릉경포대점",
               "franchiseLocation": "강원특별자치도 강릉시 경포로 87",
-              "name": "",
-              "email": ""
+              "mamberCode" : null,
+              "name": null,
+              "email": null
             },
             {
               "franchiseCode": "CBF1",
               "franchiseName": "청주성안길점",
               "franchiseLocation": "충청북도 청주시 상당구 중앙로 24",
-              "name": "",
-              "email": ""
+              "mamberCode" : null,
+              "name": null,
+              "email": null
             },
             {
               "franchiseCode": "JBF1",
               "franchiseName": "전주한옥마을점",
               "franchiseLocation": "전라북도 전주시 완산구 은행로 12",
-              "name": "",
-              "email": ""
+              "mamberCode" : null,
+              "name": null,
+              "email": null
             }
           ];
           Promise.resolve().then(() => {
@@ -699,26 +700,53 @@
         });
 
         // 수정 버튼 이벤트
+        // 수정 모달용 드롭다운 채우기 함수: 현재 점주(mamberCode)가 있으면 그 항목이 목록 최상단에 오도록 정렬
+        function populateFranchiseManagerDropdown(currentMemberCode) {
+          const $select = $('#modifyFranchiseManager');
+          // 기존 옵션 초기화 및 플레이스홀더 추가
+          $select.empty().append('<option value="">점주 선택</option>');
+          
+          let sortedManagers;
+          if (currentMemberCode) {
+            // 현재 점주와 나머지 점주를 분리 (dummyManagers의 id 기준 비교)
+            const currentManager = dummyManagers.filter(function(m) {
+              return m.id === currentMemberCode;
+            });
+            const otherManagers = dummyManagers.filter(function(m) {
+              return m.id !== currentMemberCode;
+            });
+            // 현재 점주가 가장 먼저 오도록 배열 합치기
+            sortedManagers = currentManager.concat(otherManagers);
+          } else {
+            sortedManagers = dummyManagers;
+          }
+          
+          sortedManagers.forEach(function(manager) {
+            $select.append(`<option value="${manager.id}">${manager.id} | ${manager.name}</option>`);
+          });
+          
+          // 현재 점주가 있다면 선택 처리
+          $select.val(currentMemberCode);
+        }
+
+        // 수정 버튼 클릭시
         $('#datatable tbody').on('click', '.btn-edit', function(e) {
           e.preventDefault();
-          
           var table = $('#datatable').DataTable();
           var $row = $(this).closest('tr');
           var rowData = table.row($row).data();
-          
+
           if (!rowData) {
             alert('데이터를 찾을 수 없습니다.');
             return;
           }
-          
-          // 모달에 데이터 채워넣기
-          $('#modifyFranchiseId').val(rowData.franchiseCode);
+
           $('#modifyFranchiseName').val(rowData.franchiseName);
-          $('#modifyFranchiseLocation').val(rowData.franchiseLocation);
-          $('#modifyFranchiseOwner').val(rowData.name);
-          $('#modifyFranchiseEmail').val(rowData.email);
-          
-          // 수정 모달 열기
+
+          // 행 데이터의 담당자 ID가 담긴 필드는 dummy 데이터에서는 "mamberCode"로 되어 있으므로,
+          // 만약 이름이 아닌 고유 id를 기준으로 한다면, 그 값(예: rowData.mamberCode)을 넘겨야 합니다.
+          populateFranchiseManagerDropdown(rowData.mamberCode);
+
           $('#franchiseEditModal').modal('show');
         });
 
