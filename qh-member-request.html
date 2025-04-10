@@ -148,49 +148,98 @@
             </div>
             <div class="col-lg-7 col-md-7 col-6">
               <div class="header-right">
-                <!-- profile start -->
-                <div class="profile-box ml-15">
-                  <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="profile-info">
-                      <div class="info">
-                        <div class="image">
-                          <img src="assets/images/profile/user_profile.png" alt="" />
-                        </div>
-                        <div>
-                          <h6 class="fw-500">김관리자</h6>
-                          <p>QH Admin</p>
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-                    <li>
-                      <div class="author-info flex items-center !p-1">
-                        <div class="content">
-                          <h4 class="text-sm">김관리자</h4>
-                          <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#">Email@gmail.com</a>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                      <a href="#0">
-                        <i class="lni lni-user"></i> View Profile
-                      </a>
-                    </li>
-                    <li>
-                      <a href="index.html"> <i class="lni lni-exit"></i> Sign Out </a>
-                    </li>
-                  </ul>
-                </div>
-                <!-- profile end -->
-              </div>
+               <!-- profile start -->
+<div class="profile-box ml-15">
+  <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="profile-info">
+      <div class="info">
+        <div class="image">
+          <img src="assets/images/profile/user_profile.png" alt="" />
+        </div>
+        <div>
+          <h6 class="fw-500">김관리자</h6>
+          <p>QH Admin</p>
+        </div>
+      </div>
+    </div>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+    <li>
+      <div class="author-info flex items-center !p-1">
+        <div class="content">
+          <h4 class="text-sm">김관리자</h4>
+          <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#">Email@gmail.com</a>
+        </div>
+      </div>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="#mypageModal" data-bs-toggle="modal" id="btnmypage">
+        <i class="lni lni-user"></i> my page
+      </a>
+    </li>
+    <li>
+      <a href="index.html"> <i class="lni lni-exit"></i> Sign Out </a>
+    </li>
+  </ul>
+</div>
+<!-- profile end -->
+</div>
             </div>
           </div>
         </div>
       </header>
       <!-- ========== header end ========== -->
+<!-- Modal HTML Start -->
+<!-- 마이페이지 모달 -->
+<div class="modal fade" id="mypageModal" tabindex="-1" aria-labelledby="mypageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="mypageModalLabel">내 회원 정보</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="modifyForm">
+          <input type="hidden" id="mypage">
+          <div class="mb-3">
+            <label class="form-label">아이디</label>
+            <input type="id" class="form-control" id="id" readonly>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">비밀번호</label>
+            <input type="password" class="form-control" id="password">
+          </div>
+          <div>
+          <div class="mb-3">
+            <label class="form-label">이름</label>
+            <input type="text" class="form-control" id="name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">이메일</label>
+            <input type="email" class="form-control" id="email">
+          </div>
+        </div>
+        <div></div>
+          <div class="mb-3">
+            <label class="form-label">전화번호</label>
+            <input type="text" class="form-control" id="PhoneNumber">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">주소</label>
+            <input type="text" class="form-control" id="address">
+          </div>
+        </form>
+      </div>
+      <!-- 수정과 탈퇴 버튼을 가운데로 배치 -->
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="submit" class="main-btn primary-btn btn-hover text-center">수정</button>
+        <button type="submit" class="main-btn primary-btn btn-hover text-center">탈퇴</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal HTML End -->
 
       <!-- ========== section start ========== -->
       <section class="section">
@@ -469,10 +518,11 @@
         // 6. 사용자 정의 필터 영역에 원본 필터를 복제하여 주입
         var $clone = $('#myCustomFilters').clone(true);
         // 복제 후 삽입 시, ID 제거 필수
-        
-         
         $clone.find('#btnApprove').attr('id', 'btnApprove_clone');
         $clone.find('#btnApprove').remove();
+        
+        $clone.find('#btnmypage').attr('id', 'btnmypage_clone');
+        $clone.find('#btnmypage').remove();
        $('div.myFilterArea').html($clone.html());
 
  // select 태그 감싸는 구조 적용
@@ -534,6 +584,49 @@ $('#btnApprove_clone').on('click', function (e) {
 });
 
 
+// mypage 버튼 클릭 시
+$('#btnmypage').on('click', function () {
+    // 더미 데이터
+    const userInfo = {
+        id: 'kim_admin',
+        password: 'dummyPassword',
+        name: '김관리자',
+        email: 'email@example.com',
+        phone: '010-1234-5678',
+        address: '서울시 강남구'
+    };
+
+    // 테이블 생성
+    const $editTable = $(`
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>아이디</th>
+                    <th>비밀번호</th>
+                    <th>이름</th>
+                    <th>이메일</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="form-control" value="${userInfo.id}" readonly /></td>
+                    <td><input type="text" class="form-control" value="${userInfo.password}" readonly /></td>
+                    <td><input type="text" class="form-control" value="${userInfo.name}" readonly /></td>
+                    <td><input type="email" class="form-control" value="${userInfo.email}" readonly /></td>
+                    <td><input type="tel" class="form-control" value="${userInfo.phone}" readonly /></td>
+                    <td><input type="text" class="form-control" value="${userInfo.address}" readonly /></td>
+                </tr>
+            </tbody>
+        </table>
+    `);
+
+    // 수정된 테이블을 모달에 삽입
+    $('#mypageModal .modal-body').html($editTable);
+
+    $('#mypageModal').modal('show');
+});
     </script>
     
   </body>
