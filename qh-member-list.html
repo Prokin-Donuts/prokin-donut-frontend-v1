@@ -465,9 +465,9 @@
     ];
 
     // 데이터를 비동기적으로 불러온 후 callback으로 전달
-    // 페이지네이션을 위해 반드시 필요
+    // 페이지네이션을 위해 반드시 필요 (단, 본인 더미데이터 변수로 변경 필요)
     Promise.resolve().then(() => {
-      callback({ data: dummyData });
+      callback({ data: dummyMembers });
     });
   },
   columns: [
