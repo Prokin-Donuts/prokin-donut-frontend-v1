@@ -193,7 +193,6 @@
       <!-- ========== header end ========== -->
 <!-- Modal HTML Start -->
 <!-- 마이페이지 모달 -->
-<!-- 수정 모달 -->
 <div class="modal fade" id="mypageModal" tabindex="-1" aria-labelledby="mypageModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -613,7 +612,15 @@ $('#btnmypageEmail, #btnmypageMenu').on('click', function () {
 //mypage 탈퇴 
 $('#bntMypageSecession').on('click', function (e) {
 
-    alert('⚠️ 계정을 삭제하겠습니까?\n삭제된 계정은 복구되지 않습니다.');
+  const result = confirm('⚠️ 계정을 삭제하시겠습니까?\n삭제된 계정은 복구되지 않습니다.');
+
+if (result) {
+  // 확인 눌렀을 때 실행
+  console.log('삭제 진행!');
+} else {
+  // 취소 눌렀을 때 실행
+  console.log('삭제 취소됨!');
+}
   
   $('#mypageModal').modal('show');
 });
