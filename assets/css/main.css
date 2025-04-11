@@ -2145,6 +2145,11 @@ border-spacing: 0px;
   border-color: #FF9D32 !important;
   background: #fff !important;
 }
+
+.focus-border:focus {
+  border-color: #FF9D32 !important;
+}
+
 .input-style-1 input[type=date], .input-style-1 input[type=time],
 .input-style-1 textarea[type=date],
 .input-style-1 textarea[type=time] {
@@ -6215,4 +6220,43 @@ input[type="checkbox"].row-checkbox:checked::after, input[type="checkbox"]#selec
 
 #memberDeleteModal .modal-header {
   border-bottom: none !important;
+}
+
+/************************************/
+
+.btn-smaller {
+padding: 0.375rem 0.75rem !important;
+line-height: 1.5 !important;
+height: auto !important;
+}
+
+.form-control:focus {
+  border-color: #FF9D32 !important;
+}
+.form-select:focus {
+  border-color: #FF9D32 !important;
+  box-shadow: none !important;
+}
+
+.profile-box .dropdown-menu .content-a {
+  padding-left: 8px !important;
+}
+.profile-box .dropdown-menu .content-a h6 {
+  font-size: 14px !important;
+  line-height: 1 !important;
+  font-weight: 500 !important;
+  -webkit-transition: all 0.3s ease-out 0s !important;
+  -moz-transition: all 0.3s ease-out 0s !important;
+  -ms-transition: all 0.3s ease-out 0s !important;
+  -o-transition: all 0.3s ease-out 0s !important;
+  transition: all 0.3s ease-out 0s !important;
+}
+.profile-box .dropdown-menu .content-a p {
+  padding-left: 8px !important;
+  font-size: 12px !important;
+  line-height: 1rem !important;
+  color: rgba(26, 33, 66, 0.4) !important;
+  padding: 0 !important;
+  display: inline !important;
+  background-color: initial !important;
 }

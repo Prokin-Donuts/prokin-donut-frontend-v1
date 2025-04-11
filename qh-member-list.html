@@ -166,11 +166,10 @@
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
                     <li>
-                      <div class="author-info flex items-center !p-1">
-                        <div class="content">
-                          <h4 class="text-sm">김관리자</h4>
-                          <a  href="#mypageModal" data-bs-toggle="modal" id="btnmypageEmail">
-                            Email@gmail.com</a>
+                      <div class="flex items-center !p-1">
+                        <div class="content-a">
+                          <h6>김관리자</h6>
+                          <p>Email@gmail.com</p>
                         </div>
                       </div>
                     </li>
@@ -305,138 +304,176 @@
           </div>
 
           <!-- Modal HTML Start -->
-          <!-- 등록 모달 -->
+          <!-- 회원 등록 모달 -->
           <div class="modal fade" id="memberAddModal" tabindex="-1" aria-labelledby="memberAddModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
-                <div class="modal-header d-block">
-                  <h3 class="modal-title mb-1" id="memberAddModalLabel">회원 등록</h3>
-                  <h6 class="text-danger fw-normal mb-0">(*)는 필수 입력 항목입니다.</h6>
-                  <button type="button" class="btn-close position-absolute top-0 end-0 mt-3 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                
+                <!-- 모달 헤더 -->
+                <div class="modal-header">
+                  <h3 class="modal-title" id="memberAddModalLabel">회원 등록</h3>
+                  <button 
+                    type="button" 
+                    class="btn-close" 
+                    data-bs-dismiss="modal" 
+                    aria-label="Close">
+                  </button>
                 </div>
+                
+                <!-- 모달 바디 -->
                 <div class="modal-body">
+                  <!-- 필수 입력 항목 안내 -->
+                  <p class="text-danger fw-normal mb-3">(*)는 필수 입력 항목입니다.</p>
+                  
+                  <!-- 등록 폼 -->
                   <form id="registerForm">
+                    
+                    <!-- ID 필드 + ID Check 버튼 -->
                     <div class="mb-3">
-                      <div class="input-style-1 ">
-                        <label>ID (*)</label>
-                        <div class="d-flex gap-2">
-                          <input type="text" placeholder="아이디" class="form-control" />
-                          <a href="#0" class="main-btn primary-btn rounded-full btn-hover ">ID Check</a>
-                        </div>
+                      <label class="form-label">ID (*)</label>
+                      <div class="d-flex gap-2">
+                        <input 
+                          type="text" 
+                          placeholder="아이디" 
+                          class="form-control" 
+                        />
+                        <a 
+                          href="#0" 
+                          class="main-btn primary-btn btn-hover btn-smaller">
+                          ID Check
+                        </a>
                       </div>
                     </div>
                     
-                  <!-- end col -->
-                  <div class="col-12">
-                    <div class="input-style-1">
-                      <label>Password (*)</label>
-                      <input type="Password" placeholder="초기 비밀번호" />
+                    <!-- Password -->
+                    <div class="mb-3">
+                      <label class="form-label">Password (*)</label>
+                      <input 
+                        type="password" 
+                        placeholder="초기 비밀번호" 
+                        class="form-control" 
+                      />
                     </div>
-                  </div>
-                  <!-- end col -->
-                  <div class="col-12">
-                    <div class="input-style-1">
-                      <label>Password Check (*)</label>
-                      <input type="password" placeholder="초기 비밀번호 확인" />
+                    
+                    <!-- Password Check -->
+                    <div class="mb-3">
+                      <label class="form-label">Password Check (*)</label>
+                      <input 
+                        type="password" 
+                        placeholder="초기 비밀번호 확인" 
+                        class="form-control" 
+                      />
                     </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="input-style-1">
-                      <label>Name (*)</label>
-                      <input type="name" placeholder="이름" />
+                    
+                    <!-- Name -->
+                    <div class="mb-3">
+                      <label class="form-label">Name (*)</label>
+                      <input 
+                        type="text" 
+                        placeholder="이름" 
+                        class="form-control" 
+                      />
                     </div>
-                  </div>
-                  <!-- end col -->
-                  <!-- end col -->
-                  <div class="col-12">
-                    <div class="input-style-1">
-                      <label>Email (*)</label>
-                      <input type="Email" placeholder="이메일" />
+                    
+                    <!-- Email -->
+                    <div class="mb-3">
+                      <label class="form-label">Email (*)</label>
+                      <input 
+                        type="email" 
+                        placeholder="이메일" 
+                        class="form-control" 
+                      />
                     </div>
-                  </div>
-                  <!-- end col -->
-                  <div class="col-12">
-                    <div class="input-style-1">
-                      <label>Phone Number</label>
-                      <input type="text" placeholder="전화번호" />
+                    
+                    <!-- Phone Number -->
+                    <div class="mb-3">
+                      <label class="form-label">Phone Number</label>
+                      <input 
+                        type="text" 
+                        placeholder="전화번호" 
+                        class="form-control" 
+                      />
                     </div>
-                  </div>
-                  <!-- end col -->
-                  <div class="col-12">
-                    <div class="input-style-1">
-                      <label>address</label>
-                      <input type="text" placeholder="주소" />
+                    
+                    <!-- Address -->
+                    <div class="mb-3">
+                      <label class="form-label">address</label>
+                      <input 
+                        type="text" 
+                        placeholder="주소" 
+                        class="form-control" 
+                      />
                     </div>
-                  </div>
-                 
-                  <!-- end col -->
-                  <div class="col-12">
-                    <div class="button-group d-flex justify-content-center flex-wrap">
-                      <button class="main-btn primary-btn btn-hover w-100 text-center">
+                    
+                    <!-- 등록 버튼 -->
+                    <div class="text-center w-100 mt-1 mb-3">
+                      <button 
+                        type="submit" 
+                        class="main-btn primary-btn btn-hover text-center">
                         회원 등록
                       </button>
                     </div>
-                  </div>
+                    
                   </form>
                 </div>
               </div>
             </div>
           </div>
 
-<!-- 수정 모달 -->
-<div class="modal fade" id="memberEditModal" tabindex="-1" aria-labelledby="memberEditModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="memberEditModalLabel">회원 수정</h3>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="modifyForm">
-          <input type="hidden" id="modifyMemberId">
-          <div class="mb-3">
-            <select class="form-select" id="modifyStoredType">
-              <option value="QH">본사관리자</option>
-              <option value="WM">창고관리자</option>
-              <option value="FM">가맹점주</option>
-            </select> 
-          <div class="mb-3">
-            <label class="form-label">아이디</label>
-            <input type="id" class="form-control" id="id">
+          <!-- 수정 모달 -->
+          <div class="modal fade" id="memberEditModal" tabindex="-1" aria-labelledby="memberEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title" id="memberEditModalLabel">회원 수정</h3>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="modifyForm">
+                    <input type="hidden" id="modifyMemberId">
+                    <div class="mb-3">
+                      <select class="form-select" id="modifyStoredType">
+                        <option value="QH">본사관리자</option>
+                        <option value="WM">창고관리자</option>
+                        <option value="FM">가맹점주</option>
+                      </select> 
+                    <div class="mb-3">
+                      <label class="form-label">아이디</label>
+                      <input type="id" class="form-control" id="id">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">비밀번호</label>
+                      <input type="password" class="form-control" id="password">
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">이름</label>
+                      <input type="text" class="form-control" id="name">
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">이메일</label>
+                      <input type="email" class="form-control" id="email">
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">전화번호</label>
+                      <input type="text" class="form-control" id="PhoneNumber">
+                    </div>
+                    
+                    <div class="mb-3">
+                      <label class="form-label">주소</label>
+                      <input type="text" class="form-control" id="address">
+                    </div>
+                  </div>
+                </form>
+                <div class="text-end">
+                  <button type="submit"class="main-btn primary-btn btn-hover text-center">수정</button>
+                </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label">비밀번호</label>
-            <input type="password" class="form-control" id="password">
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">이름</label>
-            <input type="text" class="form-control" id="name">
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">이메일</label>
-            <input type="email" class="form-control" id="email">
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">전화번호</label>
-            <input type="text" class="form-control" id="PhoneNumber">
-          </div>
-          
-          <div class="mb-3">
-            <label class="form-label">주소</label>
-            <input type="text" class="form-control" id="address">
-          </div>
-        </div>
-      </form>
-      <div class="text-end">
-        <button type="submit"class="main-btn primary-btn btn-hover text-center">수정</button>
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
           <!-- 삭제 모달 -->
           <div class="modal fade" id="memberDeleteModal" tabindex="-1" aria-labelledby="memberDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
