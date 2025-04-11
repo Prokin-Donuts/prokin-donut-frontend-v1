@@ -33,7 +33,7 @@
       <nav class="sidebar-nav">
         <ul>
           <li class="nav-item">
-            <a href="fm-order.html">
+            <a href="fm-dashboard.html">
               <span style="color:  #FF9D32; margin-right: 13px;">
                 <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-delivery"></i>
               </span>
@@ -47,66 +47,66 @@
     <div class="overlay"></div>
        <!-- ======== sidebar-nav end =========== -->
   
-      <!-- ======== main-wrapper start =========== -->
-      <main class="main-wrapper">
-        <!-- ========== header start ========== -->
-        <header class="header">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-lg-5 col-md-5 col-6">
-                <div class="header-left d-flex align-items-center">
-                  <div class="menu-toggle-btn mr-15">
-                    <button id="menu-toggle" class="main-btn primary-btn btn-hover">
-                      <i class="lni lni-chevron-left me-2"></i> Menu
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-7 col-md-7 col-6">
-                <div class="header-right">
-                  <!-- profile start -->
-                  <div class="profile-box ml-15">
-                    <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
-                      data-bs-toggle="dropdown" aria-expanded="false">
-                      <div class="profile-info">
-                        <div class="info">
-                          <div class="image">
-                            <img src="assets/images/profile/user_profile.png" alt="" />
-                          </div>
-                          <div>
-                            <h6 class="fw-500">최점주</h6>
-                            <p>Franchisee</p>
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-                      <li>
-                        <div class="author-info flex items-center !p-1">
-                          <div class="content">
-                            <h4 class="text-sm">최점주</h4>
-                            <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#">Email@gmail.com</a>
-                          </div>
-                        </div>
-                      </li>
-                      <li class="divider"></li>
-                      <li>
-                        <a href="#0">
-                          <i class="lni lni-user"></i> View Profile
-                        </a>
-                      </li>
-                      <li>
-                        <a href="index.html"> <i class="lni lni-exit"></i> Sign Out </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <!-- profile end -->
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      <header class="header">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 col-6">
+              <div class="header-left d-flex align-items-center">
+                <div class="menu-toggle-btn mr-15">
+                  <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                    <i class="lni lni-chevron-left me-2"></i> Menu
+                  </button>
                 </div>
               </div>
             </div>
+            <div class="col-lg-7 col-md-7 col-6">
+              <div class="header-right">
+               <!-- profile start -->
+<div class="profile-box ml-15">
+  <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="profile-info">
+      <div class="info">
+        <div class="image">
+          <img src="assets/images/profile/user_profile.png" alt="" />
+        </div>
+        <div>
+          <h6 class="fw-500">최점주</h6>
+          <p>Franchisee</p>
+        </div>
+      </div>
+    </div>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+    <li>
+      <div class="author-info flex items-center !p-1">
+        <div class="content">
+          <h4 class="text-sm">최점주</h4>
+          <a  href="#mypageModal" data-bs-toggle="modal" id="btnmypageEmail">
+            Email@gmail.com</a>
+        </div>
+      </div>
+    </li>
+    <li class="divider"></li>
+    <li> 
+      <a  href="#mypageModal" data-bs-toggle="modal" id="btnmypageMenu">      
+        <i class="lni lni-user"></i> my page
+      </a>
+    </li>
+    <li>
+      <a href="index.html"> <i class="lni lni-exit"></i> Sign Out </a>
+    </li>
+  </ul>
+</div>
+<!-- profile end -->
+</div>
+            </div>
           </div>
-        </header>
-        <!-- ========== header end ========== -->
+        </div>
+      </header>
+      <!-- ========== header end ========== -->
 
                 <!-- Modal HTML Start -->
                 <!-- 마이페이지 모달 -->
@@ -171,7 +171,7 @@
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h2>회원관리</h2>
+                  <h2>발주주관리</h2>
                 </div>
               </div>
             </div>
@@ -184,7 +184,7 @@
             <div class="col-lg-12">
               <!-- Start card -->
               <div class="card-style mb-30">
-                <h6 class="mb-10">회원 목록</h6>
+                <h6 class="mb-10">발주 목록</h6>
                 <p class="text-sm mb-20"></p>
                   
                   <div id="myCustomFilters" style="display: none;">
