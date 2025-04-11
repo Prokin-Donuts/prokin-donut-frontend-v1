@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <!-- datatable을 위해 필요함 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
   </head>
 
   <body>
@@ -24,7 +27,6 @@
     <!-- ======== Preloader =========== -->
 
     <!-- ======== sidebar-nav start =========== -->
-    
     <aside class="sidebar-nav-wrapper">
       <div class="navbar-logo">
         <a href="qh-dashboard.html">
@@ -62,7 +64,7 @@
           <li class="nav-item">
             <a href="qh-warehouse.html">
               <span class="icon">
-                <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-home"></i>
+                <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-apartment"></i>
               </span>
               <span class="text">창고관리</span>
             </a>
@@ -70,9 +72,9 @@
           <li class="nav-item">
             <a href="qh-franchise.html">
               <span style="color:  #FF9D32; margin-right: 13px;">
-                <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-apartment"></i>
+                <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-home"></i>
               </span>
-              <span style="color: black;">가맹점관리</span>
+              <span  style="color:  #1c1c1c;">가맹점관리</span>
             </a>
           </li>
           <li class="nav-item">
@@ -199,199 +201,187 @@
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h2>가맹점관리</h2>
+                  <h2>가맹점 관리</h2>
                 </div>
               </div>
             </div>
-          </div>          
+          </div>
           <!-- ========== title-wrapper end ========== -->
 
-          <!-- Start Table -->
-          <div class="table-responsive">
-            <table class="table top-selling-table">
-              <thead>
-                <tr>
-                  <th>
-                    <h6 class="text-sm text-medium">Products</h6>
-                  </th>
-                  <th class="min-width">
-                    <h6 class="text-sm text-medium">
-                      Category <i class="lni lni-arrows-vertical"></i>
-                    </h6>
-                  </th>
-                  <th class="min-width">
-                    <h6 class="text-sm text-medium">
-                      Revenue <i class="lni lni-arrows-vertical"></i>
-                    </h6>
-                  </th>
-                  <th class="min-width">
-                    <h6 class="text-sm text-medium">
-                      Status <i class="lni lni-arrows-vertical"></i>
-                    </h6>
-                  </th>
-                  <th>
-                    <h6 class="text-sm text-medium text-end">
-                      Actions <i class="lni lni-arrows-vertical"></i>
-                    </h6>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="product">
-                      <div class="image">
-                        <img src="assets/images/products/product-mini-1.jpg" alt="" />
+          <div class="row">
+
+            <!-- Start col -->
+            <div class="col-lg-4">
+              <!-- Start card -->
+
+              <!-- 지도 API 띄울 공간 -->
+              <div class="card-style mb-30">
+                <h6 class="mb-10">가맹점 위치</h6>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+                <p class="text-sm mb-20">지도 배치 예정</p>
+            </div>
+          </div>
+
+            <!-- Start col -->
+            <div class="col-lg-8">
+              <!-- Start card -->
+              <div class="card-style mb-30">
+                <h6 class="mb-10">가맹점 목록</h6>
+                <p class="text-sm mb-20">
+                  
+                  <!-- 원하는 필터(중분류, 소분류) 설정 -->
+                  <div id="myCustomFilters" style="display: none;">
+                    
+                    <div class="d-flex flex-wrap gap-2">
+                      <!-- 중분류 -->
+                      <div >
+                        <div class="select-style-1">
+                          <div class="select-position">
+                            <select id="LocationCategories">
+                              <option value="">소재지</option>
+                            </select>
+                          </div>
+                        </div>
                       </div>
-                      <p class="text-sm">Bedroom</p>
-                    </div>
-                  </td>
-                  <td>
-                    <p class="text-sm">Interior</p>
-                  </td>
-                  <td>
-                    <p class="text-sm">$345</p>
-                  </td>
-                  <td>
-                    <span class="status-btn close-btn">Pending</span>
-                  </td>
-                  <td>
-                    <div class="action justify-content-end">
-                      <button class="edit">
-                        <i class="lni lni-pencil"></i>
-                      </button>
-                      <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="lni lni-more-alt"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">Remove</a>
-                        </li>
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">Edit</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="product">
-                      <div class="image">
-                        <img src="assets/images/products/product-mini-2.jpg" alt="" />
+                    
+                      <!-- 필터 초기화 -->
+                      <div class="mb-20">
+                        <button class="main-btn warning-btn-outline btn-hover btn-sm btn-xs" id="resetFilterBtn" style="height:auto; min-height:auto;">
+                          필터 초기화
+                        </button>
                       </div>
-                      <p class="text-sm">Arm Chair</p>
-                    </div>
-                  </td>
-                  <td>
-                    <p class="text-sm">Interior</p>
-                  </td>
-                  <td>
-                    <p class="text-sm">$345</p>
-                  </td>
-                  <td>
-                    <span class="status-btn warning-btn">Refund</span>
-                  </td>
-                  <td>
-                    <div class="action justify-content-end">
-                      <button class="edit">
-                        <i class="lni lni-pencil"></i>
-                      </button>
-                      <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="lni lni-more-alt"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">Remove</a>
-                        </li>
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">Edit</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="product">
-                      <div class="image">
-                        <img src="assets/images/products/product-mini-3.jpg" alt="" />
+                    
+                      <!-- 오른쪽: 등록/수정/삭제 -->
+                      <div class="btu-group-1 ms-auto gap-2 mb-20">
+                        <button class="main-btn warning-btn-outline btn-hover btn-sm btn-xs" id="btnFranchiseAdd">등록</button>
                       </div>
-                      <p class="text-sm">Sofa</p>
                     </div>
-                  </td>
-                  <td>
-                    <p class="text-sm">Interior</p>
-                  </td>
-                  <td>
-                    <p class="text-sm">$345</p>
-                  </td>
-                  <td>
-                    <span class="status-btn success-btn">Completed</span>
-                  </td>
-                  <td>
-                    <div class="action justify-content-end">
-                      <button class="edit">
-                        <i class="lni lni-pencil"></i>
-                      </button>
-                      <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="lni lni-more-alt"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">Remove</a>
-                        </li>
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">Edit</a>
-                        </li>
-                      </ul>
+
+                  </div>
+
+                </p>
+                <div class="table-wrapper table-responsive p-0">
+
+                  
+                  <!-- Start table -->
+                  <table id="datatable" class="table striped-table w-100" style="width:100%">
+                    <thead>
+                      <tr> 
+                          <th>가맹점코드</th>
+                          <th>가맹점명</th>
+                          <th>소재지</th>
+                          <th>점주</th>
+                          <th>점주 이메일</th>
+                          <th>설정</th> <!-- 수정/삭제 열 -->
+                      </tr>
+                    </thead>
+      
+                    <tbody>
+                    </tbody>
+      
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal HTML Start -->
+          <!-- 등록 모달 -->
+          <div class="modal fade" id="franchiseAddModal" tabindex="-1" aria-labelledby="franchiseAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="franchiseAddModalLabel">가맹점 등록</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="registerForm">
+                    <div class="mb-3">
+                      <label class="form-label">가맹점명</label>
+                      <input type="text" class="form-control" id="registerFranchiseName">
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="product">
-                      <div class="image">
-                        <img src="assets/images/products/product-mini-4.jpg" alt="" />
-                      </div>
-                      <p class="text-sm">Kitchen</p>
+                    <div class="mb-3">
+                      <label class="form-label">소재지</label>
+                      <input type="text" class="form-control" id="registerFranchiseLocation">
                     </div>
-                  </td>
-                  <td>
-                    <p class="text-sm">Interior</p>
-                  </td>
-                  <td>
-                    <p class="text-sm">$345</p>
-                  </td>
-                  <td>
-                    <span class="status-btn close-btn">Canceled</span>
-                  </td>
-                  <td>
-                    <div class="action justify-content-end">
-                      <button class="edit">
-                        <i class="lni lni-pencil"></i>
-                      </button>
-                      <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="lni lni-more-alt"></i>
-                      </button>
-                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">Remove</a>
-                        </li>
-                        <li class="dropdown-item">
-                          <a href="#0" class="text-gray">Edit</a>
-                        </li>
-                      </ul>
+                    <div class="mb-3">
+                      <label class="form-label">점주</label>
+                      <select class="form-select" id="registerFranchiseManager">
+                        <option value="">점주 선택</option>
+                        <!-- 여기에 점주 옵션들이 추가됨 -->
+                      </select>
                     </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <!-- End Table -->
+                    <div class="d-flex justify-content-between">
+                      <button type="button" class="btn btn-outline-primary" id="checkDuplicate">중복체크</button>
+                      <button type="submit" class="btn btn-primary">등록</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 수정 모달 -->
+          <div class="modal fade" id="franchiseEditModal" tabindex="-1" aria-labelledby="franchiseEditModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="franchiseEditModalLabel">가맹점 정보 수정</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="modifyFranchiseForm">
+                    <input type="hidden" id="modifyFranchiseId">
+                    <div class="mb-3">
+                      <label class="form-label">가맹점명</label>
+                      <input type="text" class="form-control" id="modifyFranchiseName">
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">점주</label>
+                      <select class="form-select" id="modifyFranchiseManager">
+                        <option value="">점주 선택</option>
+                      </select>
+                    </div>
+                    <div class="text-end">
+                      <button type="submit" class="btn btn-warning">수정</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 삭제 모달 -->
+          <div class="modal fade" id="franchiseDeleteModal" tabindex="-1" aria-labelledby="franchiseDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="franchiseDeleteModalLabel">가맹점 삭제</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>선택한 가맹점을 정말 삭제하시겠습니까?</p>
+                  <ul id="deleteFranchiseList" class="list-group mb-3">
+                    <!-- 선택된 가맹점 목록 삽입 -->
+                  </ul>
+                  <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">삭제</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal HTML End -->
 
         </div>
       </section>
@@ -418,7 +408,6 @@
     <!-- ======== main-wrapper end =========== -->
 
     <!-- ========= All Javascript files linkup ======== -->
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/Chart.min.js"></script>
     <script src="assets/js/dynamic-pie-chart.js"></script>
     <script src="assets/js/moment.min.js"></script>
@@ -427,6 +416,364 @@
     <script src="assets/js/world-merc.js"></script>
     <script src="assets/js/polyfill.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- datatable을 위해 필요함 -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
 
+    <script>
+      $(document).ready(function() {
+        // 1. 더미 데이터 정의 (소재지)
+        const dummyLocationCategories = [
+          { "id": "SL", "name": "서울특별시" },
+          { "id": "GG", "name": "경기도" },
+          { "id": "IC", "name": "인천광역시" },
+          { "id": "GW", "name": "강원특별자치도" },
+          { "id": "CB", "name": "충청북도" },
+          { "id": "CN", "name": "충청남도" },
+          { "id": "JB", "name": "전라북도" },
+          { "id": "JN", "name": "전라남도" },
+          { "id": "GB", "name": "경상북도" },
+          { "id": "GN", "name": "경상남도" },
+          { "id": "JJ", "name": "제주특별자치도" },
+          { "id": "DJ", "name": "대전광역시" },
+          { "id": "DG", "name": "대구광역시" },
+          { "id": "GJ", "name": "광주광역시" },
+          { "id": "BS", "name": "부산광역시" },
+          { "id": "US", "name": "울산광역시" },
+        ];
+
+        // 2. 원본 필터 영역에 소재지 옵션 채우기
+        var $midSelect = $('#myCustomFilters #LocationCategories');
+        $.each(dummyLocationCategories, function(index, item) {
+          $midSelect.append($('<option>', {
+            value: item.id,
+            text: item.name
+          }));
+        });
+
+        // 5. DataTable 초기화 (dom 옵션에 사용자 정의 영역 포함)
+        var table = $('#datatable').DataTable({
+          autoWidth: false,
+          columnDefs: [
+            { width: '95px', targets: -1 },  // Actions 열 너비
+            { targets: [0, 1, 2, 3, 4, 5], className: 'text-center' } // JS 속성으로 가운데 정렬
+          ],
+          order: [[0, 'asc']],
+          ajax: function(data, callback, settings) {
+          const dummyData = [
+            {
+              "franchiseCode": "GGF1",
+              "franchiseName": "수원영통점",
+              "franchiseLocation": "경기도 수원시 영통구 덕영대로 156",
+              "mamberCode": "FM1",
+              "name": "박열정",
+              "email": "fire123@gmail.com"
+            },
+            {
+              "franchiseCode": "DJF1",
+              "franchiseName": "대전둔산점",
+              "franchiseLocation": "대전광역시 서구 둔산로 121",
+              "mamberCode": "FM2",
+              "name": "조아현",
+              "email": "ahyun_fm2@gmail.com"
+            },
+            {
+              "franchiseCode": "SLF1",
+              "franchiseName": "서울강남1호점",
+              "franchiseLocation": "서울특별시 강남구 테헤란로 152",
+              "mamberCode" : null,
+              "name": null,
+              "email": null
+            },
+            {
+              "franchiseCode": "ICF1",
+              "franchiseName": "인천부평역점",
+              "franchiseLocation": "인천광역시 부평구 부평대로 45",
+              "mamberCode" : null,
+              "name": null,
+              "email": null
+            },
+            {
+              "franchiseCode": "GWF1",
+              "franchiseName": "강릉경포대점",
+              "franchiseLocation": "강원특별자치도 강릉시 경포로 87",
+              "mamberCode" : null,
+              "name": null,
+              "email": null
+            },
+            {
+              "franchiseCode": "CBF1",
+              "franchiseName": "청주성안길점",
+              "franchiseLocation": "충청북도 청주시 상당구 중앙로 24",
+              "mamberCode" : null,
+              "name": null,
+              "email": null
+            },
+            {
+              "franchiseCode": "JBF1",
+              "franchiseName": "전주한옥마을점",
+              "franchiseLocation": "전라북도 전주시 완산구 은행로 12",
+              "mamberCode" : null,
+              "name": null,
+              "email": null
+            }
+          ];
+          Promise.resolve().then(() => {
+            callback({ data: dummyData });
+          });
+          },
+          columns: [
+            { data: 'franchiseCode', title: '가맹점코드' },
+            { data: 'franchiseName', title: '가맹점명' },
+            { data: 'franchiseLocation', title: '소재지' },
+            { data: 'name', title: '점주' },
+            { data: 'email', title: '점주 이메일' },
+            { // Edit/Delete 버튼
+              data: null,
+              orderable: false,
+              searchable: false,
+              render: function(data, type, row, meta) {
+                return `
+                  <div class="btu-group-2">
+                    <button class="btn btn-edit text-primary-2">
+                      <i class="lni lni-pencil"></i>
+                    </button>
+                    <button class="btn btn-delete text-danger">
+                      <i class="lni lni-trash-can"></i>
+                    </button>
+                  </div>
+                `;
+              },
+              title: '설정'
+            }
+          ],
+          paging: true,
+          pageLength: 10,
+          lengthMenu: [[5, 10, 20, -1], ['5개', '10개', '20개', '전체']],
+          searching: true,
+          ordering: true,
+          info: true,
+          lengthChange: true,
+          dom: '<"top"l<"myFilterArea">fr>t<"bottom"ip>',
+          language: {
+            lengthMenu: '_MENU_',
+            search: "검색 ",
+            info: "Showing _START_ to _END_ of _TOTAL_ entries",
+            infoEmpty: "no data",
+            emptyTable: "empty table",
+            paginate: {
+              previous: "< prev",
+              next: "next >"
+            }
+          },
+          initComplete: function(settings, json) {
+            fixLengthDropdownStyle();
+          },
+          drawCallback: function(settings) {
+          }
+        });
+
+        function fixLengthDropdownStyle() {
+          const $length = $('.dataTables_length');
+          const $select = $length.find('select');
+          const selectedValue = $select.val();
+
+          const $filter = $('#datatable_filter')
+          const $input = $filter.find('input');
+
+          // 기존 label 텍스트 제거 (ex. "표시 개수")
+          $length.find('label').contents().filter(function () {
+            return this.nodeType === 3; // 텍스트 노드
+          }).remove();
+
+          // 새 구조로 재조립
+          const $newWrapper = $(`
+            <div class="select-style-1">
+              <div class="select-position"></div>
+            </div>
+          `);
+
+          const $newInput = $(`
+            <div class="input-style-1">
+            </div>
+          `);
+
+          $select.detach();
+          $newWrapper.find('.select-position').append($select);
+          $length.empty().append($newWrapper);
+
+          $input.detach();
+          $input.attr('placeholder', 'Search...');
+          $newInput.append($input);
+          $filter.empty().append($newInput);
+
+          $select.val(selectedValue);
+        }
+
+        table.on('draw', function () {
+          $('.dataTables_paginate .paginate_button').removeClass().addClass('main-btn deactive-btn-outline square-btn btn-hover mt-1 pt-2 pb-2 pl-15 pr-15');
+        });
+
+        // 6. 사용자 정의 필터 영역에 원본 필터를 복제하여 주입
+        var $clone = $('#myCustomFilters').clone(true);
+        // 복제 후 삽입 시, ID 제거 필수!
+        $clone.find('#LocationCategories').attr('id', 'LocationCategories_clone');
+        
+        $clone.find('#btnFranchiseAdd').attr('id', 'btnFranchiseAdd_clone');
+        $clone.find('#btnFranchiseEdit').attr('id', 'btnFranchiseEdit_clone');
+        $clone.find('#btnFranchiseDelete').attr('id', 'btnFranchiseDelete_clone');
+        $clone.find('#btnFranchiseAdd, #btnFranchiseEdit, #btnFranchiseDelete').remove();
+        $('div.myFilterArea').html($clone.html());
+
+        // select 태그 감싸는 구조 적용
+        $('.dataTables_length select').each(function() {
+          const $select = $(this);
+          if (!$select.parent().hasClass('select-position')) {
+            $select.wrap('<div class="col-lg-2"><div class="select-style-1"><div class="select-position"></div></div></div>');
+          }
+        });
+
+        // 6-1. 이벤트 위임 방식으로 변경된 ID에 새롭게 바인딩 (body를 통해 실제 필터에 작동하게!)
+        $('body').on('change', '#LocationCategories_clone', function() {
+          $('#LocationSubCategories_clone').val('');
+          table.draw();
+        });
+        
+        $('body').on('click', '#resetFilterBtn', function () {
+          const table = $('#datatable').DataTable();
+
+          table.search('').columns().search('');
+
+          $('#LocationCategories_clone, #franchiseNameInput_clone').val('');
+
+          table.order([[0, 'asc']]);
+          table.draw();
+        });
+
+        // 7. 필터 이벤트: 드롭다운 변경 시 테이블 필터링
+        $('#LocationCategories, #franchiseNameInput').on('change keyup', function() {
+          table.draw();
+        });
+
+        // 7-1. (7번 함수에서 각각이 변경될 때마다) 필터링 함수도 변경된 ID값을 기준으로 수정
+        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+          const selectedLocation = $('#LocationCategories_clone').val();
+          const categoryLocation = data[0]; // 창고코드를 기준으로
+
+          // 일부 포함에도 검색
+          if (selectedLocation && !categoryLocation.includes(selectedLocation)) {
+            return false;
+          }
+
+          return true;
+        });
+
+        // 9. Edit/Delete 버튼 이벤트 (제품명 대신 productName 사용)
+        // 등록 버튼 클릭 시
+        const dummyManagers = [
+          { id: "FM1", name: "박열정" },
+          { id: "FM2", name: "조아현" },
+          { id: "FM3", name: "백승우" },
+          { id: "FM4", name: "윤가영" }
+        ];
+
+        function populateManagerDropdown() {
+          const $select = $('#registerFranchiseManager');
+          $select.empty().append(`<option value="">점주 선택</option>`); // 기본값 초기화
+
+          dummyManagers.forEach(manager => {
+            const label = `${manager.id} | ${manager.name}`;
+            $select.append(`<option value="${manager.id}">${label}</option>`);
+          });
+        }
+
+        // 모달 열릴 때마다 목록 갱신되게 하면 좋아
+        $('#franchiseAddModal').on('show.bs.modal', function () {
+          populateManagerDropdown();
+        });
+
+        // 등록 버튼 이벤트: 등록 모달 열기
+        $('body').on('click', '#btnFranchiseAdd_clone', function(e) {
+          e.preventDefault();
+          $('#franchiseAddModal').modal('show');
+        });
+
+        // 수정 버튼 이벤트
+        // 수정 모달용 드롭다운 채우기 함수: 현재 점주(mamberCode)가 있으면 그 항목이 목록 최상단에 오도록 정렬
+        function populateFranchiseManagerDropdown(currentMemberCode) {
+          const $select = $('#modifyFranchiseManager');
+          // 기존 옵션 초기화 및 플레이스홀더 추가
+          $select.empty().append('<option value="">점주 선택</option>');
+          
+          let sortedManagers;
+          if (currentMemberCode) {
+            // 현재 점주와 나머지 점주를 분리 (dummyManagers의 id 기준 비교)
+            const currentManager = dummyManagers.filter(function(m) {
+              return m.id === currentMemberCode;
+            });
+            const otherManagers = dummyManagers.filter(function(m) {
+              return m.id !== currentMemberCode;
+            });
+            // 현재 점주가 가장 먼저 오도록 배열 합치기
+            sortedManagers = currentManager.concat(otherManagers);
+          } else {
+            sortedManagers = dummyManagers;
+          }
+          
+          sortedManagers.forEach(function(manager) {
+            $select.append(`<option value="${manager.id}">${manager.id} | ${manager.name}</option>`);
+          });
+          
+          // 현재 점주가 있다면 선택 처리
+          $select.val(currentMemberCode);
+        }
+
+        // 수정 버튼 클릭시
+        $('#datatable tbody').on('click', '.btn-edit', function(e) {
+          e.preventDefault();
+          var table = $('#datatable').DataTable();
+          var $row = $(this).closest('tr');
+          var rowData = table.row($row).data();
+
+          if (!rowData) {
+            alert('데이터를 찾을 수 없습니다.');
+            return;
+          }
+
+          $('#modifyFranchiseName').val(rowData.franchiseName);
+
+          // 행 데이터의 담당자 ID가 담긴 필드는 dummy 데이터에서는 "mamberCode"로 되어 있으므로,
+          // 만약 이름이 아닌 고유 id를 기준으로 한다면, 그 값(예: rowData.mamberCode)을 넘겨야 합니다.
+          populateFranchiseManagerDropdown(rowData.mamberCode);
+
+          $('#franchiseEditModal').modal('show');
+        });
+
+        // 삭제 버튼 이벤트
+        $('#datatable tbody').on('click', '.btn-delete', function(e) {
+          e.preventDefault();
+          
+          var table = $('#datatable').DataTable();
+          var $row = $(this).closest('tr');
+          var rowData = table.row($row).data();
+          
+          if (!rowData) {
+            alert('데이터를 찾을 수 없습니다.');
+            return;
+          }
+          
+          // 삭제 모달의 리스트 영역을 비우고, 해당 행의 가맹점 이름을 추가
+          $('#deleteFranchiseList').empty().append(
+            '<li class="list-group-item">' + rowData.franchiseName + '</li>'
+          );
+          
+          // 삭제 모달을 열기
+          $('#franchiseDeleteModal').modal('show');
+        });
+        
+      });
+
+    </script>
   </body>
 </html>
