@@ -253,19 +253,29 @@
                 </p>
                 <div class="table-wrapper table-responsive p-0">
 
-                  
                   <!-- Start table -->
                   <table id="datatable_mainCategoryUp" class="table striped-table w-100" style="width:100%">
+
+                    <!-- colgroup를 통해 열 폭을 강제 지정 -->
+                    <colgroup>
+                      <col style="width: 5%; background-color: null;" />
+                      <col style="width: 25%; background-color: null;" />
+                      <col style="width: 25%; background-color: null;" />
+                      <col style="width: 30%; background-color: null;" />
+                      <col style="width: 15%; background-color: null;" />
+                    </colgroup>
+
                     <thead>
                       <tr>
                           <th><input type="checkbox" id="select-all_mainCategoryUp"></th> <!-- 체크박스 열 -->
                           <th>카테고리코드</th>
                           <th>중분류명</th>
                           <th>소분류명</th>
+                          <th></th>
                       </tr>
                     </thead>
       
-                    <tbody>
+                    <tbody class="category-tbody">
                     </tbody>
       
                   </table>
@@ -334,6 +344,18 @@
                   
                   <!-- Start table -->
                   <table id="datatable" class="table striped-table w-100" style="width:100%">
+
+                    <!-- colgroup를 통해 열 폭을 강제 지정 -->
+                    <colgroup>
+                      <col style="width: 5%; background-color: null;" />
+                      <col style="width: 10%; background-color: null;" />
+                      <col style="width: 10%; background-color: null;" />
+                      <col style="width: 15%; background-color: null;" />
+                      <col style="width: 10%; background-color: null;" />
+                      <col style="width: 20%; background-color: null;" />
+                      <col style="width: 15%; background-color: null;" />
+                    </colgroup>
+
                     <thead>
                       <tr>
                           <th><input type="checkbox" id="select-all"></th> <!-- 체크박스 열 -->
@@ -589,6 +611,7 @@
         // DataTable 초기화 시 dom 옵션에서 필터 영역을 위한 container를 별도로 지정
         var categoryTable = $('#datatable_mainCategoryUp').DataTable({
           autoWidth: false,
+          order: [[1, 'asc']],
           columnDefs: [
             { width: '95px', targets: -1 },
             { targets: [1, 2, 3], className: 'text-center' }
@@ -621,7 +644,8 @@
             },
             { data: 'categoryId', title: '제품코드' },
             { data: 'categoryMid', title: '중분류명' },
-            { data: 'categorySub', title: '소분류명' }
+            { data: 'categorySub', title: '소분류명' },
+            { defaultContent: "", title: "" }
           ],
           paging: true,
           pageLength: 5,
@@ -646,6 +670,7 @@
           initComplete: function(settings, json) {
             // 헤더 체크박스 정렬 아이콘 제거
             $('#datatable_mainCategoryUp thead th').eq(0).removeClass('sorting sorting_asc sorting_desc');
+            $('#datatable_mainCategoryUp thead th').eq(4).removeClass('sorting sorting_asc sorting_desc');
             fixLengthDropdownStyle_category();
 
             // 필터 이벤트는 복제한 요소에 바인딩
@@ -653,6 +678,7 @@
           },
           drawCallback: function(settings) {
             $('#datatable_mainCategoryUp thead th').eq(0).removeClass('sorting sorting_asc sorting_desc');
+            $('#datatable_mainCategoryUp thead th').eq(4).removeClass('sorting sorting_asc sorting_desc');
           }
         });
 
@@ -846,9 +872,10 @@
         // 5. DataTable 초기화 (dom 옵션에 사용자 정의 영역 포함)
         var table = $('#datatable').DataTable({
           autoWidth: false,
+          order: [[1, 'asc']],
           columnDefs: [
             { width: '95px', targets: -1 },  // Actions 열 너비
-            { targets: [1, 2, 3, 4, 6], className: 'text-center' } // JS 속성으로 가운데 정렬
+            { targets: [1, 2, 3, 4, 5, 6], className: 'text-center' } // JS 속성으로 가운데 정렬
           ],
           ajax: function(data, callback, settings) {
             if (settings.nTable.id !== 'datatable') return true;
