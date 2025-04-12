@@ -6263,3 +6263,12 @@ height: auto !important;
   background-color: initial !important;
 }
 
+#datatable_1_wrapper .main-btn.deactive-btn-outline,
+#datatable_1_wrapper .main-btn.deactive-btn-outline:hover,
+#datatable_1_wrapper .main-btn.deactive-btn-outline:focus,
+#datatable_2_wrapper .main-btn.deactive-btn-outline,
+#datatable_2_wrapper .main-btn.deactive-btn-outline:hover,
+#datatable_2_wrapper .main-btn.deactive-btn-outline:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
