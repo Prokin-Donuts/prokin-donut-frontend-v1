@@ -6263,12 +6263,3 @@ height: auto !important;
   background-color: initial !important;
 }
 
-#datatable_1_wrapper .main-btn,
-#datatable_1_wrapper .main-btn:hover,
-#datatable_1_wrapper .main-btn:focus,
-#datatable_2_wrapper .main-btn,
-#datatable_2_wrapper .main-btn:hover,
-#datatable_2_wrapper .main-btn:focus {
-  border: none !important;
-  box-shadow: none !important;
-}
