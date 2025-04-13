@@ -414,20 +414,31 @@
           <div class="modal fade" id="franchiseDeleteModal" tabindex="-1" aria-labelledby="franchiseDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
+
                 <div class="modal-header">
-                  <h5 class="modal-title" id="franchiseDeleteModalLabel">가맹점 삭제</h5>
+                  <h3 class="modal-title" id="franchiseDeleteModalLabel">가맹점 삭제</h3>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 <div class="modal-body">
-                  <p>선택한 가맹점을 정말 삭제하시겠습니까?</p>
-                  <ul id="deleteFranchiseList" class="list-group mb-3">
-                    <!-- 선택된 가맹점 목록 삽입 -->
-                  </ul>
+
+                  <!-- 삭제 가능 시 -->
+                  <div id="franchiseDeleteContentOk" style="display: none;">
+                    <h5>선택한 가맹점을 정말 삭제하시겠습니까?</h5><br>
+                    <ul id="deleteFranchiseListOk" class="list-group mb-3"></ul>
+                  </div>
+
+                  <!-- 삭제 불가 시 -->
+                  <div id="franchiseDeleteContentNo" style="display: none;">
+                    <h5>선택한 가맹점은 진행 중인 업무로 인해 삭제할 수 없습니다.</h5><br>
+                    <ul id="deleteFranchiseListNo" class="list-group mb-3"></ul>
+                  </div>
+
                   <div class="d-flex justify-content-end gap-2">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">삭제</button>
+                    <button type="button" class="main-btn primary-btn btn-hover text-center" id="confirmDeleteFranchise">삭제</button>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
@@ -928,26 +939,61 @@
 
         });
 
-        // 삭제 버튼 이벤트
+        // 삭제 버튼 클릭
         $('#datatable tbody').on('click', '.btn-delete', function(e) {
           e.preventDefault();
-          
-          var table = $('#datatable').DataTable();
-          var $row = $(this).closest('tr');
-          var rowData = table.row($row).data();
-          
-          if (!rowData) {
-            alert('데이터를 찾을 수 없습니다.');
+          const $row = $(this).closest('tr');
+          const rowData = table.row($row).data(); // DataTable 인스턴스 필요
+
+          // 상태 판별 (예시: 코드 기준)
+          let dummyResponse;
+          switch (rowData.franchiseCode) {
+            case "DJF1":
+              dummyResponse = { canDelete: false, reason: "발주가 진행중입니다.", status: "발주진행" };
+              break;
+            case "GGF1":
+              dummyResponse = { canDelete: false, reason: "출고가 진행중입니다.", status: "출고진행" };
+              break;
+            default:
+              dummyResponse = { canDelete: true, status: "삭제가능" };
+          }
+
+          const statusBadge = `<span class="badge bg-secondary">${dummyResponse.status}</span>`;
+          const managerInfo = rowData.mamberCode ? `${rowData.mamberCode} | ${rowData.name}` : "담당자없음";
+
+          if (dummyResponse.canDelete) {
+            $('#franchiseDeleteContentOk').show();
+            $('#franchiseDeleteContentNo').hide();
+            $('#deleteFranchiseListOk').html(`
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                ${rowData.franchiseName} (${managerInfo}) ${statusBadge}
+              </li>
+            `);
+            $('#confirmDeleteFranchise').show();
+          } else {
+            $('#franchiseDeleteContentOk').hide();
+            $('#franchiseDeleteContentNo').show();
+            $('#deleteFranchiseListNo').html(`
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                ${rowData.franchiseName} (${managerInfo}) ${statusBadge}
+              </li>
+            `);
+            $('#confirmDeleteFranchise').hide();
+          }
+
+          $('#franchiseDeleteModal').modal('show');
+        });
+
+        // 삭제 확정 클릭
+        $('#confirmDeleteFranchise').on('click', function() {
+          if ($(this).is(':hidden')) {
+            alert("삭제할 수 없는 가맹점입니다.");
             return;
           }
-          
-          // 삭제 모달의 리스트 영역을 비우고, 해당 행의 가맹점 이름을 추가
-          $('#deleteFranchiseList').empty().append(
-            '<li class="list-group-item">' + rowData.franchiseName + '</li>'
-          );
-          
-          // 삭제 모달을 열기
-          $('#franchiseDeleteModal').modal('show');
+
+          alert("가맹점이 성공적으로 삭제되었습니다.");
+          $('#franchiseDeleteModal').modal('hide');
+          // TODO: table.row($row).remove().draw();
         });
         
       });

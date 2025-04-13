@@ -487,7 +487,7 @@
           </div>
         </div>
 
-        <!-- 창고 삭제 모달 -->
+        <!-- 삭제 모달 -->
         <div class="modal fade" id="warehouseDeleteModal" tabindex="-1" aria-labelledby="warehouseDeleteModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -1029,15 +1029,11 @@
           // 더미 응답: warehouseCode에 따라 삭제 가능 여부와 상태 결정
           var dummyResponse;
           switch (rowData.warehouseCode) {
-            case "GG1":
-              // GG1은 삭제 가능
-              dummyResponse = { canDelete: true, status: "삭제가능" };
-              break;
             case "DJ1":
               // DJ1은 입고 진행 중 → 삭제 불가
               dummyResponse = { canDelete: false, reason: "입고가 진행중입니다.", status: "입고진행" };
               break;
-            case "JB1":
+            case "GG1":
               // JB1은 재고 있음 → 삭제 불가
               dummyResponse = { canDelete: false, reason: "재고가 존재합니다.", status: "재고있음" };
               break;
@@ -1046,7 +1042,7 @@
               dummyResponse = { canDelete: false, reason: "출고가 진행중입니다.", status: "출고진행" };
               break;
             default:
-              dummyResponse = { canDelete: true, status: "정상" };
+              dummyResponse = { canDelete: true, status: "삭제가능" };
           }
 
           // 상태를 배지(badge) 형식으로 생성 (원하는 색상과 텍스트로 조정 가능)
