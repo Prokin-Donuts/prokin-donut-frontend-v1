@@ -401,7 +401,7 @@
             
                     <!-- 수정 버튼 -->
                     <div class="text-end">
-                      <button type="submit" class="btn btn-warning" id="franchiseModifyBtn">수정</button>
+                      <button type="submit" class="main-btn primary-btn btn-hover text-center" id="franchiseModifyBtn">수정</button>
                     </div>
                   </form>
                 </div>
@@ -842,17 +842,17 @@
           var isModifyFranchiseNameChecked = false;
 
           // 기존의 이벤트 핸들러 제거 후 재등록 (중복 방지)
-          $("#modifyFranchiseName").off("input").on("input", function () {
+          $("#modifyFranchiseName").off("input").off("input").on("input", function () {
             isModifyFranchiseNameChecked = false;
           });
 
           // 가맹점명 입력란 변경 시: 중복 체크 상태 초기화 (즉, 수정 후에는 재확인 필요)
-          $("#modifyFranchiseName").on("input", function () {
+          $("#modifyFranchiseName").off("input").on("input", function () {
             isModifyFranchiseNameChecked = false;
           });
           
           // 중복 체크 버튼 클릭 이벤트
-          $("#modifyCheckDuplicate").on("click", function () {
+          $("#modifyCheckDuplicate").off("click").on("click", function () {
             var fname = $("#modifyFranchiseName").val().trim();
             if (!fname) {
               alert("가맹점명을 입력하세요.");
@@ -886,7 +886,7 @@
           }
           
           // 모달이 열릴 때마다 점주 목록을 로드
-          $("#franchiseEditModal").on("show.bs.modal", function () {
+          $("#franchiseEditModal").off("show.bs.modal").on("show.bs.modal", function () {
             loadModifyFranchiseManagers();
             // 만약 rowData에 점주 선택값(memberCode)이 있다면, 선택값 지정
             if (rowData && rowData.mamberCode) {
@@ -895,7 +895,7 @@
           });
           
           // 수정 폼 제출 이벤트
-          $("#modifyFranchiseForm").on("submit", function (e) {
+          $("#modifyFranchiseForm").off("submit").on("submit", function (e) {
             e.preventDefault();
             var fname = $("#modifyFranchiseName").val().trim();
             var manager = $("#modifyFranchiseManager").val().trim();
