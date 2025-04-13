@@ -306,34 +306,58 @@
           </div>
 
           <!-- Modal HTML Start -->
-          <!-- 등록 모달 -->
-          <div class="modal fade" id="franchiseAddModal" tabindex="-1" aria-labelledby="franchiseAddModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+          
+          <!-- 가맹점 등록 모달 (단 하나만 선언) -->
+          <div class="modal fade" id="franchiseAddModal" tabindex="-1"
+          aria-labelledby="franchiseAddModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
+
+                <!-- 모달 헤더 -->
                 <div class="modal-header">
                   <h5 class="modal-title" id="franchiseAddModalLabel">가맹점 등록</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
+                <!-- 모달 바디 -->
                 <div class="modal-body">
-                  <form id="registerForm">
+                  <p class="text-danger fw-normal mb-3">(*)는 필수 입력 항목입니다.</p>
+                  <form id="registerForm" action="#" method="post">
+
+                    <!-- 가맹점명 (중복확인 버튼 포함) -->
                     <div class="mb-3">
-                      <label class="form-label">가맹점명</label>
-                      <input type="text" class="form-control" id="registerFranchiseName">
+                      <label class="form-label" for="registerFranchiseName" >가맹점명 (*)</label>
+                      <div class="d-flex gap-2">
+                        <input type="text" class="form-control" id="registerFranchiseName" name="registerFranchiseName" placeholder="가맹점명을 입력하세요" />
+                        <button type="button" class="main-btn primary-btn btn-hover btn-smaller" id="checkDuplicate">중복체크</button>
+                      </div>
                     </div>
+
+                    <!-- 소재지 (우편번호 및 상세주소) -->
                     <div class="mb-3">
-                      <label class="form-label">소재지</label>
-                      <input type="text" class="form-control" id="registerFranchiseLocation">
+                      <label class="form-label">소재지 (*)</label>
+                      <div class="d-flex gap-2">
+                        <input type="text" class="form-control" id="franchiseZonecode_disp" placeholder="우편번호" disabled />
+                        <button type="button" class="main-btn primary-btn btn-hover btn-smaller" id="franchiseSearchBtn">우편번호</button>
+                      </div>
+                      <input type="text" class="form-control mt-1" id="franchiseRoadAddress_disp" placeholder="도로명 주소" disabled />
+                      <input type="text" class="form-control mt-1" id="franchiseDetailAddress_disp" placeholder="상세주소를 입력해주세요." />
+                      <!-- 숨긴 필드 (서버 전송용) -->
+                      <input type="hidden" name="zonecode" id="franchiseZonecode_hidden" />
+                      <input type="hidden" name="roadAddress" id="franchiseRoadAddress_hidden" />
+                      <input type="hidden" name="detailAddress" id="franchiseDetailAddress_hidden" />
                     </div>
+                    <!-- 점주 드롭박스 -->
                     <div class="mb-3">
-                      <label class="form-label">점주</label>
-                      <select class="form-select" id="registerFranchiseManager">
+                      <label class="form-label">점주 (*)</label>
+                      <select class="form-select" id="registerFranchiseManager" name="registerFranchiseManager">
                         <option value="">점주 선택</option>
-                        <!-- 여기에 점주 옵션들이 추가됨 -->
+                        <!-- 점주 옵션은 AJAX 등으로 채움 -->
                       </select>
                     </div>
-                    <div class="d-flex justify-content-between">
-                      <button type="button" class="btn btn-outline-primary" id="checkDuplicate">중복체크</button>
-                      <button type="submit" class="btn btn-primary">등록</button>
+                    <!-- 등록 버튼 -->
+                    <div class="text-center w-100 mt-1 mb-3">
+                      <button type="submit" class="main-btn primary-btn btn-hover text-center" id="franchiseRegisterBtn">등록</button>
                     </div>
                   </form>
                 </div>
@@ -431,6 +455,8 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <!-- 다음 우편번호 API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <script>
       $(document).ready(function() {
@@ -682,32 +708,100 @@
 
         // 9. Edit/Delete 버튼 이벤트 (제품명 대신 productName 사용)
         // 등록 버튼 클릭 시
-        const dummyManagers = [
+        // 전역 변수: 가맹점명 중복 체크 상태 (초기값 false)
+        var isFranchiseNameChecked = false;
+
+        // 모달 열기 버튼 이벤트
+        $("#btnFranchiseAdd_clone").on("click", function() {
+          $("#franchiseAddModal").modal("show");
+        });
+
+        // 가맹점명 입력 변경 시 중복 체크 상태 초기화
+        $("#registerFranchiseName").on("input", function() {
+          isFranchiseNameChecked = false;
+        });
+
+        // 가맹점명 중복 체크 버튼 이벤트 (더미 AJAX 처리)
+        $("#checkDuplicate").on("click", function() {
+          var fname = $("#registerFranchiseName").val().trim();
+          if (!fname) {
+            alert("가맹점명을 입력하세요.");
+            return;
+          }
+          // 정규표현식: 한글, 영어, 숫자만 허용, 최대 10글자
+          var regName = /^[A-Za-z0-9가-힣]{1,10}$/;
+          if (!regName.test(fname)) {
+            alert("가맹점명은 한글, 영어, 숫자만 가능하며 최대 10글자까지 입력할 수 있습니다.");
+            return;
+          }
+          // 여기서는 중복 없음으로 가정 (실제 AJAX 호출 가능)
+          alert("사용 가능한 가맹점명입니다.");
+          isFranchiseNameChecked = true;
+        });
+
+        // Daum 우편번호 API (소재지)
+        $("#franchiseSearchBtn").on("click", function() {
+          new daum.Postcode({
+            oncomplete: function(data) {
+              $("#franchiseZonecode_disp").val(data.zonecode);
+              $("#franchiseRoadAddress_disp").val(data.roadAddress);
+              $("#franchiseZonecode_hidden").val(data.zonecode);
+              $("#franchiseRoadAddress_hidden").val(data.roadAddress);
+            }
+          }).open();
+        });
+
+        // 상세주소 입력이 변경될 때 hidden 업데이트
+        $("#franchiseDetailAddress_disp").on("change", function() {
+          $("#franchiseDetailAddress_hidden").val($(this).val());
+        });
+
+        // 점주 드롭박스: 더미 데이터 채우기
+        function loadFranchiseManagers() {
+          var dummyManagers = [
           { id: "FM1", name: "박열정" },
           { id: "FM2", name: "조아현" },
           { id: "FM3", name: "백승우" },
           { id: "FM4", name: "윤가영" }
         ];
-
-        function populateManagerDropdown() {
-          const $select = $('#registerFranchiseManager');
-          $select.empty().append(`<option value="">점주 선택</option>`); // 기본값 초기화
-
-          dummyManagers.forEach(manager => {
-            const label = `${manager.id} | ${manager.name}`;
-            $select.append(`<option value="${manager.id}">${label}</option>`);
+          var $select = $("#registerFranchiseManager");
+          $select.empty().append('<option value="">점주 선택</option>');
+          $.each(dummyManagers, function(i, mgr) {
+            $select.append(`<option value="${mgr.id}">${mgr.id} | ${mgr.name}</option>`);
           });
         }
-
-        // 모달 열릴 때마다 목록 갱신되게 하면 좋아
-        $('#franchiseAddModal').on('show.bs.modal', function () {
-          populateManagerDropdown();
+        $("#franchiseAddModal").on("show.bs.modal", function() {
+          loadFranchiseManagers();
         });
 
-        // 등록 버튼 이벤트: 등록 모달 열기
-        $('body').on('click', '#btnFranchiseAdd_clone', function(e) {
+        // 폼 제출 시 유효성 검사
+        $("#registerForm").on("submit", function(e) {
           e.preventDefault();
-          $('#franchiseAddModal').modal('show');
+          var fname = $("#registerFranchiseName").val().trim();
+          var zonecode = $("#franchiseZonecode_disp").val().trim();
+          var roadAddr = $("#franchiseRoadAddress_disp").val().trim();
+          var detailAddr = $("#franchiseDetailAddress_disp").val().trim();
+          var manager = $("#registerFranchiseManager").val().trim();
+
+          if (!fname || !zonecode || !roadAddr || !detailAddr || !manager) {
+            alert("필수 입력 항목이 비어있습니다. 모두 입력해주세요.");
+            return;
+          }
+          // 가맹점명 정규식 검사
+          var regName = /^[A-Za-z0-9가-힣]{1,10}$/;
+          if (!regName.test(fname)) {
+            alert("가맹점명은 한글, 영어, 숫자만 가능하며 최대 10글자까지 입력할 수 있습니다.");
+            return;
+          }
+          if (!isFranchiseNameChecked) {
+            alert("가맹점명 중복체크를 해주세요.");
+            return;
+          }
+          // 모든 검증 통과 시 처리
+          alert("가맹점이 성공적으로 등록되었습니다.");
+          $("#franchiseAddModal").modal("hide");
+          $(this)[0].reset();
+          isFranchiseNameChecked = false;
         });
 
         // 수정 버튼 이벤트
