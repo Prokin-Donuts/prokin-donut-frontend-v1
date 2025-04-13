@@ -2805,6 +2805,10 @@ border-spacing: 0px;
 .header .header-right button::after {
   display: none;
 }
+.input-group-text {
+  background: #F0950C;
+  color: #fff;
+}
 .header .header-right button span {
   position: absolute;
   width: 12px;
