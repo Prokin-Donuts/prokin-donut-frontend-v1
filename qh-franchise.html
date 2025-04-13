@@ -315,7 +315,7 @@
 
                 <!-- 모달 헤더 -->
                 <div class="modal-header">
-                  <h5 class="modal-title" id="franchiseAddModalLabel">가맹점 등록</h5>
+                  <h3 class="modal-title" id="franchiseAddModalLabel">가맹점 등록</h3>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
@@ -349,7 +349,7 @@
                     </div>
                     <!-- 점주 드롭박스 -->
                     <div class="mb-3">
-                      <label class="form-label">점주 (*)</label>
+                      <label class="form-label">점주</label>
                       <select class="form-select" id="registerFranchiseManager" name="registerFranchiseManager">
                         <option value="">점주 선택</option>
                         <!-- 점주 옵션은 AJAX 등으로 채움 -->
@@ -366,12 +366,13 @@
           </div>
 
           <!-- 가맹점 수정 모달 -->
-          <div class="modal fade" id="franchiseEditModal" tabindex="-1" aria-labelledby="franchiseEditModalLabel" aria-hidden="true">
+          <div class="modal fade" id="franchiseEditModal"
+          tabindex="-1" aria-labelledby="franchiseEditModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <!-- 모달 헤더 -->
                 <div class="modal-header">
-                  <h5 class="modal-title" id="franchiseEditModalLabel">가맹점 정보 수정</h5>
+                  <h3 class="modal-title" id="franchiseEditModalLabel">가맹점 정보 수정</h3>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <!-- 모달 바디 -->
@@ -392,7 +393,7 @@
             
                     <!-- 점주 드롭박스 -->
                     <div class="mb-3">
-                      <label class="form-label" for="modifyFranchiseManager">점주 (*)</label>
+                      <label class="form-label" for="modifyFranchiseManager">점주</label>
                       <select class="form-select" id="modifyFranchiseManager" name="modifyFranchiseManager">
                         <option value="">점주 선택</option>
                         <!-- 점주 옵션은 AJAX(더미 데이터)로 채워질 예정 -->
@@ -795,9 +796,8 @@
           var zonecode = $("#franchiseZonecode_disp").val().trim();
           var roadAddr = $("#franchiseRoadAddress_disp").val().trim();
           var detailAddr = $("#franchiseDetailAddress_disp").val().trim();
-          var manager = $("#registerFranchiseManager").val().trim();
 
-          if (!fname || !zonecode || !roadAddr || !detailAddr || !manager) {
+          if (!fname || !zonecode || !roadAddr || !detailAddr) {
             alert("필수 입력 항목이 비어있습니다. 모두 입력해주세요.");
             return;
           }
@@ -898,10 +898,9 @@
           $("#modifyFranchiseForm").off("submit").on("submit", function (e) {
             e.preventDefault();
             var fname = $("#modifyFranchiseName").val().trim();
-            var manager = $("#modifyFranchiseManager").val().trim();
           
             // 필수 항목 검증
-            if (!fname || !manager) {
+            if (!fname) {
               alert("필수 입력 항목이 비어있습니다. 모두 입력해주세요.");
               return;
             }
