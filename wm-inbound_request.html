@@ -471,6 +471,7 @@
           <td>${item.productName}</td>
           <td>${item.productPrice}</td>
           <td>${item.storedType}</td>
+          <td><input type="number" class="form-control quantity-input" min="100" value="100" step="100" style="width: 80px;"></td>
         </tr>
       `;
       $tableBody.append(rowHtml);
@@ -486,12 +487,14 @@
 
     $('#selectedProductsTable tbody tr').each(function () {
       const $tds = $(this).find('td');
+      const quantity = $(this).find('.quantity-input').val();
       const product = {
         no: $tds.eq(0).text(),
         productCode: $tds.eq(1).text(),
         productName: $tds.eq(2).text(),
         productPrice: $tds.eq(3).text(),
         storedType: $tds.eq(4).text(),
+        quantity: quantity
       };
       requestList.push(product);
     });
