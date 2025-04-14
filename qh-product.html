@@ -503,29 +503,6 @@
           </div>
           <!-- Modal HTML End -->
 
-          <!-- 제품 삭제 모달 -->
-          <div class="modal fade" id="productDeleteModal" tabindex="-1" aria-labelledby="productDeleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="productDeleteModalLabel">제품 삭제</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>선택한 제품을 정말 삭제하시겠습니까?</p>
-                  <ul id="deleteProductList" class="list-group mb-3">
-                    <!-- 선택된 제품명 목록 삽입 -->
-                  </ul>
-                  <div class="d-flex justify-content-end gap-2">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete">삭제</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Modal HTML End -->
-
         </div>
       </section>
       <!-- ========== section end ========== -->
@@ -656,6 +633,30 @@
             </ul>
             <div class="d-flex justify-content-end gap-2">
               <button type="button" class="main-btn primary-btn btn-hover text-center" id="confirmDelete_mainCategoryUp">삭제</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 제품 삭제 모달 -->
+    <div class="modal fade" id="productDeleteModal" tabindex="-1" aria-labelledby="productDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="productDeleteModalLabel">제품 삭제</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- 안내 메시지 -->
+            <h5>선택한 제품을 정말 삭제하시겠습니까?</h5><br>
+            <!-- 선택된 제품 목록 (상태 배지는 모두 회색 bg-secondary로 표시) -->
+            <ul id="deleteProductList" class="list-group mb-3">
+              <!-- 동적으로 목록 항목이 추가됩니다 -->
+            </ul>
+            <!-- 삭제 확인 버튼 (취소 버튼은 없음) -->
+            <div class="d-flex justify-content-end">
+              <button type="button" class="main-btn primary-btn btn-hover text-center" id="confirmDelete">삭제</button>
             </div>
           </div>
         </div>
@@ -954,7 +955,7 @@
             DGL: { text: '입고진행',   canDelete: false },
             DLW: { text: '삭제가능',   canDelete: true },
             BGL: { text: '출고진행',   canDelete: false },
-            CDC: { text: '제품등록',     canDelete: false },
+            CDC: { text: '제품있음',   canDelete: false },
             TZR: { text: '발주진행',   canDelete: false  },
             MPK: { text: '삭제가능',   canDelete: true  },
             TPK: { text: '삭제가능',   canDelete: true  }
@@ -1001,7 +1002,7 @@
             // 2) 전부 혹은 일부 불가능
             // 안내문
             $('#productDeleteModal_mainCategoryUp .modal-body > h5')
-              .text('선택항목 중 업무에 사용중인 카테고리는 삭제할 수 없습니다.');
+              .text('선택한 카테고리 중 삭제할 수 없는 항목이 포함되어 있습니다.');
             // 버튼
             $('#confirmDelete_mainCategoryUp').text('삭제가능 품목만 삭제');
           }
@@ -1145,6 +1146,9 @@
           }
         });
 
+        // 전역 변수: 제품 삭제 모달에서 선택된 제품 데이터를 저장
+        let currentSelectedProducts = [];
+
         // 5. DataTable 초기화 (dom 옵션에 사용자 정의 영역 포함)
         var table = $('#datatable').DataTable({
           autoWidth: false,
@@ -1155,32 +1159,32 @@
           ],
           ajax: function(data, callback, settings) {
             if (settings.nTable.id !== 'datatable') return true;
-          const dummyData = [
-            // 더미데이터
-            { "productId": "DPN1", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉장", "productName": "프로틴초코도넛", "productPrice": "5,000원" },
-            { "productId": "DPN2", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉장", "productName": "프로틴딸기도넛", "productPrice": "5,000원" },
-            { "productId": "DPN3", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉장", "productName": "프로틴글레이즈드도넛", "productPrice": "5,000원" },
-            { "productId": "DPN4", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉동", "productName": "냉동프로틴초코도넛", "productPrice": "4,000원" },
-            { "productId": "DPN5", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉동", "productName": "냉동프로틴딸기도넛", "productPrice": "4,000원" },
-            { "productId": "DPN6", "categoryMid": "도넛", "categorySub": "프로틴 도넛", "StoredType": "냉동", "productName": "냉동프로틴글레이즈드도넛", "productPrice": "4,000원" },
-            { "productId": "DGL1", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉장", "productName": "글루텐프리초코도넛", "productPrice": "5,000원" },
-            { "productId": "DGL2", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉장", "productName": "글루텐프리딸기도넛", "productPrice": "5,000원" },
-            { "productId": "DGL3", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉장", "productName": "글루텐프리글레이즈드도넛", "productPrice": "5,000원" },
-            { "productId": "DGL4", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉동", "productName": "냉동동글루텐프리초코도넛", "productPrice": "4,000원" },
-            { "productId": "DGL5", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉동", "productName": "냉동글루텐프리딸기도넛", "productPrice": "4,000원" },
-            { "productId": "DGL6", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛", "StoredType": "냉동", "productName": "냉동글루텐프리글레이즈드도넛", "productPrice": "4,000원" },
-            { "productId": "DLW1", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉장", "productName": "저당초코도넛", "productPrice": "5,000원" },
-            { "productId": "DLW2", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉장", "productName": "저당딸기도넛", "productPrice": "5,000원" },
-            { "productId": "DLW3", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉장", "productName": "저당글레이즈드도넛", "productPrice": "5,000원" },
-            { "productId": "DLW4", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉동", "productName": "냉동저당초코도넛", "productPrice": "4,000원" },
-            { "productId": "DLW5", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉동", "productName": "냉동저당딸기도넛", "productPrice": "4,000원" },
-            { "productId": "DLW6", "categoryMid": "도넛", "categorySub": "저당 도넛", "StoredType": "냉동", "productName": "냉동저당글레이즈드도넛", "productPrice": "4,000원" },
-            { "productId": "BGL1", "categoryMid": "베이글", "categorySub": "글루텐프리베이글", "StoredType": "냉동", "productName": "글루텐프리베이글", "productPrice": "5,000원" },
-            { "productId": "CDC1", "categoryMid": "커피", "categorySub": "디카페인", "StoredType": "상온", "productName": "디카페인커피", "productPrice": "5,000원" },
-            { "productId": "TZR1", "categoryMid": "티", "categorySub": "제로음료", "StoredType": "상온", "productName": "제로아이스티", "productPrice": "4,000원" },
-            { "productId": "MPK1", "categoryMid": "머그컵", "categorySub": "프로킨머그컵", "StoredType": "상온", "productName": "프로킨머그컵", "productPrice": "8,000원" },
-            { "productId": "TPK1", "categoryMid": "텀블러", "categorySub": "프로킨텀블러", "StoredType": "상온", "productName": "프로킨텀블러", "productPrice": "100,000원" }
-          ];
+            // 전역 더미 데이터 (제품 목록)
+            const dummyData = [
+              { productId: "DPN1", categoryMid: "도넛", categorySub: "프로틴 도넛", StoredType: "냉장", productName: "프로틴초코도넛", productPrice: "5,000원", status: "재고있음" },
+              { productId: "DPN2", categoryMid: "도넛", categorySub: "프로틴 도넛", StoredType: "냉장", productName: "프로틴딸기도넛", productPrice: "5,000원", status: "삭제가능" },
+              { productId: "DPN3", categoryMid: "도넛", categorySub: "프로틴 도넛", StoredType: "냉장", productName: "프로틴글레이즈드도넛", productPrice: "5,000원", status: "입고진행" },
+              { productId: "DPN4", categoryMid: "도넛", categorySub: "프로틴 도넛", StoredType: "냉동", productName: "냉동프로틴초코도넛", productPrice: "4,000원", status: "발주진행" },
+              { productId: "DPN5", categoryMid: "도넛", categorySub: "프로틴 도넛", StoredType: "냉동", productName: "냉동프로틴딸기도넛", productPrice: "4,000원", status: "재고있음" },
+              { productId: "DPN6", categoryMid: "도넛", categorySub: "프로틴 도넛", StoredType: "냉동", productName: "냉동프로틴글레이즈드도넛", productPrice: "4,000원", status: "재고있음" },
+              { productId: "DGL1", categoryMid: "도넛", categorySub: "글루텐 프리 도넛", StoredType: "냉장", productName: "글루텐프리초코도넛", productPrice: "5,000원", status: "재고있음" },
+              { productId: "DGL2", categoryMid: "도넛", categorySub: "글루텐 프리 도넛", StoredType: "냉장", productName: "글루텐프리딸기도넛", productPrice: "5,000원", status: "출고진행" },
+              { productId: "DGL3", categoryMid: "도넛", categorySub: "글루텐 프리 도넛", StoredType: "냉장", productName: "글루텐프리글레이즈드도넛", productPrice: "5,000원", status: "출고진행" },
+              { productId: "DGL4", categoryMid: "도넛", categorySub: "글루텐 프리 도넛", StoredType: "냉동", productName: "냉동동글루텐프리초코도넛", productPrice: "4,000원", status: "출고진행" },
+              { productId: "DGL5", categoryMid: "도넛", categorySub: "글루텐 프리 도넛", StoredType: "냉동", productName: "냉동글루텐프리딸기도넛", productPrice: "4,000원", status: "재고있음" },
+              { productId: "DGL6", categoryMid: "도넛", categorySub: "글루텐 프리 도넛", StoredType: "냉동", productName: "냉동글루텐프리글레이즈드도넛", productPrice: "4,000원", status: "재고있음" },
+              { productId: "DLW1", categoryMid: "도넛", categorySub: "저당 도넛", StoredType: "냉장", productName: "저당초코도넛", productPrice: "5,000원", status: "삭제가능" },
+              { productId: "DLW2", categoryMid: "도넛", categorySub: "저당 도넛", StoredType: "냉장", productName: "저당딸기도넛", productPrice: "5,000원", status: "삭제가능" },
+              { productId: "DLW3", categoryMid: "도넛", categorySub: "저당 도넛", StoredType: "냉장", productName: "저당글레이즈드도넛", productPrice: "5,000원", status: "삭제가능" },
+              { productId: "DLW4", categoryMid: "도넛", categorySub: "저당 도넛", StoredType: "냉동", productName: "냉동저당초코도넛", productPrice: "4,000원", status: "삭제가능" },
+              { productId: "DLW5", categoryMid: "도넛", categorySub: "저당 도넛", StoredType: "냉동", productName: "냉동저당딸기도넛", productPrice: "4,000원", status: "삭제가능" },
+              { productId: "DLW6", categoryMid: "도넛", categorySub: "저당 도넛", StoredType: "냉동", productName: "냉동저당글레이즈드도넛", productPrice: "4,000원", status: "재고있음" },
+              { productId: "BGL1", categoryMid: "베이글", categorySub: "글루텐프리베이글", StoredType: "냉동", productName: "글루텐프리베이글", productPrice: "5,000원", status: "입고진행" },
+              { productId: "CDC1", categoryMid: "커피", categorySub: "디카페인", StoredType: "상온", productName: "디카페인커피", productPrice: "5,000원", status: "출고진행" },
+              { productId: "TZR1", categoryMid: "티", categorySub: "제로음료", StoredType: "상온", productName: "제로아이스티", productPrice: "4,000원", status: "재고있음" },
+              { productId: "MPK1", categoryMid: "머그컵", categorySub: "프로킨머그컵", StoredType: "상온", productName: "프로킨머그컵", productPrice: "8,000원", status: "입고진행" },
+              { productId: "TPK1", categoryMid: "텀블러", categorySub: "프로킨텀블러", StoredType: "상온", productName: "프로킨텀블러", productPrice: "100,000원", status: "입고진행" }
+            ];
           Promise.resolve().then(() => {
             callback({ data: dummyData });
           });
@@ -1357,39 +1361,6 @@
           $('#select-all').prop('checked', false);
         });
 
-        // 9. Edit/Delete 버튼 이벤트 (제품명 대신 productName 사용)
-        $('#datatable tbody').on('click', '.btn-edit', function(e) {
-          e.preventDefault();
-          var selectedNames = [];
-          $('#datatable tbody input.row-checkbox:checked').each(function() {
-            var rowData = table.row($(this).closest('tr')).data();
-            if(rowData && rowData.productName) {
-              selectedNames.push(rowData.productName);
-            }
-          });
-          if(selectedNames.length === 0) {
-            selectedNames.push("No rows selected.");
-          }
-          $('#productEditModal .modal-body').html('<p>' + selectedNames.join(', ') + '</p>');
-          $('#productEditModal').modal('show');
-        });
-
-        $('#datatable tbody').on('click', '.btn-delete', function(e) {
-          e.preventDefault();
-          var selectedNames = [];
-          $('#datatable tbody input.row-checkbox:checked').each(function() {
-            var rowData = table.row($(this).closest('tr')).data();
-            if(rowData && rowData.productName) {
-              selectedNames.push(rowData.productName);
-            }
-          });
-          if(selectedNames.length === 0) {
-            selectedNames.push("No rows selected.");
-          }
-          $('#productDeleteModal .modal-body').html('<p>' + selectedNames.join(', ') + '</p>');
-          $('#productDeleteModal').modal('show');
-        });
-
         // 등록 버튼 클릭 시
         $('#btnProductAdd_clone').on('click', function (e) {
           $('#productAddModal').modal('show');
@@ -1428,34 +1399,80 @@
           $('#productEditModal').modal('show');
         });
 
-        // 삭제 버튼 클릭 시
-        $('#btnProductDelete_clone').on('click', function (e) {
-          const selectedRows = table.rows({ page: 'current' }).nodes();
-          const selectedData = [];
+        // 제품 삭제 모달 열기 이벤트
+        $('#btnProductDelete_clone').click(function() {
 
-          $(selectedRows).each(function () {
-            if ($(this).find('.row-checkbox').prop('checked')) {
-              const data = table.row(this).data();
-              selectedData.push(data);
+          // 체크박스가 선택된 행만 가져오기
+          var selectedData = [];
+          table.rows({ page: 'current' }).nodes().each(function(row) {
+            if ($(row).find('.row-checkbox').prop('checked')) {
+              selectedData.push(table.row(row).data());
             }
           });
-
+    
           if (selectedData.length === 0) {
-            alert('삭제할 항목을 선택하세요.');
+            alert('삭제할 제품을 선택하세요.');
             return;
           }
-
-          // 삭제 확인용 테이블
-          const $deleteTable = $('<table class="table"><thead><tr><th>제품명</th><th>단가</th></tr></thead><tbody></tbody></table>');
-          selectedData.forEach(item => {
-            const $row = $(`<tr><td>${item.productName}</td><td>${item.productPrice}</td></tr>`);
-            $deleteTable.find('tbody').append($row);
+    
+          // 전역 변수에 선택된 데이터 할당
+          currentSelectedProducts = selectedData;
+    
+          // 제품 상태 매핑 (모든 배지는 회색)
+          const productStatusMap = {
+            "재고있음": { text: "재고있음", canDelete: false },
+            "입고진행": { text: "입고진행", canDelete: false },
+            "발주진행": { text: "발주진행", canDelete: false },
+            "출고진행": { text: "출고진행", canDelete: false },
+            "삭제가능": { text: "삭제가능", canDelete: true }
+          };
+    
+          // 삭제 목록 초기화
+          $('#deleteProductList').empty();
+    
+          let allDeletable = true;
+          currentSelectedProducts.forEach(function(item) {
+            const prodStatus = item.status || "삭제가능";
+            const statusObj = productStatusMap[prodStatus] || { text: prodStatus, canDelete: true };
+            const statusBadge = `<span class="badge bg-secondary">${statusObj.text}</span>`;
+            
+            if (!statusObj.canDelete) {
+              allDeletable = false;
+            }
+            
+            $('#deleteProductList').append(`
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                ${item.productName}
+                ${item.productId}
+                ${statusBadge}
+              </li>
+            `);
           });
-
-          $('#productDeleteModal .modal-body').html($deleteTable);
+    
+          // 안내문 및 삭제 버튼 텍스트를 설정 (모달 내부 안내문은 <p> 태그로 감싸져 있어야 함)
+          if (allDeletable) {
+            $('#productDeleteModal .modal-body > p').text('선택한 제품을 정말 삭제하시겠습니까?');
+            $('#confirmDelete').text('삭제');
+          } else {
+            $('#productDeleteModal .modal-body > p').text('선택한 제품 중 삭제할 수 없는 항목이 포함되어 있습니다.');
+            $('#confirmDelete').text('삭제가능 품목만 삭제');
+          }
+          
           $('#productDeleteModal').modal('show');
         });
-        
+  
+        // 제품 삭제 모달의 삭제 버튼 클릭 이벤트 (중복 바인딩 방지를 위해 off() 후 on() 사용)
+        $('#confirmDelete').off('click').on('click', function() {
+          const btnText = $(this).text();
+          if (btnText === '삭제가능 품목만 삭제') {
+            alert('삭제 가능한 제품만 삭제했습니다!');
+          } else {
+            alert('선택한 제품을 모두 삭제했습니다!');
+          }
+          
+          $('#productDeleteModal').modal('hide');
+          // 필요 시 DataTable 업데이트 등의 추가 처리
+        });
       });
 
     </script>
