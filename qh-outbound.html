@@ -265,7 +265,7 @@
             <!-- 왼쪽 테이블 -->
             <div class="col-lg-6">
               <div class="card-style mb-30">
-                <h6 class="mb-10">발주 요청 목록</h6>
+                <h6 class="mb-20">발주 요청 목록</h6>
                 <div id="myCustomFilters" style="display: none;">
                   <div class="d-flex align-items-center gap-2" style="margin-top: -30px;">
                     <div class="btu-group-1 d-flex gap-2">
@@ -381,21 +381,7 @@
 
     <script>
     $(document).ready(function() {
-      // 1. 필터 영역 복제 및 삽입 (ID 수정)
-      var $originalFilter = $("#myCustomFilters");
-      if ($originalFilter.length) {
-        // 첫 번째 테이블 앞에 삽입할 복제본 생성 및 ID 변경
-        var $filterClone1 = $originalFilter.clone(true).attr("id", "myCustomFilters_1");
-        $filterClone1.insertBefore("#datatable_1");
-
-        // 두 번째 테이블 앞에 삽입할 복제본 생성 및 ID 변경
-        var $filterClone2 = $originalFilter.clone(true).attr("id", "myCustomFilters_2");
-        $filterClone2.insertBefore("#datatable_2");
-      } else {
-        console.warn("#myCustomFilters 요소가 존재하지 않습니다.");
-      }
-
-      // 2. DataTable 초기화
+      // 1. DataTable 초기화
       // 첫 번째 DataTable (예시: 발주 목록)
       const table1 = $('#datatable_1').DataTable({
         autoWidth: false,
@@ -450,6 +436,12 @@
         initComplete: function () {
           // 원하는 초기 스타일 설정 등
           fixLengthDropdownStyle('datatable_1');
+          // 2. 요소 복제
+          const $clone = $('#myCustomFilters').clone(true).css('display','block');
+          $clone.find('#btnApprove').attr('id', 'btnApprove_clone');
+          $(this.api().table().container())
+            .find('div.myFilterArea_1')
+            .append($clone);
         },
         drawCallback: function () {
           $('#datatable_1 thead th').eq(0).removeClass('sorting sorting_asc sorting_desc');
@@ -579,8 +571,8 @@
         }
       });
 
-      // 6. 승인 버튼 클릭 이벤트
-      $('#btnApprove_clone').on('click', function () {
+      // 6. 승인 버튼 클릭 이벤트 -> 이벤트 위임 방식 사용필
+      $(document).on('click', '#btnApprove_clone', function () {
         const selectedRows = table1.rows({ page: 'current' }).nodes();
         const selectedData = [];
         $(selectedRows).each(function () {

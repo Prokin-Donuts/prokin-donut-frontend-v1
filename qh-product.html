@@ -572,6 +572,108 @@
     </main>
     <!-- ======== main-wrapper end =========== -->
 
+    <!-- 모달 시작 -->
+
+    <!-- 카테고리 등록 모달 -->
+    <div class="modal fade" id="categoryAddModal" tabindex="-1" aria-labelledby="categoryAddModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          
+          <!-- 모달 헤더 -->
+          <div class="modal-header">
+            <h3 class="modal-title" id="categoryAddModalLabel">카테고리 등록</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          
+          <!-- 모달 바디 -->
+          <div class="modal-body">
+            <p class="text-danger fw-normal mb-3">(*)는 필수 입력 항목입니다.</p>
+            
+            <form id="registerCategoryForm">
+              
+              <!-- 카테고리 코드 -->
+              <div class="mb-3">
+                <label class="form-label">
+                  카테고리코드 (*)
+                  <i 
+                    class="mdi mdi-help-circle text-primary"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    title="알파벳 대문자 3자리로 작성해주세요. 예: DPN"
+                    style="cursor: pointer;"></i>
+                </label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="registerCategoryId" 
+                  placeholder="예: DPN"
+                  maxlength="3"
+                />
+              </div>
+
+              <!-- 중분류명 -->
+              <div class="mb-3">
+                <label class="form-label">
+                  중분류명 (*)
+                  <i 
+                    class="mdi mdi-help-circle text-primary"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    title="한글, 영문, 숫자만 입력 가능 / 최대 10자"
+                    style="cursor: pointer;"></i>
+                </label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="registerCategoryMid" 
+                  placeholder="예: 도넛"
+                  maxlength="10"
+                />
+              </div>
+
+              <!-- 소분류명 -->
+              <div class="mb-3">
+                <label class="form-label">
+                  소분류명 (*)
+                  <i 
+                    class="mdi mdi-help-circle text-primary"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    title="소분류명은 중분류 아래에서 유일해야 합니다."
+                    style="cursor: pointer;"></i>
+                </label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="registerCategorySub" 
+                  placeholder="예: 글루텐 프리 도넛"
+                  maxlength="20"
+                />
+              </div>
+
+              <!-- 중복 체크 & 등록 버튼 -->
+              <div class="d-flex justify-content-between">
+                <button 
+                  type="button" 
+                  class="main-btn warning-btn-outline btn-hover btn-sm"
+                  id="checkCategoryDuplicate">
+                  중복 체크
+                </button>
+                <button 
+                  type="submit" 
+                  class="main-btn primary-btn btn-hover btn-sm">
+                  등록
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모달 끝 -->
+
     <!-- ========= All Javascript files linkup ======== -->
     <script src="assets/js/Chart.min.js"></script>
     <script src="assets/js/dynamic-pie-chart.js"></script>
@@ -585,6 +687,16 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="assets/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Bootstrap 5 Tooltip 활성화 (모달 내부)
+      document.addEventListener('DOMContentLoaded', function () {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+      });
+    </script>
 
 <!-- 카테고리 설정 시작 -->
     <script>
@@ -729,9 +841,83 @@
         });
 
         // 버튼 이벤트
-        $('body').on('click', '#btnProductAdd_mainCategoryUp_clone', function() {
-          $('#productAddModal_mainCategoryUp').modal('show');
+        // 중복 체크 상태 전역 변수
+        let isCategoryDuplicateChecked = false;
+
+        // 중복 체크 버튼 이벤트 (한 번만 바인딩)
+        $('#checkCategoryDuplicate').on('click', function () {
+          const id = $('#registerCategoryId').val().trim();
+          const mid = $('#registerCategoryMid').val().trim();
+          const sub = $('#registerCategorySub').val().trim();
+
+          // 정규식 유효성 검사
+          const regId = /^[A-Z]{3}$/;
+          const regMidSub = /^[A-Za-z0-9가-힣 ]{1,20}$/;
+
+          if (!id || !mid || !sub) {
+            alert('모든 항목을 입력해주세요.');
+            return;
+          }
+          if (!regId.test(id)) {
+            alert('카테고리 코드는 알파벳 대문자 3자리여야 합니다.');
+            return;
+          }
+          if (!regMidSub.test(mid)) {
+            alert('중분류명은 한글, 영문, 숫자, 공백 포함 최대 20자입니다.');
+            return;
+          }
+          if (!regMidSub.test(sub)) {
+            alert('소분류명은 한글, 영문, 숫자, 공백 포함 최대 20자입니다.');
+            return;
+          }
+
+          // 더미 데이터 기준 중복 확인
+          const dummyExistingIds = ['DPN', 'DGL', 'DLW', 'BGL', 'CDC', 'TZR', 'MPK', 'TPK'];
+          if (dummyExistingIds.includes(id)) {
+            alert('이미 존재하는 카테고리 코드입니다.');
+            isCategoryDuplicateChecked = false;
+          } else {
+            alert('사용 가능한 카테고리 코드입니다.');
+            isCategoryDuplicateChecked = true;
+          }
         });
+
+        // 입력 값 변경되면 중복 체크 상태 초기화
+        $('#registerCategoryId, #registerCategoryMid, #registerCategorySub').on('input', function () {
+          isCategoryDuplicateChecked = false;
+        });
+
+        // 모달 열기 버튼
+        $('body').on('click', '#btnProductAdd_mainCategoryUp_clone', function () {
+          $('#categoryAddModal').modal('show');
+        });
+
+        // 등록 폼 제출 이벤트 (한 번만 바인딩)
+        $('#registerCategoryForm').on('submit', function (e) {
+          e.preventDefault();
+
+          const id = $('#registerCategoryId').val().trim();
+          const mid = $('#registerCategoryMid').val().trim();
+          const sub = $('#registerCategorySub').val().trim();
+
+          if (!id || !mid || !sub) {
+            alert('모든 항목을 입력해주세요.');
+            return;
+          }
+
+          if (!isCategoryDuplicateChecked) {
+            alert('중복 체크를 먼저 진행해주세요.');
+            return;
+          }
+
+          // 등록 성공 처리 (AJAX로 대체 가능)
+          alert('카테고리가 성공적으로 등록되었습니다.');
+
+          this.reset(); // 폼 초기화
+          isCategoryDuplicateChecked = false;
+          $('#categoryAddModal').modal('hide');
+        });
+
         $('body').on('click', '#btnProductDelete_mainCategoryUp_clone', function() {
           var selectedData = [];
           categoryTable.rows({ page: 'current' }).nodes().each(function(row) {

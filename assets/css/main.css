@@ -2805,6 +2805,10 @@ border-spacing: 0px;
 .header .header-right button::after {
   display: none;
 }
+.input-group-text {
+  background: #F0950C;
+  color: #fff;
+}
 .header .header-right button span {
   position: absolute;
   width: 12px;
@@ -6263,12 +6267,12 @@ height: auto !important;
   background-color: initial !important;
 }
 
-#datatable_1_wrapper .main-btn,
-#datatable_1_wrapper .main-btn:hover,
-#datatable_1_wrapper .main-btn:focus,
-#datatable_2_wrapper .main-btn,
-#datatable_2_wrapper .main-btn:hover,
-#datatable_2_wrapper .main-btn:focus {
+#datatable_1_wrapper .main-btn.deactive-btn-outline,
+#datatable_1_wrapper .main-btn.deactive-btn-outline:hover,
+#datatable_1_wrapper .main-btn.deactive-btn-outline:focus,
+#datatable_2_wrapper .main-btn.deactive-btn-outline,
+#datatable_2_wrapper .main-btn.deactive-btn-outline:hover,
+#datatable_2_wrapper .main-btn.deactive-btn-outline:focus {
   border: none !important;
   box-shadow: none !important;
 }
