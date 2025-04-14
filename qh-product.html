@@ -501,28 +501,6 @@
               </div>
             </div>
           </div>
-
-          <!-- 카테고리 삭제 모달 -->
-          <div class="modal fade" id="productDeleteModal_mainCategoryUp" tabindex="-1" aria-labelledby="productDeleteModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="productDeleteModalLabel_mainCategoryUp">카테고리 삭제</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <p>선택한 카테고리를 정말 삭제하시겠습니까?</p>
-                  <ul id="deleteProductList_mainCategoryUp" class="list-group mb-3">
-                    <!-- 선택된 제품명 목록 삽입 -->
-                  </ul>
-                  <div class="d-flex justify-content-end gap-2">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-danger" id="confirmDelete_mainCategoryUp">삭제</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
           <!-- Modal HTML End -->
 
           <!-- 제품 삭제 모달 -->
@@ -596,11 +574,14 @@
                 <label class="form-label">
                   카테고리코드 (*)
                   <i 
-                    class="mdi mdi-help-circle text-primary"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="right"
-                    title="알파벳 대문자 3자리로 작성해주세요. 예: DPN"
-                    style="cursor: pointer;"></i>
+                  class="mdi mdi-help-circle text-primary"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  data-bs-html="true"
+                  data-bs-custom-class="wide-tooltip"
+                  title="중분류(1자) + 소분류(2자) = <b>총 3자리 대문자 코드</b><br>예: 도넛(D) + 로우슈거(LS) → DLS<br><i>※ 중복 시 소분류 약어를 조정해 주세요.</i>"
+                  style="cursor: pointer;">
+                </i>
                 </label>
                 <input 
                   type="text" 
@@ -615,12 +596,6 @@
               <div class="mb-3">
                 <label class="form-label">
                   중분류명 (*)
-                  <i 
-                    class="mdi mdi-help-circle text-primary"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="right"
-                    title="한글, 영문, 숫자만 입력 가능 / 최대 10자"
-                    style="cursor: pointer;"></i>
                 </label>
                 <input 
                   type="text" 
@@ -635,12 +610,6 @@
               <div class="mb-3">
                 <label class="form-label">
                   소분류명 (*)
-                  <i 
-                    class="mdi mdi-help-circle text-primary"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="right"
-                    title="소분류명은 중분류 아래에서 유일해야 합니다."
-                    style="cursor: pointer;"></i>
                 </label>
                 <input 
                   type="text" 
@@ -667,6 +636,27 @@
               </div>
 
             </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 카테고리 삭제 모달 -->
+    <div class="modal fade" id="productDeleteModal_mainCategoryUp" tabindex="-1" aria-labelledby="productDeleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="productDeleteModalLabel_mainCategoryUp">카테고리 삭제</h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <h5>선택한 카테고리를 정말 삭제하시겠습니까?</h5><br>
+            <ul id="deleteProductList_mainCategoryUp" class="list-group mb-3">
+              <!-- 선택된 제품명 목록 삽입 -->
+            </ul>
+            <div class="d-flex justify-content-end gap-2">
+              <button type="button" class="main-btn primary-btn btn-hover text-center" id="confirmDelete_mainCategoryUp">삭제</button>
+            </div>
           </div>
         </div>
       </div>
@@ -732,10 +722,10 @@
             // settings.nTable.id 검사를 통해 해당 테이블에만 적용
             if (settings.nTable.id !== 'datatable_mainCategoryUp') return true;
             const dummyMainCategorieData = [
-              { "categoryId": "DPN", "categoryMid": "도넛", "categorySub": "프로틴 도넛" },
-              { "categoryId": "DGL", "categoryMid": "도넛", "categorySub": "글루텐 프리 도넛" },
-              { "categoryId": "DLW", "categoryMid": "도넛", "categorySub": "저당 도넛" },
-              { "categoryId": "BGL", "categoryMid": "베이글", "categorySub": "글루텐 프리 베이글" },
+              { "categoryId": "DPN", "categoryMid": "도넛", "categorySub": "프로틴도넛" },
+              { "categoryId": "DGL", "categoryMid": "도넛", "categorySub": "글루텐프리도넛" },
+              { "categoryId": "DLW", "categoryMid": "도넛", "categorySub": "저당도넛" },
+              { "categoryId": "BGL", "categoryMid": "베이글", "categorySub": "글루텐프리베이글" },
               { "categoryId": "CDC", "categoryMid": "커피", "categorySub": "디카페인" },
               { "categoryId": "TZR", "categoryMid": "티", "categorySub": "제로음료" },
               { "categoryId": "MPK", "categoryMid": "머그컵", "categorySub": "프로킨머그컵" },
@@ -846,9 +836,9 @@
 
         // 중복 체크 버튼 이벤트 (한 번만 바인딩)
         $('#checkCategoryDuplicate').on('click', function () {
-          const id = $('#registerCategoryId').val().trim();
-          const mid = $('#registerCategoryMid').val().trim();
-          const sub = $('#registerCategorySub').val().trim();
+          const id = $('#registerCategoryForm #registerCategoryId').val().trim();
+          const mid = $('#registerCategoryForm #registerCategoryMid').val().trim();
+          const sub = $('#registerCategoryForm #registerCategorySub').val().trim();
 
           // 정규식 유효성 검사
           const regId = /^[A-Z]{3}$/;
@@ -863,23 +853,50 @@
             return;
           }
           if (!regMidSub.test(mid)) {
-            alert('중분류명은 한글, 영문, 숫자, 공백 포함 최대 20자입니다.');
+            alert('중분류명은 한글, 영문, 숫자, 공백 포함 최대 10자입니다.');
             return;
           }
           if (!regMidSub.test(sub)) {
-            alert('소분류명은 한글, 영문, 숫자, 공백 포함 최대 20자입니다.');
+            alert('소분류명은 한글, 영문, 숫자, 공백 포함 최대 10자입니다.');
             return;
           }
 
-          // 더미 데이터 기준 중복 확인
+          // 더미 데이터 (기존에 등록된 카테고리들)
           const dummyExistingIds = ['DPN', 'DGL', 'DLW', 'BGL', 'CDC', 'TZR', 'MPK', 'TPK'];
+          const dummyExistingPairs = [
+            { mid: '도넛', sub: '프로틴도넛' },
+            { mid: '도넛', sub: '글루텐프리도넛' },
+            { mid: '도넛', sub: '저당도넛' },
+            { mid: '베이글', sub: '글루텐프리베이글' },
+            { mid: '커피', sub: '디카페인' },
+            { mid: '티', sub: '제로음료' },
+            { mid: '머그컵', sub: '프로킨머그컵' },
+            { mid: '텀블러', sub: '프로킨텀블러' }
+          ];
+
+          if (!id || !mid || !sub) {
+            alert('모든 항목을 입력해주세요.');
+            return;
+          }
+
+          // 1. ID 중복 체크
           if (dummyExistingIds.includes(id)) {
             alert('이미 존재하는 카테고리 코드입니다.');
             isCategoryDuplicateChecked = false;
-          } else {
-            alert('사용 가능한 카테고리 코드입니다.');
-            isCategoryDuplicateChecked = true;
+            return;
           }
+
+          // 2. (중분류, 소분류) 조합 중복 체크
+          const isPairDuplicate = dummyExistingPairs.some(pair => pair.mid === mid && pair.sub === sub);
+          if (isPairDuplicate) {
+            alert(`이미 등록된 중분류/소분류 조합입니다.\n[${mid} - ${sub}]`);
+            isCategoryDuplicateChecked = false;
+            return;
+          }
+
+          // 통과
+          alert('사용 가능한 카테고리입니다.');
+          isCategoryDuplicateChecked = true;
         });
 
         // 입력 값 변경되면 중복 체크 상태 초기화
@@ -896,9 +913,9 @@
         $('#registerCategoryForm').on('submit', function (e) {
           e.preventDefault();
 
-          const id = $('#registerCategoryId').val().trim();
-          const mid = $('#registerCategoryMid').val().trim();
-          const sub = $('#registerCategorySub').val().trim();
+          const id = $('#registerCategoryForm #registerCategoryId').val().trim();
+          const mid = $('#registerCategoryForm #registerCategoryMid').val().trim();
+          const sub = $('#registerCategoryForm #registerCategorySub').val().trim();
 
           if (!id || !mid || !sub) {
             alert('모든 항목을 입력해주세요.');
@@ -918,7 +935,8 @@
           $('#categoryAddModal').modal('hide');
         });
 
-        $('body').on('click', '#btnProductDelete_mainCategoryUp_clone', function() {
+        // 삭제 버튼 클릭 시
+        $('body').on('click', '#btnProductDelete_mainCategoryUp_clone', function () {
           var selectedData = [];
           categoryTable.rows({ page: 'current' }).nodes().each(function(row) {
             if ($(row).find('.row-checkbox').prop('checked')) {
@@ -929,12 +947,84 @@
             alert('삭제할 항목을 선택하세요.');
             return;
           }
+
+          // 상태 매핑
+          const statusMap = {
+            DPN: { text: '재고있음',   canDelete: false },
+            DGL: { text: '입고진행',   canDelete: false },
+            DLW: { text: '삭제가능',   canDelete: true },
+            BGL: { text: '출고진행',   canDelete: false },
+            CDC: { text: '제품등록',     canDelete: false },
+            TZR: { text: '발주진행',   canDelete: false  },
+            MPK: { text: '삭제가능',   canDelete: true  },
+            TPK: { text: '삭제가능',   canDelete: true  }
+          };
+
           var $deleteList = $('#deleteProductList_mainCategoryUp');
           $deleteList.empty();
+
+          // "모두 삭제 가능"인지 판별
+          let allDeletable = true;
+
           selectedData.forEach(function(item) {
-            $deleteList.append('<li class="list-group-item">' + item.categoryMid + ' - ' + item.categorySub + '</li>');
+            // categoryId -> 상태 가져오기
+            const catId = item.categoryId;
+            const statusObj = statusMap[catId] || { text: '삭제가능', canDelete: true };
+
+            // 배지 색상: 삭제 가능(초록), 불가능(빨강)
+            const badgeColor = statusObj.canDelete ? 'bg-success' : 'bg-danger';
+            const statusBadge = `<span class="badge bg-secondary">${statusObj.text}</span>`;
+
+            // 하나라도 false 있으면 전체 삭제 불가로 간주
+            if (!statusObj.canDelete) {
+              allDeletable = false;
+            }
+
+            // 리스트 표시
+            $deleteList.append(`
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                ${item.categoryMid} - ${item.categorySub}
+                ${statusBadge}
+              </li>
+            `);
           });
+
+          // 안내문 & 버튼 문구 설정
+          if (allDeletable) {
+            // 1) 전부다 삭제 가능
+            // 안내문
+            $('#productDeleteModal_mainCategoryUp .modal-body > h5')
+              .text('선택한 카테고리를 정말 삭제하시겠습니까?');
+            // 버튼
+            $('#confirmDelete_mainCategoryUp').text('삭제');
+          } else {
+            // 2) 전부 혹은 일부 불가능
+            // 안내문
+            $('#productDeleteModal_mainCategoryUp .modal-body > h5')
+              .text('선택항목 중 업무에 사용중인 카테고리는 삭제할 수 없습니다.');
+            // 버튼
+            $('#confirmDelete_mainCategoryUp').text('삭제가능 품목만 삭제');
+          }
+
+          // 모달 표시
           $('#productDeleteModal_mainCategoryUp').modal('show');
+        });
+
+        // 모달 내부의 삭제버튼 클릭 시
+        $('#confirmDelete_mainCategoryUp').on('click', function() {
+          const btnText = $(this).text();
+
+          if (btnText === '삭제가능 품목만 삭제') {
+            // (예시) 삭제 가능한 항목만 필터링해서 AJAX로 보낸다
+            // 이 로직을 구현해주면 "삭제가능"한 카테고리만 삭제 처리
+            alert('삭제 가능한 카테고리만 삭제했습니다!');
+          } else {
+            // (예시) 전체 삭제
+            alert('모두 삭제되었습니다!');
+          }
+
+          $('#productDeleteModal_mainCategoryUp').modal('hide');
+          // 필요 시: DataTable 업데이트 로직
         });
 
         // DataTable length dropdown custom 스타일 함수 (카테고리용)
