@@ -189,9 +189,8 @@
       </header>
       <!-- ========== header end ========== -->
 
-      <!-- ========== section start ========== -->
-      <!-- ========== section start ========== -->
-      <section class="section">
+       <!-- ========== section start ========== -->
+       <section class="section">
         <div class="container-fluid">
           <!-- ========== title-wrapper start ========== -->
           <div class="title-wrapper pt-30">
@@ -220,7 +219,7 @@
                   <table id="datatable" class="table striped-table w-100 inbound-datatable" style="width:100%">
                     <thead>
                       <tr>
-                        <th><input type="checkbox" id="select-all"></th>
+                        <!-- <th><input type="checkbox" id="select-all"></th> -->
                         <th>입고코드</th>
                         <th>제품코드</th>
                         <th>제품명</th>
@@ -288,8 +287,8 @@
      var table = $('#datatable').DataTable({
   autoWidth: false,
   columnDefs: [
-    { targets: 0, orderable: false, searchable: false }, // 체크박스 컬럼
-    { targets: [1, 2, 3, 4], className: 'text-center' }
+    // { targets: 0, orderable: false, searchable: false }, // 체크박스 컬럼
+    // { targets: [1, 2, 3, 4], className: 'text-center' }
     // { targets: [1, 2, 3, 4, 6, 7], className: 'text-center' }
   ],
   order: [[1, 'asc']],
@@ -315,14 +314,14 @@
     });
   },
   columns: [
-    { // 체크박스 컬럼
-      data: null,
-      orderable: false,
-      searchable: false,
-      render: function(data, type, row, meta) {
-        return '<input type="checkbox" class="row-checkbox">';
-      }
-    },
+    // { // 체크박스 컬럼
+    //   data: null,
+    //   orderable: false,
+    //   searchable: false,
+    //   render: function(data, type, row, meta) {
+    //     return '<input type="checkbox" class="row-checkbox">';
+    //   }
+    // },
     { data: 'inboundCode', title: '입고코드' },
     { data: 'productCode', title: '제품코드' },
     { data: 'productName', title: '제품명' },
@@ -423,26 +422,26 @@
             $select.wrap('<div class="col-lg-2"><div class="select-style-1"><div class="select-position"></div></div></div>');
           }
         });
-        // 8. "Select All" 체크박스 이벤트 및 페이지 변경 시 초기화 등은 그대로 유지
-        $('#select-all').on('click', function() {
-          const rows = table.rows({ page: 'current' }).nodes();
-          $('input.row-checkbox', rows).prop('checked', this.checked);
-        });
-        $('#datatable tbody').on('change', 'input.row-checkbox', function() {
-          if(!this.checked) {
-            const el = $('#select-all').get(0);
-            if(el && el.checked) {
-              el.checked = false;
-            }
-          }
-        });
+        // // 8. "Select All" 체크박스 이벤트 및 페이지 변경 시 초기화 등은 그대로 유지
+        // $('#select-all').on('click', function() {
+        //   const rows = table.rows({ page: 'current' }).nodes();
+        //   $('input.row-checkbox', rows).prop('checked', this.checked);
+        // });
+        // $('#datatable tbody').on('change', 'input.row-checkbox', function() {
+        //   if(!this.checked) {
+        //     const el = $('#select-all').get(0);
+        //     if(el && el.checked) {
+        //       el.checked = false;
+        //     }
+        //   }
+        // });
         
         table.on('draw', function() {
           $('#select-all').prop('checked', false);
         });
 
  
-</script>
+      </script>
     </script>
     
   </body>

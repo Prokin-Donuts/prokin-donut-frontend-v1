@@ -69,9 +69,9 @@
               <li>
                 <a href="wm-inbound_approval.html" style="color: black; font-size: 17px;"> 입고관리 </a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="wm-inbound_modify.html" class="hover-text-grow"> 입고수정/취소 </a>
-              </li>
+              </li> -->
               <li>
                 <a href="wm-inbound_status.html" class="hover-text-grow"> 입고현황 </a>
               </li>
@@ -321,7 +321,7 @@
                 </div>
                 <div>
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                  <button type="button" class="main-btn primary-btn btn-primary btn-sm">입고 수정정 완료</button>
+                  <button type="button" class="main-btn primary-btn btn-primary btn-sm">입고 수정 완료</button>
                 </div>
               </div>
               
@@ -368,31 +368,6 @@
             </div>
           </div>
         </div>
-
-        <!-- 삭제 모달 -->
-        <!-- <div class="modal fade" id="inboundDeleteModal" tabindex="-1" aria-labelledby="inboundDeleteModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="inboundDeleteModalLabel">입고요청 삭제</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>입고 요청을 삭제하시겠습니까?</p>
-                <ul id="deleteinboundList" class="list-group mb-3">
-                 
-                </ul>
-
-                <div>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                  <button type="button" class="main-btn primary-btn btn-primary btn-sm">삭제</button>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div> -->
-        <!-- Modal HTML End -->
 
       </div>
     </section>
@@ -689,12 +664,6 @@
       $('#inboundAddModal').on('show.bs.modal', function () {
         populateManagerDropdown();
       });
-
-      // 등록 버튼 이벤트: 등록 모달 열기
-      // $('body').on('click', '#btninboundAdd_clone', function(e) {
-      //   e.preventDefault();
-      //   $('#inboundAddModal').modal('show');
-      // });
 
       // 이 부분 전체를 바꿔주세요!
       $('body').on('click', '.btn-approve', function () {
