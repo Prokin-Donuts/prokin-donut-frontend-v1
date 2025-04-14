@@ -197,11 +197,6 @@
                         필터 초기화
                       </button>
                     </div>
-                  
-                    <!-- 오른쪽: 등록/수정/삭제
-                    <div class="btu-group-1 ms-auto gap-2 mb-20">
-                      <button class="main-btn warning-btn-outline btn-hover btn-sm btn-xs" id="btnFranchiseAdd">등록</button>
-                    </div> -->
                   </div>
 
                 </div>
@@ -230,7 +225,7 @@
                         <th>입고일</th>
                         <th>입고상태</th>
                         <th>창고코드</th>
-                        <th>설정</th> <!-- 수정/삭제 열 -->
+                        <th>승인|수정|취소</th> <!-- 수정/삭제 열 -->
                     </tr>
                   </thead>
     
@@ -243,8 +238,8 @@
           </div>
         </div>
 
-         <!-- 승인 모달 -->
-        <!-- 승인 상세 보기 모달 -->
+        <!-- 승인 모달 -->
+        <!-- 입고 승인 상세 보기 모달 -->
         <div class="modal fade" id="inboundDetailModal" tabindex="-1" aria-labelledby="inboundDetailModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- 크기 조정 가능: modal-sm, modal-lg 등 -->
             <div class="modal-content">
@@ -276,104 +271,127 @@
                 </div>
               
                 <!-- 오른쪽: 버튼 묶음 -->
-                <div>
+                <!-- <div>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                   <button type="button" class="btn btn-primary">입고 요청 완료</button>
+                </div> -->
+
+                <div>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                  <button type="button" class="main-btn primary-btn btn-primary btn-sm">입고 요청 완료</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-
-
-        <!-- Modal HTML Start -->
-        <!-- 등록 모달 -->
-        <!-- <div class="modal fade" id="franchiseAddModal" tabindex="-1" aria-labelledby="franchiseAddModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
+        <!-- 입고 요청 수정 모달 -->
+        <div class="modal fade" id="inboundEditModal" tabindex="-1" aria-labelledby="inboundEditModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document"> <!-- modal-lg: 큰 창 -->
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="franchiseAddModalLabel">가맹점 등록</h5>
+                <h5 class="modal-title">입고 요청 수정</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  
+                </button>
               </div>
               <div class="modal-body">
-                <form id="registerForm">
-                  <div class="mb-3">
-                    <label class="form-label">가맹점명</label>
-                    <input type="text" class="form-control" id="registerInboundDate">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">소재지</label>
-                    <input type="text" class="form-control" id="registerInboundStatus">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">점주</label>
-                    <select class="form-select" id="registerFranchiseManager">
-                      <option value="">점주 선택</option>
-                      // 점주 목록 추가 
-                    </select>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-primary" id="checkDuplicate">중복체크</button>
-                    <button type="submit" class="btn btn-primary">등록</button>
-                  </div>
-                </form>
+                <p>수량과 입고 날짜를 선택하고 입고수정정 완료 버튼을 클릭하세요.</p>
+                <table class="table" id="selectedProductsTable">
+                  <thead>
+                    <tr>
+                      <th>번호</th>
+                      <th>제품코드</th>
+                      <th>제품명</th>
+                      <th>제품단가</th>
+                      <th>보관타입</th>
+                      <th>수량</th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- JS로 동적 추가 -->
+                  </tbody>
+                </table>
               </div>
+              <div class="modal-footer d-flex justify-content-between align-items-center">
+                <!-- 왼쪽: 입고 날짜 -->
+                <div class="form-group mb-0">
+                  <label for="inboundDate" class="mr-2 mb-0">입고 날짜:</label>
+                  <input type="date" class="form-control form-control-sm d-inline-block" id="inboundDate" style="width: auto;" />
+                </div>
+                <div>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                  <button type="button" class="main-btn primary-btn btn-primary btn-sm">입고 수정정 완료</button>
+                </div>
+              </div>
+              
             </div>
           </div>
-        </div> -->
+        </div>
 
-        <!-- 수정 모달 -->
-        <div class="modal fade" id="franchiseEditModal" tabindex="-1" aria-labelledby="franchiseEditModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
+
+        <!-- 입고 삭제 모달 ! -->
+        <div class="modal fade" id="inboundDeleteModal" tabindex="-1" aria-labelledby="inboundDeleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- 크기 조정 가능: modal-sm, modal-lg 등 -->
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="franchiseEditModalLabel">입고요청 수정</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="inboundDetailModalLabel">입고 상세 내역</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
               </div>
               <div class="modal-body">
-                <form id="modifyFranchiseForm">
-                  <input type="hidden" id="modifyFranchiseId">
-                  <div class="mb-3">
-                    <label class="form-label">가맹점명</label>
-                    <input type="text" class="form-control" id="modifyinboundDate">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">점주</label>
-                    <select class="form-select" id="modifyFranchiseManager">
-                      <option value="">점주 선택</option>
-                    </select>
-                  </div>
-                  <div class="text-end">
-                    <button type="submit" class="btn btn-warning">수정</button>
-                  </div>
-                </form>
+                <table class="table" id="selectedProductsTable">
+                  <thead>
+                    <tr>
+                      <th>제품코드</th>
+                      <th>제품명</th>
+                      <th>제품단가</th>
+                      <th>보관타입</th>
+                      <th>수량</th>
+                    </tr>
+                  </thead>
+                  <tbody id="inboundDetailTableBody">
+                    <!-- JavaScript로 채워짐 -->
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer d-flex justify-content-between align-items-center">
+                <!-- 왼쪽: 입고 날짜 -->
+                <div class="form-group mb-0">
+                  <label for="inboundDate" class="mr-2 mb-0">입고 날짜:</label>
+                  <input type="date" class="form-control form-control-sm d-inline-block" id="inboundDate" style="width: auto;" />
+                </div>          
+                <div>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                  <button type="button" class="main-btn primary-btn btn-primary btn-sm">삭제</button>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <!-- 삭제 모달 -->
-        <div class="modal fade" id="franchiseDeleteModal" tabindex="-1" aria-labelledby="franchiseDeleteModalLabel" aria-hidden="true">
+        <!-- <div class="modal fade" id="inboundDeleteModal" tabindex="-1" aria-labelledby="inboundDeleteModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="franchiseDeleteModalLabel">입고요청 삭제</h5>
+                <h5 class="modal-title" id="inboundDeleteModalLabel">입고요청 삭제</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <p>입고 요청을 삭제하시겠습니까?</p>
-                <ul id="deleteFranchiseList" class="list-group mb-3">
-                  <!-- 입고상세 목록 -->
+                <ul id="deleteinboundList" class="list-group mb-3">
+                 
                 </ul>
-                <div class="d-flex justify-content-end gap-2">
+
+                <div>
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                  <button type="button" class="btn btn-danger" id="confirmDelete">삭제</button>
+                  <button type="button" class="main-btn primary-btn btn-primary btn-sm">삭제</button>
                 </div>
+
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- Modal HTML End -->
 
       </div>
@@ -516,7 +534,7 @@
                 </div>
               `;
             },
-            title: '설정'
+            title: '승인&nbsp&nbsp|&nbsp&nbsp수정&nbsp&nbsp|&nbsp&nbsp취소'
           }
         ],
         paging: true,
@@ -591,10 +609,10 @@
       // 복제 후 삽입 시, ID 제거 필수!
       $clone.find('#InboundCategories').attr('id', 'InboundCategories_clone');
       
-      $clone.find('#btnFranchiseAdd').attr('id', 'btnFranchiseAdd_clone');
-      $clone.find('#btnFranchiseEdit').attr('id', 'btnFranchiseEdit_clone');
-      $clone.find('#btnFranchiseDelete').attr('id', 'btnFranchiseDelete_clone');
-      $clone.find('#btnFranchiseAdd, #btnFranchiseEdit, #btnFranchiseDelete').remove();
+      $clone.find('#btninboundAdd').attr('id', 'btninboundAdd_clone');
+      $clone.find('#btninboundEdit').attr('id', 'btninboundEdit_clone');
+      $clone.find('#btninboundDelete').attr('id', 'btninboundDelete_clone');
+      $clone.find('#btninboundAdd, #btninboundEdit, #btninboundDelete').remove();
       $('div.myFilterArea').html($clone.html());
 
       // select 태그 감싸는 구조 적용
@@ -658,7 +676,7 @@
       ];
 
       function populateManagerDropdown() {
-        const $select = $('#registerFranchiseManager');
+        const $select = $('#registerinboundManager');
         $select.empty().append(`<option value="">점주 선택</option>`); // 기본값 초기화
 
         dummyManagers.forEach(manager => {
@@ -668,14 +686,14 @@
       }
 
       // 모달 열릴 때마다 목록 갱신되게 하면 좋아
-      $('#franchiseAddModal').on('show.bs.modal', function () {
+      $('#inboundAddModal').on('show.bs.modal', function () {
         populateManagerDropdown();
       });
 
       // 등록 버튼 이벤트: 등록 모달 열기
-      // $('body').on('click', '#btnFranchiseAdd_clone', function(e) {
+      // $('body').on('click', '#btninboundAdd_clone', function(e) {
       //   e.preventDefault();
-      //   $('#franchiseAddModal').modal('show');
+      //   $('#inboundAddModal').modal('show');
       // });
 
       // 이 부분 전체를 바꿔주세요!
@@ -710,8 +728,8 @@
 
       // 수정 버튼 이벤트
       // 수정 모달용 드롭다운 채우기 함수: 현재 점주(warehouseCode)가 있으면 그 항목이 목록 최상단에 오도록 정렬
-      function populateFranchiseManagerDropdown(currentMemberCode) {
-        const $select = $('#modifyFranchiseManager');
+      function populateinboundManagerDropdown(currentMemberCode) {
+        const $select = $('#modifyinboundManager');
         // 기존 옵션 초기화 및 플레이스홀더 추가
         $select.empty().append('<option value="">점주 선택</option>');
         
@@ -754,9 +772,9 @@
 
         // 행 데이터의 담당자 ID가 담긴 필드는 dummy 데이터에서는 "warehouseCode"로 되어 있으므로,
         // 만약 이름이 아닌 고유 id를 기준으로 한다면, 그 값(예: rowData.warehouseCode)을 넘겨야 합니다.
-        populateFranchiseManagerDropdown(rowData.warehouseCode);
+        populateinboundManagerDropdown(rowData.warehouseCode);
 
-        $('#franchiseEditModal').modal('show');
+        $('#inboundEditModal').modal('show');
       });
 
       // 삭제 버튼 이벤트
@@ -773,12 +791,12 @@
         }
         
         // 삭제 모달의 리스트 영역을 비우고, 해당 행의 가맹점 이름을 추가
-        $('#deleteFranchiseList').empty().append(
+        $('#deleteinboundList').empty().append(
           '<li class="list-group-item">' + rowData.inboundDate + '</li>'
         );
         
         // 삭제 모달을 열기
-        $('#franchiseDeleteModal').modal('show');
+        $('#inboundDeleteModal').modal('show');
       });
       
     });
