@@ -418,53 +418,7 @@
           </div>
 
           <!-- Modal HTML Start -->
-          <!-- 제품 등록 모달 -->
-          <div class="modal fade" id="productAddModal" tabindex="-1" aria-labelledby="productAddModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="productAddModalLabel">제품 등록</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form id="registerForm">
-                    <div class="mb-3">
-                      <label class="form-label">카테고리</label>
-                      <div class="d-flex gap-2">
-                        <select class="form-select" id="registerCategoryMid">
-                          <option value="">중분류</option>
-                        </select>
-                        <select class="form-select" id="registerCategorySub">
-                          <option value="">소분류</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">제품명</label>
-                      <input type="text" class="form-control" id="registerProductName">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">제공단가</label>
-                      <input type="text" class="form-control" id="registerProductPrice">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">보관타입</label>
-                      <select class="form-select" id="registerStoredType">
-                        <option value="">선택</option>
-                        <option value="냉장">냉장</option>
-                        <option value="냉동">냉동</option>
-                        <option value="상온">상온</option>
-                      </select>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <button type="button" class="btn btn-outline-primary" id="checkDuplicate">중복체크</button>
-                      <button type="submit" class="btn btn-primary">등록</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
+
 
           <!-- 수정 모달 -->
           <div class="modal fade" id="productEditModal" tabindex="-1" aria-labelledby="productEditModalLabel" aria-hidden="true">
@@ -483,7 +437,7 @@
                     </div>
                     <div class="mb-3">
                       <label class="form-label">제공단가</label>
-                      <input type="text" class="form-control" id="modifyProductPrice">
+                      <input type="number" class="form-control" id="modifyProductPrice">
                     </div>
                     <div class="mb-3">
                       <label class="form-label">보관타입</label>
@@ -577,7 +531,7 @@
                 <input 
                   type="text" 
                   class="form-control" 
-                  id="registerCategoryMid" 
+                  id="registerCategoryMid_subCategoryUp" 
                   placeholder="예: 도넛"
                   maxlength="10"
                 />
@@ -591,7 +545,7 @@
                 <input 
                   type="text" 
                   class="form-control" 
-                  id="registerCategorySub" 
+                  id="registerCategorySub_subCategoryUp" 
                   placeholder="예: 글루텐 프리 도넛"
                   maxlength="20"
                 />
@@ -634,6 +588,90 @@
             <div class="d-flex justify-content-end gap-2">
               <button type="button" class="main-btn primary-btn btn-hover text-center" id="confirmDelete_mainCategoryUp">삭제</button>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 제품 등록 모달 -->
+    <div class="modal fade" id="productAddModal" tabindex="-1" aria-labelledby="productAddModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          
+          <!-- 모달 헤더 -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="productAddModalLabel">제품 등록</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          
+          <!-- 모달 바디 -->
+          <div class="modal-body">
+            <p class="text-danger fw-normal mb-3">(*)는 필수 입력 항목입니다.</p>
+            <form id="registerProductForm">
+              
+              <!-- 1. 중분류 드롭박스 -->
+              <div class="mb-3">
+                <label for="registerCategoryMid" class="form-label">중분류 (*)</label>
+                <select class="form-select" id="registerCategoryMid" required>
+                  <option value="">중분류 선택</option>
+                  <!-- JavaScript에서 동적으로 옵션 추가 -->
+                </select>
+              </div>
+              
+              <!-- 2. 소분류 드롭박스 -->
+              <div class="mb-3">
+                <label for="registerCategorySub" class="form-label">소분류 (*)</label>
+                <select class="form-select" id="registerCategorySub" required>
+                  <option value="">소분류 선택</option>
+                  <!-- JavaScript에서 동적으로 옵션 추가 -->
+                </select>
+              </div>
+              
+              <!-- 3. 제품명 입력 + 중복 확인 버튼 -->
+              <div class="mb-3">
+                <label for="registerProductName" class="form-label">제품명 (*)
+                  <i 
+                    class="mdi mdi-help-circle text-primary"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="right"
+                    data-bs-html="true"
+                    data-bs-custom-class="wide-tooltip"
+                    title="냉장 또는 냉동 보관 제품의 경우,<br>제품명 앞에 보관타입을 명시해 주세요.<br>예: 냉동초코프로틴도넛"
+                    style="cursor: pointer;">
+                  </i></label>
+                <div class="d-flex gap-2">
+                  <input type="text" class="form-control" id="registerProductName" placeholder="예: 프로틴초코" maxlength="10" required>
+
+                  <button type="button" class="main-btn primary-btn btn-hover btn-smaller" id="checkProductNameDuplicate">중복 확인</button>
+                </div>
+              </div>
+              
+              <!-- 4. 제공단가 입력 + 단위 표시 -->
+              <div class="mb-3">
+                <label for="registerProductPrice" class="form-label">제공단가 (*)</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="registerProductPrice" placeholder="예: 5000" required>
+                  <span class="input-group-text">원</span>
+                </div>
+              </div>
+              
+              <!-- 5. 보관타입 드롭박스 -->
+              <div class="mb-3">
+                <label for="registerStoredType" class="form-label">보관타입 (*)</label>
+                <select class="form-select" id="registerStoredType" required>
+                  <option value="">선택하세요</option>
+                  <option value="냉장">냉장</option>
+                  <option value="냉동">냉동</option>
+                  <option value="상온">상온</option>
+                </select>
+              </div>
+              
+              <!-- 제출 버튼 -->
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="main-btn primary-btn btn-hover text-center">등록</button>
+              </div>
+              
+            </form>
           </div>
         </div>
       </div>
@@ -835,11 +873,12 @@
         // 중복 체크 상태 전역 변수
         let isCategoryDuplicateChecked = false;
 
+        // 카테고리 등록 버튼 클릭 시
         // 중복 체크 버튼 이벤트 (한 번만 바인딩)
         $('#checkCategoryDuplicate').on('click', function () {
           const id = $('#registerCategoryForm #registerCategoryId').val().trim();
-          const mid = $('#registerCategoryForm #registerCategoryMid').val().trim();
-          const sub = $('#registerCategoryForm #registerCategorySub').val().trim();
+          const mid = $('#registerCategoryForm #registerCategoryMid_subCategoryUp').val().trim();
+          const sub = $('#registerCategoryForm #registerCategorySub_subCategoryUp').val().trim();
 
           // 정규식 유효성 검사
           const regId = /^[A-Z]{3}$/;
@@ -901,7 +940,7 @@
         });
 
         // 입력 값 변경되면 중복 체크 상태 초기화
-        $('#registerCategoryId, #registerCategoryMid, #registerCategorySub').on('input', function () {
+        $('#registerCategoryId, #registerCategoryMid_subCategoryUp, #registerCategorySub_subCategoryUp').on('input', function () {
           isCategoryDuplicateChecked = false;
         });
 
@@ -915,8 +954,8 @@
           e.preventDefault();
 
           const id = $('#registerCategoryForm #registerCategoryId').val().trim();
-          const mid = $('#registerCategoryForm #registerCategoryMid').val().trim();
-          const sub = $('#registerCategoryForm #registerCategorySub').val().trim();
+          const mid = $('#registerCategoryForm #registerCategoryMid_subCategoryUp').val().trim();
+          const sub = $('#registerCategoryForm #registerCategorySub_subCategoryUp').val().trim();
 
           if (!id || !mid || !sub) {
             alert('모든 항목을 입력해주세요.');
@@ -1361,42 +1400,118 @@
           $('#select-all').prop('checked', false);
         });
 
-        // 등록 버튼 클릭 시
-        $('#btnProductAdd_clone').on('click', function (e) {
-          $('#productAddModal').modal('show');
-        });
-
-        // 수정 버튼 클릭 시
-        $('#btnProductEdit_clone').on('click', function (e) {
-          const selectedRows = table.rows({ page: 'current' }).nodes();
-          const selectedData = [];
-
-          $(selectedRows).each(function () {
-            if ($(this).find('.row-checkbox').prop('checked')) {
-              const data = table.row(this).data();
-              selectedData.push(data);
+        // 드롭다운 채우기 함수
+        function populateMidCategories() {
+          console.log("populateMidCategories() called");
+          console.log("dummyMidCategories:", dummyMidCategories);
+          const $midSelect = $('#registerCategoryMid');
+          $midSelect.empty().append('<option value="">중분류 선택</option>');
+          dummyMidCategories.forEach(function(item) {
+            $midSelect.append('<option value="' + item.id + '">' + item.name + '</option>');
+          });
+        }
+        function populateSubCategories(selectedMid) {
+          const $subSelect = $('#registerCategorySub');
+          $subSelect.empty().append('<option value="">소분류 선택</option>');
+          dummySubCategories.forEach(function(item) {
+            if (item.midCategory === selectedMid) {
+              $subSelect.append('<option value="' + item.id + '">' + item.name + '</option>');
             }
           });
-
-          if (selectedData.length === 0) {
-            alert('수정할 항목을 선택하세요.');
+        }
+        
+        // 유효성 검사 함수
+        function validateProductInputs() {
+          const mid = $('#registerCategoryMid').val().trim();
+          const sub = $('#registerCategorySub').val().trim();
+          const productName = $('#registerProductName').val().trim();
+          const productPrice = $('#registerProductPrice').val().trim();
+          const storedType = $('#registerStoredType').val();
+          
+          if (!mid || !sub || !productName || !productPrice || !storedType) {
+            return "모든 항목은 필수 입력입니다.";
+          }
+          const nameRegex = /^[A-Za-z가-힣]{1,10}$/;
+          if (!nameRegex.test(productName)) {
+            return "제품명은 한글과 영문만 가능하며 최대 10자까지 입력 가능합니다.";
+          }
+          if (isNaN(productPrice)) {
+            return "제공단가는 숫자만 입력 가능합니다.";
+          }
+          return null;
+        }
+        
+        var isProductNameDuplicateChecked = false;
+        
+        // 입력값 변경 시 중복 체크 플래그 초기화
+        $('#registerCategoryMid, #registerCategorySub, #registerProductName').on('input change', function() {
+          isProductNameDuplicateChecked = false;
+        });
+        
+        // 모달이 열릴 때마다 드롭다운 초기화
+        $('#productAddModal').on('shown.bs.modal', function() {
+          console.log("제품 등록 모달이 열렸습니다.");
+          populateMidCategories();
+          $('#registerCategorySub').empty().append('<option value="">소분류 선택</option>');
+          isProductNameDuplicateChecked = false;
+        });
+        
+        // 중분류 선택 시 소분류 업데이트
+        $(document).on('change', '#registerCategoryMid', function() {
+          var selectedMid = $(this).val();
+          populateSubCategories(selectedMid);
+        });
+        
+        // 제품 중복 확인 버튼 이벤트
+        $('#checkProductNameDuplicate').on('click', function() {
+          const errorMsg = validateProductInputs();
+          if (errorMsg) {
+            alert(errorMsg);
             return;
           }
-
-          // 수정 모달 안에 테이블 생성
-          const $editTable = $('<table class="table"><thead><tr><th>제품명</th><th>단가</th></tr></thead><tbody></tbody></table>');
-          selectedData.forEach((item, index) => {
-            const $row = $(`
-              <tr>
-                <td><input type="text" class="form-control" value="${item.productName}" data-index="${index}" data-field="productName" /></td>
-                <td><input type="text" class="form-control" value="${item.productPrice}" data-index="${index}" data-field="productPrice" /></td>
-              </tr>
-            `);
-            $editTable.find('tbody').append($row);
+          // 예시: 더미 등록된 제품 배열
+          const registeredProducts = [
+            { mid: "도넛", sub: "프로틴도넛", productName: "프로틴초코" },
+            { mid: "도넛", sub: "글루텐프리도넛", productName: "클래식" }
+          ];
+          const mid = $('#registerCategoryMid').val().trim();
+          const sub = $('#registerCategorySub').val().trim();
+          const productName = $('#registerProductName').val().trim();
+          
+          const isDuplicate = registeredProducts.some(function(prod) {
+            return prod.mid === mid && prod.sub === sub && prod.productName === productName;
           });
-
-          $('#productEditModal .modal-body').html($editTable);
-          $('#productEditModal').modal('show');
+          
+          if (isDuplicate) {
+            alert("이미 등록된 제품입니다.");
+            isProductNameDuplicateChecked = false;
+          } else {
+            alert("사용 가능한 제품명입니다.");
+            isProductNameDuplicateChecked = true;
+          }
+        });
+        
+        // 제품 등록 폼 제출 이벤트
+        $('#registerProductForm').on('submit', function(e) {
+          e.preventDefault();
+          const errorMsg = validateProductInputs();
+          if (errorMsg) {
+            alert(errorMsg);
+            return;
+          }
+          if (!isProductNameDuplicateChecked) {
+            alert("제품명 중복 확인을 먼저 진행해주세요.");
+            return;
+          }
+          alert("제품이 등록되었습니다.");
+          this.reset();
+          isProductNameDuplicateChecked = false;
+          $('#productAddModal').modal('hide');
+        });
+        
+        // 모달 열기 버튼 이벤트 (단순히 모달을 여는 역할만)
+        $(document).on('click', '#btnProductAdd_clone', function() {
+          $('#productAddModal').modal('show');
         });
 
         // 제품 삭제 모달 열기 이벤트
@@ -1451,10 +1566,10 @@
     
           // 안내문 및 삭제 버튼 텍스트를 설정 (모달 내부 안내문은 <p> 태그로 감싸져 있어야 함)
           if (allDeletable) {
-            $('#productDeleteModal .modal-body > p').text('선택한 제품을 정말 삭제하시겠습니까?');
+            $('#productDeleteModal .modal-body > h5').text('선택한 제품을 정말 삭제하시겠습니까?');
             $('#confirmDelete').text('삭제');
           } else {
-            $('#productDeleteModal .modal-body > p').text('선택한 제품 중 삭제할 수 없는 항목이 포함되어 있습니다.');
+            $('#productDeleteModal .modal-body > h5').text('선택한 제품 중 삭제할 수 없는 항목이 포함되어 있습니다.');
             $('#confirmDelete').text('삭제가능 품목만 삭제');
           }
           
