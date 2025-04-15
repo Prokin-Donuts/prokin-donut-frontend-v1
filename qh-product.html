@@ -149,49 +149,102 @@
             </div>
             <div class="col-lg-7 col-md-7 col-6">
               <div class="header-right">
-                <!-- profile start -->
-                <div class="profile-box ml-15">
-                  <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="profile-info">
-                      <div class="info">
-                        <div class="image">
-                          <img src="assets/images/profile/user_profile.png" alt="" />
-                        </div>
-                        <div>
-                          <h6 class="fw-500">김관리자</h6>
-                          <p>QH Admin</p>
-                        </div>
+               <!-- profile start -->
+               <div class="profile-box ml-15">
+                <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="profile-info">
+                    <div class="info">
+                      <div class="image">
+                        <img src="assets/images/profile/user_profile.png" alt="" />
+                      </div>
+                      <div>
+                        <h6 class="fw-500">김관리자</h6>
+                        <p>QH Admin</p>
                       </div>
                     </div>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-                    <li>
-                      <div class="author-info flex items-center !p-1">
-                        <div class="content">
-                          <h4 class="text-sm">김관리자</h4>
-                          <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#">Email@gmail.com</a>
+                  </div>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                  <li>
+                    <div class="flex items-center !p-1">
+                      <div class="content-a">
+                        <h6>김관리자</h6>
+                        <p>Email@gmail.com</p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="divider"></li>
+                  <li> 
+                    <a  href="#mypageModal" data-bs-toggle="modal" id="btnmypageMenu">      
+                      <i class="lni lni-user"></i> my page
+                    </a>
+                  </li>
+                  <li>
+                    <a href="index.html"> <i class="lni lni-exit"></i> Sign Out </a>
+                  </li>
+                </ul>
+              </div>
+              <!-- profile end -->
+              </div>
+                          </div>
                         </div>
                       </div>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                      <a href="#0">
-                        <i class="lni lni-user"></i> View Profile
-                      </a>
-                    </li>
-                    <li>
-                      <a href="index.html"> <i class="lni lni-exit"></i> Sign Out </a>
-                    </li>
-                  </ul>
+                    </header>
+                    <!-- ========== header end ========== -->
+              <!-- Modal HTML Start -->
+              <!-- 마이페이지 모달 -->
+              <div class="modal fade" id="mypageModal" tabindex="-1" aria-labelledby="mypageModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="mypageModalLabel">내 회원 정보</h3>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="modifyForm">
+                        <input type="hidden" id="mypageId">
+                        
+                        <div class="mb-3">
+                          <label class="form-label">아이디</label>
+                          <input type="id" class="form-control" id="id">
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">비밀번호</label>
+                          <input type="text" class="form-control" id="password">
+                        </div>
+                        
+                        <div class="mb-3">
+                          <label class="form-label">이름</label>
+                          <input type="text" class="form-control" id="name">
+                        </div>
+                        
+                        <div class="mb-3">
+                          <label class="form-label">이메일</label>
+                          <input type="email" class="form-control" id="email">
+                        </div>
+                        
+                        <div class="mb-3">
+                          <label class="form-label">전화번호</label>
+                          <input type="text" class="form-control" id="PhoneNumber">
+                        </div>
+                        
+                        <div class="mb-3">
+                          <label class="form-label">주소</label>
+                          <input type="text" class="form-control" id="address">
+                        </div>
+                      </div>
+                    </form>
+                    <div class="text-center w-100 mt-1 mb-3">
+                      <button type="submit"class="main-btn primary-btn btn-hover text-center" >수정</button>
+                    </div>
+                    <div class="text-center mb-3">
+                    <a href=#0 id = "bntMypageSecession">탈퇴</a> 
+                    </div>
+                    </div>
+                  </div>
                 </div>
-                <!-- profile end -->
               </div>
-            </div>
-          </div>
-        </div>
-      </header>
-      <!-- ========== header end ========== -->
+              <!-- Modal HTML End -->
 
       <!-- ========== section start ========== -->
       <section class="section">
@@ -1621,6 +1674,43 @@
         });
       });
 
+// mypage 버튼 클릭 시
+$('#btnmypageEmail, #btnmypageMenu').on('click', function () {
+    const userInfo = {
+        id: 'kim_admin',
+        password: 'dummyPassword',
+        name: '김관리자',
+        email: 'email@example.com',
+        phone: '010-1234-5678',
+        address: '서울시 강남구'
+    };
+
+    $('#id').val(userInfo.id);
+    $('#password').val(userInfo.password);
+    $('#name').val(userInfo.name);
+    $('#email').val(userInfo.email);
+    $('#PhoneNumber').val(userInfo.phone);
+    $('#address').val(userInfo.address);
+
+    $('#mypageModal').modal('show');
+});
+
+
+//mypage 탈퇴 
+$('#bntMypageSecession').on('click', function (e) {
+
+  const result = confirm('⚠️ 계정을 삭제하시겠습니까?\n삭제된 계정은 복구되지 않습니다.');
+
+if (result) {
+  // 확인 눌렀을 때 실행
+  console.log('삭제 진행!');
+} else {
+  // 취소 눌렀을 때 실행
+  console.log('삭제 취소됨!');
+}
+  
+  $('#mypageModal').modal('show');
+});
     </script>
   </body>
 </html>
