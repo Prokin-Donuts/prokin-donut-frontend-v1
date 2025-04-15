@@ -67,7 +67,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="qh-franchise.html">
+            <a href="qh-inbound.html">
               <span class="icon">
                 <i width="20" height="20" viewBox="0 0 20 20" fill="none" class="lni lni-apartment"></i>
               </span>
@@ -235,7 +235,7 @@
                   
                     <!-- 오른쪽: 등록/수정/삭제
                     <div class="btu-group-1 ms-auto gap-2 mb-20">
-                      <button class="main-btn warning-btn-outline btn-hover btn-sm btn-xs" id="btnFranchiseAdd">등록</button>
+                      <button class="main-btn warning-btn-outline btn-hover btn-sm btn-xs" id="btninboundAdd">등록</button>
                     </div> -->
                   </div>
 
@@ -278,74 +278,52 @@
           </div>
         </div>
 
-        <!-- Modal HTML Start -->
-        <!-- 등록 모달 -->
-        <div class="modal fade" id="inboundApprovalModal" tabindex="-1" aria-labelledby="franchiseAddModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="franchiseAddModalLabel">가맹점 등록</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="registerForm">
-                  <div class="mb-3">
-                    <label class="form-label">가맹점명</label>
-                    <input type="text" class="form-control" id="registerInboundDate">
+
+        <!-- 승인인 모달 -->
+          <div class="modal fade" id="inboundDetailModal" tabindex="-1" aria-labelledby="inboundDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- 크기 조정 가능: modal-sm, modal-lg 등 -->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="inboundDetailModalLabel">입고 상세 내역</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                </div>
+                <div class="modal-body">
+                  <table class="table" id="selectedProductsTable">
+                    <thead>
+                      <tr>
+                        <th>제품코드</th>
+                        <th>제품명</th>
+                        <th>제품단가</th>
+                        <th>보관타입</th>
+                        <th>수량</th>
+                      </tr>
+                    </thead>
+                    <tbody id="inboundDetailTableBody">
+                      <!-- JavaScript로 채워짐 -->
+                    </tbody>
+                  </table>
+                </div>
+                <div class="modal-footer d-flex justify-content-between align-items-center">
+                  <!-- 왼쪽: 입고 날짜 -->
+                  <div class="form-group mb-0">
+                    <label for="inboundDate" class="mr-2 mb-0">입고 날짜:</label>
+                    <input type="date" class="form-control form-control-sm d-inline-block" id="inboundDate" style="width: auto;" />
                   </div>
-                  <div class="mb-3">
-                    <label class="form-label">소재지</label>
-                    <input type="text" class="form-control" id="registerInboundStatus">
+                
+                  <!-- 오른쪽: 버튼 묶음 -->
+                  <!-- <div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary">입고 요청 완료</button>
+                  </div> -->
+  
+                  <div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="main-btn primary-btn btn-primary btn-sm">입고 승인 완료</button>
                   </div>
-                  <div class="mb-3">
-                    <label class="form-label">점주</label>
-                    <select class="form-select" id="registerFranchiseManager">
-                      <option value="">점주 선택</option>
-                      <!-- 여기에 점주 옵션들이 추가됨 -->
-                    </select>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline-primary" id="checkDuplicate">중복체크</button>
-                    <button type="submit" class="btn btn-primary">등록</button>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- 수정 모달 -->
-        <div class="modal fade" id="franchiseEditModal" tabindex="-1" aria-labelledby="franchiseEditModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="franchiseEditModalLabel">입고요청 수정</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <form id="modifyFranchiseForm">
-                  <input type="hidden" id="modifyFranchiseId">
-                  <div class="mb-3">
-                    <label class="form-label">가맹점명</label>
-                    <input type="text" class="form-control" id="modifyinboundDate">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label">점주</label>
-                    <select class="form-select" id="modifyFranchiseManager">
-                      <option value="">점주 선택</option>
-                    </select>
-                  </div>
-                  <div class="text-end">
-                    <button type="submit" class="btn btn-warning">수정</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-       
-
       </div>
     </section>
     <!-- ========== section end ========== -->
@@ -474,14 +452,13 @@
             render: function(data, type, row, meta) {
               return `
                 <div class="btu-group-2">
-
-                  <button class="btn btn-edit text-primary-2">
+                   <button class="btn btn-approve text-success" title="입고 승인" data-inbound-code="INBOUND123">
                     <i class="lni lni-checkmark-circle"></i>
-                  </button>  
+                  </button> 
                 </div>
               `;
             },
-            title: '설정'
+            title: '승인'
           }
         ],
         paging: true,
@@ -556,10 +533,10 @@
       // 복제 후 삽입 시, ID 제거 필수!
       $clone.find('#InboundCategories').attr('id', 'InboundCategories_clone');
       
-      $clone.find('#btnFranchiseAdd').attr('id', 'btnFranchiseAdd_clone');
-      $clone.find('#btnFranchiseEdit').attr('id', 'btnFranchiseEdit_clone');
-      $clone.find('#btnFranchiseDelete').attr('id', 'btnFranchiseDelete_clone');
-      $clone.find('#btnFranchiseAdd, #btnFranchiseEdit, #btnFranchiseDelete').remove();
+      $clone.find('#btninboundAdd').attr('id', 'btninboundAdd_clone');
+      $clone.find('#btninboundEdit').attr('id', 'btninboundEdit_clone');
+      $clone.find('#btninboundDelete').attr('id', 'btninboundDelete_clone');
+      $clone.find('#btninboundAdd, #btninboundEdit, #btninboundDelete').remove();
       $('div.myFilterArea').html($clone.html());
 
       // select 태그 감싸는 구조 적용
@@ -605,6 +582,13 @@
         return true;
       });
 
+      // 입고상세 목업 데이터 
+      const inboundDetails = [
+        { inboundCode: 'INBOUND123', productName: '오리지널 도넛', quantity: 100 },
+        { inboundCode: 'INBOUND123', productName: '초코 도넛', quantity: 50 },
+        { inboundCode: 'INBOUND456', productName: '커피', quantity: 30 },
+      ];
+
       // 9. Edit/Delete 버튼 이벤트 (제품명 대신 productName 사용)
       // 등록 버튼 클릭 시
       const dummyManagers = [
@@ -615,7 +599,7 @@
       ];
 
       function populateManagerDropdown() {
-        const $select = $('#registerFranchiseManager');
+        const $select = $('#registerinboundManager');
         $select.empty().append(`<option value="">점주 선택</option>`); // 기본값 초기화
 
         dummyManagers.forEach(manager => {
@@ -625,49 +609,43 @@
       }
 
       // 모달 열릴 때마다 목록 갱신되게 하면 좋아
-      $('#franchiseAddModal').on('show.bs.modal', function () {
+      $('#inboundAddModal').on('show.bs.modal', function () {
         populateManagerDropdown();
       });
 
-      // 등록 버튼 이벤트: 등록 모달 열기
-      // $('body').on('click', '#btnFranchiseAdd_clone', function(e) {
-      //   e.preventDefault();
-      //   $('#franchiseAddModal').modal('show');
-      // });
+      // 이 부분 전체를 바꿔주세요!
+      $('body').on('click', '.btn-approve', function () {
+        const inboundCode = this.dataset.inboundCode;
 
-      // 입고 승인 버튼 클릭 시
-      // 입고 승인 버튼 클릭 시
-      $('#datatable tbody').on('click', '.btn-approve', function(e) {
-        e.preventDefault();  // 기본 동작 방지
-        console.log('입고 승인 버튼 클릭됨');  // 디버깅을 위한 로그
-        
-        // 데이터 테이블 초기화
-        var table = $('#datatable').DataTable();
-        
-        // 클릭한 버튼의 가장 가까운 <tr>을 찾고, 해당 행의 데이터를 가져옴
-        var $row = $(this).closest('tr');
-        var rowData = table.row($row).data();
-        
-        if (!rowData) {
-          alert('데이터를 찾을 수 없습니다.');
-          return;
+        const filteredDetails = inboundDetails.filter(detail => detail.inboundCode === inboundCode);
+
+        const tbody = document.getElementById('inboundDetailTableBody');
+        tbody.innerHTML = '';
+
+        if (filteredDetails.length > 0) {
+          filteredDetails.forEach(detail => {
+            const row = `
+              <tr>
+                <td>${detail.productName}</td>
+                <td>${detail.quantity}</td>
+              </tr>
+            `;
+            tbody.insertAdjacentHTML('beforeend', row);
+          });
+        } else {
+          tbody.innerHTML = '<tr><td colspan="2">데이터가 없습니다.</td></tr>';
         }
 
-        // 입고 승인 모달에 데이터 설정
-        $('#approveInboundDate').val(rowData.inboundDate);
-
-        // 행 데이터의 담당자 ID가 담긴 필드는 "warehouseCode"로 되어 있으므로
-        populateFranchiseManagerDropdown(rowData.warehouseCode);
-
-        // 입고 승인 모달 열기
-        $('#inboundApprovalModal').modal('show');
+        // 모달 띄우기
+        const modal = new bootstrap.Modal(document.getElementById('inboundDetailModal'));
+        modal.show();
       });
 
 
       // 수정 버튼 이벤트
       // 수정 모달용 드롭다운 채우기 함수: 현재 점주(warehouseCode)가 있으면 그 항목이 목록 최상단에 오도록 정렬
-      function populateFranchiseManagerDropdown(currentMemberCode) {
-        const $select = $('#modifyFranchiseManager');
+      function populateinboundManagerDropdown(currentMemberCode) {
+        const $select = $('#modifyinboundManager');
         // 기존 옵션 초기화 및 플레이스홀더 추가
         $select.empty().append('<option value="">점주 선택</option>');
         
@@ -710,14 +688,25 @@
 
         // 행 데이터의 담당자 ID가 담긴 필드는 dummy 데이터에서는 "warehouseCode"로 되어 있으므로,
         // 만약 이름이 아닌 고유 id를 기준으로 한다면, 그 값(예: rowData.warehouseCode)을 넘겨야 합니다.
-        populateFranchiseManagerDropdown(rowData.warehouseCode);
+        populateinboundManagerDropdown(rowData.warehouseCode);
 
-        $('#franchiseEditModal').modal('show');
+        $('#inboundEditModal').modal('show');
+      });
+    });
+
+    // 모달 열릴 때마다 목록 갱신되게 하면 좋아
+      $('#inboundAddModal').on('show.bs.modal', function () {
+        populateManagerDropdown();
       });
 
+      // 등록 버튼 이벤트: 등록 모달 열기
+      // $('body').on('click', '#btninboundAdd_clone', function(e) {
+      //   e.preventDefault();
+      //   $('#inboundAddModal').modal('show');
+      // });
+
+      // 이 부분 전체를 바꿔주세요!
     
-      
-    });
 
   </script>
 </body>
