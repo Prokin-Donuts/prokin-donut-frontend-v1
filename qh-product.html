@@ -338,8 +338,8 @@
 
                   </div>
 
-                </p>
-                <div class="table-wrapper table-responsive p-0">
+
+                </p>                <div class="table-wrapper table-responsive p-0">
 
                   
                   <!-- Start table -->
@@ -377,85 +377,6 @@
             </div>
           </div>
 
-          <!-- Modal HTML Start -->
-          <!-- 카테고리 등록 모달 -->
-          <div class="modal fade" id="productAddModal_mainCategoryUp" tabindex="-1" aria-labelledby="productAddModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="productAddModalLabel_mainCategoryUp">카테고리 등록</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form id="registerForm_mainCategoryUp">
-                    <div class="mb-3">
-                      <label class="form-label">카테고리</label>
-                      <div class="d-flex gap-2">
-                        <select class="form-select" id="registerCategoryMid_mainCategoryUp">
-                          <option value="">중분류</option>
-                        </select>
-                        <select class="form-select" id="registerCategorySub_mainCategoryUp">
-                          <option value="">소분류</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">중분류명</label>
-                      <input type="text" class="form-control" id="registerCategoryMid_mainCategoryUp">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">소분류명</label>
-                      <input type="text" class="form-control" id="registerCategorySub_mainCategoryUp">
-                    </div>
-                    <div class="d-flex justify-content-between">
-                      <button type="button" class="btn btn-outline-primary" id="checkDuplicate_mainCategoryUp">중복체크</button>
-                      <button type="submit" class="btn btn-primary_mainCategoryUp">등록</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Modal HTML Start -->
-
-
-          <!-- 수정 모달 -->
-          <div class="modal fade" id="productEditModal" tabindex="-1" aria-labelledby="productEditModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="productEditModalLabel">제품 정보 수정</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <form id="modifyForm">
-                    <input type="hidden" id="modifyProductId">
-                    <div class="mb-3">
-                      <label class="form-label">제품명</label>
-                      <input type="text" class="form-control" id="modifyProductName">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">제공단가</label>
-                      <input type="number" class="form-control" id="modifyProductPrice">
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label">보관타입</label>
-                      <select class="form-select" id="modifyStoredType">
-                        <option value="냉장">냉장</option>
-                        <option value="냉동">냉동</option>
-                        <option value="상온">상온</option>
-                      </select>
-                    </div>
-                    <div class="text-end">
-                      <button type="submit" class="btn btn-warning">수정</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Modal HTML End -->
 
         </div>
       </section>
@@ -622,7 +543,7 @@
               <div class="mb-3">
                 <label for="registerCategorySub" class="form-label">소분류 (*)</label>
                 <select class="form-select" id="registerCategorySub" required>
-                  <option value="">소분류 선택</option>
+                  <option value="">중분류를 먼저 선택하세요</option>
                   <!-- JavaScript에서 동적으로 옵션 추가 -->
                 </select>
               </div>
@@ -676,6 +597,50 @@
         </div>
       </div>
     </div>
+
+<!-- 제품 수정 모달 -->
+<div class="modal fade" id="productEditModal" tabindex="-1" aria-labelledby="productEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">제품 수정</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="text-danger mb-2">(*)는 필수 입력 항목입니다.</p>
+        <table class="table text-center align-middle" id="editProductTable">
+          <thead>
+            <tr>
+              <th>제품코드</th>
+              <th>중분류*</th>
+              <th>소분류*</th>
+              <th>제품명*
+                <i 
+                  class="mdi mdi-help-circle text-primary wide-tooltip tooltip-inner"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="right"
+                  data-bs-html="true"
+                  title="냉장 또는 냉동 보관 제품의 경우,<br>제품명 앞에 보관타입을 명시해 주세요.<br>예: 냉동초코프로틴도넛"
+                  style="cursor: pointer; margin-left: 5px;">
+                </i>
+              </th>
+              <th>제공단가*</th>
+              <th>보관타입*</th>
+              <th>중복확인</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" id="btnProductEditSubmit">수정</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- 제품 삭제 모달 -->
     <div class="modal fade" id="productDeleteModal" tabindex="-1" aria-labelledby="productDeleteModalLabel" aria-hidden="true">
@@ -1402,8 +1367,6 @@
 
         // 드롭다운 채우기 함수
         function populateMidCategories() {
-          console.log("populateMidCategories() called");
-          console.log("dummyMidCategories:", dummyMidCategories);
           const $midSelect = $('#registerCategoryMid');
           $midSelect.empty().append('<option value="">중분류 선택</option>');
           dummyMidCategories.forEach(function(item) {
@@ -1412,7 +1375,7 @@
         }
         function populateSubCategories(selectedMid) {
           const $subSelect = $('#registerCategorySub');
-          $subSelect.empty().append('<option value="">소분류 선택</option>');
+          $subSelect.empty().append('<option value="">중분류를 먼저 선택하세요</option>');
           dummySubCategories.forEach(function(item) {
             if (item.midCategory === selectedMid) {
               $subSelect.append('<option value="' + item.id + '">' + item.name + '</option>');
@@ -1452,7 +1415,7 @@
         $('#productAddModal').on('shown.bs.modal', function() {
           console.log("제품 등록 모달이 열렸습니다.");
           populateMidCategories();
-          $('#registerCategorySub').empty().append('<option value="">소분류 선택</option>');
+          $('#registerCategorySub').empty().append('<option value="">중분류를 먼저 선택하세요</option>');
           isProductNameDuplicateChecked = false;
         });
         
@@ -1512,6 +1475,74 @@
         // 모달 열기 버튼 이벤트 (단순히 모달을 여는 역할만)
         $(document).on('click', '#btnProductAdd_clone', function() {
           $('#productAddModal').modal('show');
+        });
+
+        // 제품 수정 모달 클릭 시
+        const dummySubCategoriesByMid = {};
+        dummySubCategories.forEach(item => {
+          if (!dummySubCategoriesByMid[item.midCategory]) {
+            dummySubCategoriesByMid[item.midCategory] = [];
+          }
+          dummySubCategoriesByMid[item.midCategory].push(item.name);
+        });
+
+        function createEditRow(rowData) {
+          const options = (arr, selected) => arr.map(v => `<option value="${v}"${v === selected ? ' selected' : ''}>${v}</option>`).join('');
+          const mids = Object.keys(dummySubCategoriesByMid);
+          const subs = dummySubCategoriesByMid[rowData.categoryMid] || [];
+
+          return `
+            <tr>
+              <td><span class="form-control form-control-sm text-muted bg-light">${rowData.productId}</span></td>
+              <td>
+                <select class="form-select form-select-sm required-field mid-select">
+                  <option value="">중분류 선택</option>
+                  ${options(mids, rowData.categoryMid)}
+                </select>
+              </td>
+              <td>
+                <select class="form-select form-select-sm required-field sub-select">
+                  <option value="">소분류 선택</option>
+                  ${options(subs, rowData.categorySub)}
+                </select>
+              </td>
+              <td><input type="text" class="form-control form-control-sm required-field name-input" maxlength="10" value="${rowData.productName}"></td>
+              <td><input type="text" class="form-control form-control-sm required-field price-input" value="${rowData.productPrice.replace(/[^0-9]/g, '')}"></td>
+              <td>
+                <select class="form-select form-select-sm required-field stored-select">
+                  <option value="">선택</option>
+                  <option value="냉장"${rowData.StoredType === '냉장' ? ' selected' : ''}>냉장</option>
+                  <option value="냉동"${rowData.StoredType === '냉동' ? ' selected' : ''}>냉동</option>
+                  <option value="상온"${rowData.StoredType === '상온' ? ' selected' : ''}>상온</option>
+                </select>
+              </td>
+              <td><button type="button" class="main-btn primary-btn btn-hover btn-smaller">중복확인</button></td>
+            </tr>
+          `;
+        }
+
+        $(document).on('click', '#btnProductEdit_clone', function () {
+          const $checked = $('#datatable tbody input.row-checkbox:checked');
+          if ($checked.length === 0) {
+            alert('수정할 제품을 선택해주세요.');
+            return;
+          }
+
+          const table = $('#datatable').DataTable();
+          const $tbody = $('#editProductTable tbody');
+          $tbody.empty();
+
+          $checked.each(function () {
+            const $row = $(this).closest('tr');  // 여기 수정 중요!
+            const rowData = table.row($row).data();
+            if (!rowData) {
+              console.warn('행 데이터가 없습니다:', $row);
+              return;
+            }
+            $tbody.append(createEditRow(rowData));
+          });
+
+          $('#productEditModal').modal('show');
         });
 
         // 제품 삭제 모달 열기 이벤트
